@@ -5,10 +5,11 @@ import edu.up.cs301.game.actionMsg.GameAction;
 
 /**
  *
- * 
- * @author Steven R. Vegdahl
- * @author Andrew M. Nuxoll
- * @version September 2012
+ *
+ * @author Charles Rayner
+ * @author Michael Waitt
+ * @author Jacob Kirby
+ * @version March 2016
  */
 public class BoggleMoveAction extends GameAction {
 	
