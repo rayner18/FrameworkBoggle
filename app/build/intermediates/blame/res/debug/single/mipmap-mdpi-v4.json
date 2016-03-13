@@ -1,6 +1,10 @@
 [
     {
-        "merged": "/Users/charlesrayner/Documents/School/CS 301/HW4/Boggle/app/build/intermediates/res/merged/debug/mipmap-mdpi-v4/ic_launcher.png",
-        "source": "/Users/charlesrayner/Documents/School/CS 301/HW4/Boggle/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+        "merged": "C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi-v4\\ic_launcher.png",
+        "source": "C:\\FrameworkBoggle\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\charlesrayner\\Documents\\School\\CS 301\\HW4\\Boggle\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\charlesrayner\\Documents\\School\\CS 301\\HW4\\Boggle\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
     }
 ]

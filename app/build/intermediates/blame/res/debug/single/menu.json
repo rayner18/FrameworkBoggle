@@ -1,6 +1,10 @@
 [
     {
-        "merged": "/Users/charlesrayner/Documents/School/CS 301/HW4/Boggle/app/build/intermediates/res/merged/debug/menu/game_main.xml",
-        "source": "/Users/charlesrayner/Documents/School/CS 301/HW4/Boggle/app/src/main/res/menu/game_main.xml"
+        "merged": "C:\\Users\\charlesrayner\\Documents\\School\\CS 301\\HW4\\Boggle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\game_main.xml",
+        "source": "C:\\Users\\charlesrayner\\Documents\\School\\CS 301\\HW4\\Boggle\\app\\src\\main\\res\\menu\\game_main.xml"
+    },
+    {
+        "merged": "C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\game_main.xml",
+        "source": "C:\\FrameworkBoggle\\app\\src\\main\\res\\menu\\game_main.xml"
     }
 ]
