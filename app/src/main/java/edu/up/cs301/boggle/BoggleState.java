@@ -22,7 +22,15 @@ public class BoggleState extends GameState {
         private ArrayList<String> wordBank;
         private boolean timer;
 
+    public BoggleState(){
+        playerTurn = 0;
+        player1Score = 0;
+        player2Score = 0;
+        currentWord = null;
+        wordBank = null;
+        timer = true;
 
+    }
 
     public BoggleState(BoggleState state){
             playerTurn = state.playerTurn;
@@ -65,7 +73,26 @@ public class BoggleState extends GameState {
         public void setWordBank(ArrayList<String> wordBank) {
             this.wordBank = wordBank;
         }
-}
+
+
+
+    public boolean wordLength(ArrayList<String> word) {
+        if (word.size() < 3) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+        public void removeLetter(ArrayList<String> word){
+            word.remove(word.size() - 1);
+
+    }
+
+
+
+    }
+
 
 
 
