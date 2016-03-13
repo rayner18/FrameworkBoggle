@@ -12,13 +12,12 @@ import edu.up.cs301.game.actionMsg.GameAction;
 import edu.up.cs301.game.infoMsg.GameInfo;
 
 /**
- * A GUI of a boggle-player.
- * 
+ * A GUI of a boggle player
  *
- * 
- * @author Steven R. Vegdahl
- * @author Andrew M. Nuxoll
- * @version July 2013
+ * @author Charles Rayner
+ * @author Michael Waitt
+ * @author Jacob Kirby
+ * @version March 2016
  */
 public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, OnClickListener {
 	// The TextView the displays the current counter value
@@ -34,6 +33,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 	 * constructor
 	 *
 	 * @param name
+     *     the name of a player
 	 */
 	public BoggleHumanPlayer(String name) {
 		super(name);

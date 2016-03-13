@@ -9,11 +9,12 @@ import edu.up.cs301.game.config.GameConfig;
 import edu.up.cs301.game.config.GamePlayerType;
 
 /**
- * this is the primary activity for Boggle game
- * 
- * @author Andrew M. Nuxoll
- * @author Steven R. Vegdahl
- * @version July 2013
+ * This is the primary activity of a Boggle game
+ *
+ * @author Charles Rayner
+ * @author Michael Waitt
+ * @author Jacob Kirby
+ * @version March 2016
  */
 public class BoggleMainActivity extends GameMainActivity {
 	

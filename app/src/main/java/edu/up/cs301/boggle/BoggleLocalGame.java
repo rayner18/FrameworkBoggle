@@ -7,11 +7,12 @@ import edu.up.cs301.game.LocalGame;
 import edu.up.cs301.game.actionMsg.GameAction;
 
 /**
- * A class that represents the state of a game.
- * 
- * @author Steven R. Vegdahl
- * @author Andrew M. Nuxoll
- * @version July 2013
+ * A class that represents the sate of the game
+ *
+ * @author Charles Rayner
+ * @author Michael Waitt
+ * @author Jacob Kirby
+ * @version March 2016
  */
 public class BoggleLocalGame extends LocalGame implements BoggleGame {
 

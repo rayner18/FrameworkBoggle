@@ -7,9 +7,10 @@ import edu.up.cs301.game.util.Tickable;
 /**
  * A computer-version of a boggle-player.
  * 
- * @author Steven R. Vegdahl
- * @author Andrew M. Nuxoll
- * @version September 2013
+ * @author Charles Rayner
+ * @author Michael Waitt
+ * @author Jacob Kirby
+ * @version March 2016
  */
 public class BoggleComputerPlayer1 extends GameComputerPlayer implements BogglePlayer, Tickable {
 

@@ -4,10 +4,12 @@ import edu.up.cs301.game.Game;
 
 
 /**
- * An interface that implements a boggle-game
- * 
- * @author Steven R. Vegdahl
- * @version 25 July 2002
+ * An interface that implements a Boggle Game
+ *
+ * @author Charles Rayner
+ * @author Michael Waitt
+ * @author Jacob Kirby
+ * @version March 2016
  */
 public interface BoggleGame extends Game
 {
