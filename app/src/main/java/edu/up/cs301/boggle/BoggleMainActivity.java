@@ -1,10 +1,14 @@
 package edu.up.cs301.boggle;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import edu.up.cs301.game.GameMainActivity;
 import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.LocalGame;
+import edu.up.cs301.game.R;
 import edu.up.cs301.game.config.GameConfig;
 import edu.up.cs301.game.config.GamePlayerType;
 
@@ -17,7 +21,7 @@ import edu.up.cs301.game.config.GamePlayerType;
  * @version March 2016
  */
 public class BoggleMainActivity extends GameMainActivity {
-	
+
 	// the port number that this game will use when playing over the network
 	private static final int PORT_NUMBER = 2234;
 
