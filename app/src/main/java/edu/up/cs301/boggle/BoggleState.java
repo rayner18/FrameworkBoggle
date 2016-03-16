@@ -2,14 +2,18 @@ package edu.up.cs301.boggle;
 
 
 import android.content.res.Resources;
+import android.graphics.Path;
+import android.provider.MediaStore;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,9 +34,10 @@ public class BoggleState extends GameState {
     private int playerTurn; //tells which players turn it is
     private int player1Score;
     private int player2Score;
-    private ArrayList<String> currentWord; //the current word the player is making
+    private String currentWord; //the current word the player is making
     private ArrayList<String> wordBank; //the current words in the word bank
     private boolean timer; //true if the timer is running, false if timer has stopped
+    public File FILE;
 
     public BoggleState() {
         playerTurn = 0;
@@ -86,11 +91,11 @@ public class BoggleState extends GameState {
         this.player2Score = player2Score;
     }
 
-    public ArrayList<String> getCurrentWord() {
+    public String getCurrentWord() {
         return currentWord;
     }
 
-    public void setCurrentWord(ArrayList<String> currentWord) {
+    public void setCurrentWord(String currentWord) {
         this.currentWord = currentWord;
     }
 
@@ -103,39 +108,46 @@ public class BoggleState extends GameState {
     }
 
 
-    public boolean wordLength(ArrayList<String> word) {
-        return word.size() >= 3;
+    public boolean wordLength(String word) {
+
+        if (word.length() < 3) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    public void removeLetter(ArrayList<String> word) {
-        word.remove(word.size() - 1);
+    public void removeLetter(String word) {
+
 
     }
 
-    public boolean findFile(File dir, String target) {
+    public File findFile(File dir, String target) {
         File[] fileList = dir.listFiles();
         for (File file : fileList) {
             if (file.isDirectory()) {
-                boolean result = findFile(file, target);
-                if (result) {
-                    return true;
+                File result = findFile(file, target);
+                if (result != null) {
+                    return result;
                 }
             } else {
                 if (file.isFile()) {
-                    if (file.getName().contains(target)) {
-                        return true;
+                    if (file.getName().equals(target)) {
+                        FILE = file;
+                        return file;
                     }
+
                 }
             }
 
         }
-        return false;
+        return null;
     }
 
     //public void inDictionary(File file, Resources resources){
-        public HashMap inDictionary(File file) throws FileNotFoundException {
+    public Boolean inDictionary(String word) throws IOException {
 
-            Scanner scanner = new Scanner(new FileReader(file.getName()));
+            /*Scanner scanner = new Scanner(new FileReader(file.getName()));
 
             HashMap<String, String> map = new HashMap<String, String>();
 
@@ -144,15 +156,62 @@ public class BoggleState extends GameState {
                 map.put(columns[0], columns[1]);
             }
 
-           // System.out.println(map);
             return map;
+            */
+/*
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        String line;
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        while ((line = reader.readLine()) != null) {
+           String[] parts = reader.readLine().split(":", 2);
+            if (parts.length <= 2) {
+                String key = parts[0];
+              //String value = parts[1];
+               map.put(key,"");
+
+            }
+            reader.close();
+
+       }
+       */
+        BufferedReader reader;
+        reader = new BufferedReader(new InputStreamReader(new FileInputStream("./src/main/res/raw/words.txt")));
+        String line;
+        while ((line = reader.readLine())!= null){
+            if(word.equals(line))
+                return true;
+        }
+        return false;
+
+
+
     }
 
-    public boolean wordAvailable() throws FileNotFoundException {
+
+
+
+
+
+    public Boolean wordAvailable() throws IOException {
         File file1 = new File(".");
-        boolean file = findFile(file1,"words.txt");
-        return file;
-        //HashMap map = inDictionary(file);
+        File file = findFile(file1,"words.txt");
+
+        if(file.getName().equals("words.txt")){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+        //Boolean is a word = inDictionary(file, String);
+        //String names = map.toString();
+        //return names;
+        /*while(names.hasMoreElements()) {
+            String key = (String) names.nextElement();
+            System.out.println("Key: " +key+ " & Value: " +
+                    map.get(key));
+    */
 
 
 

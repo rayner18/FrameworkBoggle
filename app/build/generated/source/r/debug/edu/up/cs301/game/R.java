@@ -107,7 +107,7 @@ public final class R {
         public static final int wood1=0x7f030003;
     }
     public static final class raw {
-        public static final int dictionary=0x7f050000;
+        public static final int words=0x7f050000;
     }
     public static final class string {
         public static final int add_player=0x7f090000;
