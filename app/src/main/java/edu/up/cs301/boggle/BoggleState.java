@@ -1,24 +1,29 @@
 package edu.up.cs301.boggle;
 
 
+import android.content.res.Resources;
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 import edu.up.cs301.game.infoMsg.GameState;
+
 
 /**
  * @author Charles Rayner
  * @author Michael Waitt
  * @author Jacob Kirby
  * @version March 2016
- *
- * This is our Game State class. This is where all the methods are for Boggle to run.
- * The methods that we implemented and are testing are wordLength, Remove Letter, findFile,
- * inDictionary, wordAvailable, update Score, rotate board, add to wordbank
  */
 public class BoggleState extends GameState {
 
@@ -26,18 +31,36 @@ public class BoggleState extends GameState {
     private int player1Score;
     private int player2Score;
     private String currentWord; //the current word the player is making
-    private ArrayList<String> wordBank; //the current words in the word bank
+    private String wordBank; //the current words in the word bank
     private boolean timer; //true if the timer is running, false if timer has stopped
-    private String[][] gameBoard = new String[4][4];
 
+    private String[][] board = new String[4][4];
 
     public BoggleState() {
         playerTurn = 0;
         player1Score = 0;
         player2Score = 0;
         currentWord = null;
+        wordBank = null;
         timer = true;
-        wordBank = new ArrayList<String>();
+
+        board[0][0] = ("a");
+        board[0][1] = ("a");
+        board[0][2] = ("a");
+        board[0][3] = ("a");
+        board[1][0] = ("a");
+        board[1][1] = ("a");
+        board[1][2] = ("a");
+        board[1][3] = ("a");
+        board[2][0] = ("a");
+        board[2][1] = ("a");
+        board[2][2] = ("a");
+        board[2][3] = ("a");
+        board[3][0] = ("a");
+        board[3][1] = ("a");
+        board[3][2] = ("a");
+        board[3][3] = ("a");
+
     }
 
     public BoggleState(BoggleState state) {
@@ -47,6 +70,7 @@ public class BoggleState extends GameState {
         currentWord = state.currentWord;
         wordBank = state.wordBank;
         timer = state.timer;
+
     }
 
     public boolean isTimer() {
@@ -57,13 +81,10 @@ public class BoggleState extends GameState {
         this.timer = timer;
     }
 
-    public String[][] getGameBoard() {return gameBoard;}
-
-    public void setGameBoard(String[][] gameBoard) {this.gameBoard = gameBoard;}
-
     public int getPlayerTurn() {
         return playerTurn;
     }
+
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn = playerTurn;
     }
@@ -92,120 +113,645 @@ public class BoggleState extends GameState {
         this.currentWord = currentWord;
     }
 
-    public ArrayList<String> getWordBank() {
+    public String getWordBank() {
         return wordBank;
     }
 
-    public void setWordBank(ArrayList<String> wordBank) {
+    public void setWordBank(String wordBank) {
         this.wordBank = wordBank;
     }
 
-    /**
-     * @param word
-     * @return
-     * determines if the word is more then 3 letters, which means its playable
-     */
+
     public boolean wordLength(String word) {
+        return true;
+    }
 
-        if (word.length() < 3) {
-            return false;
-        } else {
-            return true;
+    public String removeLetter(String word) {
+
+
+        if ((word != null) && (word.length() > 0)) {
+
+            word = word.substring(0, word.length()-1);
+
         }
-    }
-    public void removeLetter(String word) {
+
+        return word;
 
     }
 
-    /**
-     *
-     * @param word
-     * @return
-     * @throws IOException
-     *
-     * This method finds if a word is in the dictionary. It uses the file "words.txt"
-     * which is a file with all the words in the dictionary
-     */
-    public Boolean inDictionary(String word) throws IOException {
-        BufferedReader reader;
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream("./src/main/res/raw/words.txt")));
-        String line;
-        while ((line = reader.readLine())!= null){
-            if(word.equals(line))
-                return true;
+    public boolean findFile(File dir, String target) {
+        File[] fileList = dir.listFiles();
+        for (File file : fileList) {
+            if (file.isDirectory()) {
+                boolean result = findFile(file, target);
+                if (result) {
+                    return true;
+                }
+            } else {
+                if (file.isFile()) {
+                    if (file.getName().contains(target)) {
+                        return true;
+                    }
+                }
+            }
+
         }
         return false;
     }
 
-    /**
-     * Updates the score based on the length of the word entered
-     * Words of size 3 and 4 = 1 point
-     *                     5 = 2 points
-     *                     6 = 3 points
-     *                     7 = 5 points
-     *             8 or more = 11 points
-     *
-     * @param word the word the user has submitted
-     */
-    public void updateScore(String word) {
-        int score = 0;
+    //public void inDictionary(File file, Resources resources){
+        public HashMap inDictionary(File file) throws FileNotFoundException {
 
-        //Check to see how long the word is
-        if (word.length() <= 4 && word.length() >= 3) {
-            score = 1;
-        }
-        else if (word.length() == 5) {
-            score = 2;
-        }
-        else if (word.length() == 6) {
-            score = 3;
-        }
-        else if (word.length() == 7) {
-            score = 5;
-        }
-        else if (word.length() >= 8) {
-            score = 11;
-        }
-        //Update the player's score
-        player1Score = score;
+            Scanner scanner = new Scanner(new FileReader(file.getName()));
+
+            HashMap<String, String> map = new HashMap<String, String>();
+
+            while (scanner.hasNextLine()) {
+                String[] columns = scanner.nextLine().split(" ");
+                map.put(columns[0], columns[1]);
+            }
+
+           // System.out.println(map);
+            return map;
     }
 
-    /**
-     * Rotates the board
-     *
-     * @param board two dimensional array representing the board
-     */
-    public void rotateBoard(String[][] board) {
-        String[][] tmp = new String[4][4];
+    public boolean wordAvailable() throws FileNotFoundException {
+        File file1 = new File(".");
+        boolean file = findFile(file1,"words.txt");
+        return file;
+        //HashMap map = inDictionary(file);
 
-        for (int i = 0; i < 4; ++i) {
-            for (int j = 0; j < 4; ++j) {
-                tmp[i][j] = board[4 - j - 1][i]; //Rotates the board
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public int isCurrentAdjacentToLast(int lastLetterRow,
+                                       int lastLetterCol, int curLetterRow, int curLetterCol) {
+
+
+        int trueOrFalse = 0; //false is 0, true is 1
+                             //didn't use boolean because it wasn't working
+
+        if (lastLetterRow == 0) {
+            if (lastLetterCol == 0) {
+                if (curLetterRow == 0 && curLetterCol == 1) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 1 && curLetterCol == 0) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 1 && curLetterCol == 1) {
+                    trueOrFalse = 1;
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else if (lastLetterCol == 1) {
+                if (curLetterRow == 0 && curLetterCol == 0) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 0 && curLetterCol == 2) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 1 && curLetterCol == 0) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 1 && curLetterCol == 1) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 1 && curLetterCol == 2) {
+                    trueOrFalse = 1;
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else if (lastLetterCol == 2) {
+                if (curLetterRow == 0 && curLetterCol == 1) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 0 && curLetterCol == 3) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 1 && curLetterCol == 1) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 1 && curLetterCol == 2) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 1 && curLetterCol == 3) {
+                    trueOrFalse = 1;
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else if (lastLetterCol == 3) {
+                if (curLetterRow == 0 && curLetterCol == 2) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 1 && curLetterCol == 2) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 1 && curLetterCol == 3) {
+                    trueOrFalse = 1;
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else
+            {
+                trueOrFalse = 0;
             }
         }
-        /**
-         * External Citation
-         *
-         * Date: 15 March 2016
-         * Problem: Didn't know how to rotate a two dimensional array.
-         * Resource: http://stackoverflow.com/questions/42519/how-do-you-rotate-
-         * a-two-dimensional-array
-         * Solution: Used the sample code from this post.
-         */
+        else if (lastLetterRow == 1) {
+            if (lastLetterCol == 0) {
+                if (curLetterRow == 0 && curLetterCol == 0) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 0 && curLetterCol == 1) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 1 && curLetterCol == 1) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 2 && curLetterCol == 0) {
+                    trueOrFalse = 1;
+                }
+                else if (curLetterRow == 2 && curLetterCol == 1) {
+                    trueOrFalse = 1;
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else if (lastLetterCol == 1) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow + 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else if (lastLetterCol == 2) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow + 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else if (lastLetterCol == 3) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow + 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else
+            {
+                trueOrFalse = 0;
+            }
+        }
+        else if (lastLetterRow == 2) {
+            if (lastLetterCol == 0) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow + 1) {
+                    if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+            }
+            else if (lastLetterCol == 1) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow + 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else if (lastLetterCol == 2) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow + 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else if (lastLetterCol == 3) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow + 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+        }
+        else if (lastLetterRow == 3) {
+            if (lastLetterCol == 0) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
 
-        //Copies the rotated board to the existing board
-        gameBoard = tmp;
+            }
+            else if (lastLetterCol == 1) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else if (lastLetterCol == 2) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else if (lastLetterCol == 3) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }
+                    else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }
+                else
+                {
+                    trueOrFalse = 0;
+                }
+            }
+            else
+            {
+                trueOrFalse = 0;
+            }
+        }
+        else {
+            trueOrFalse = 0;
+        }
+
+
+        return trueOrFalse;
     }
 
-    /**
-     *
-     * @param word
-     * Adds a sumbitted correct word to the word bank
-     */
-    public void addToWordBank(String word) {
-        //Adds it to the arrayList
-         wordBank.add(word);
-    }
+
+
+
 }
 
 
