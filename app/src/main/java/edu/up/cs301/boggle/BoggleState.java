@@ -15,6 +15,10 @@ import edu.up.cs301.game.infoMsg.GameState;
  * @author Michael Waitt
  * @author Jacob Kirby
  * @version March 2016
+ *
+ * This is our Game State class. This is where all the methods are for Boggle to run.
+ * The methods that we implemented and are testing are wordLength, Remove Letter, findFile,
+ * inDictionary, wordAvailable, update Score, rotate board, add to wordbank
  */
 public class BoggleState extends GameState {
 
@@ -97,10 +101,8 @@ public class BoggleState extends GameState {
     }
 
     /**
-     *
      * @param word
      * @return
-     *
      * determines if the word is more then 3 letters, which means its playable
      */
     public boolean wordLength(String word) {
@@ -111,42 +113,19 @@ public class BoggleState extends GameState {
             return true;
         }
     }
-
-
     public void removeLetter(String word) {
 
     }
 
     /**
      *
-     * @param dir
-     * @param target
+     * @param word
      * @return
+     * @throws IOException
      *
-     * This method finds a specific file. We use it to find our dictionary file.
-     * We might not end up using this file but we made it just in case
+     * This method finds if a word is in the dictionary. It uses the file "words.txt"
+     * which is a file with all the words in the dictionary
      */
-    public File findFile(File dir, String target) {
-        File[] fileList = dir.listFiles(); //array of files in a directory
-        //loops through files and determines if they are a directory or a file
-        for (File file : fileList) {
-            if (file.isDirectory()) {
-                File result = findFile(file, target); //recursive method
-                if (result != null) {
-                    return result;
-                }
-            } else {
-                if (file.isFile()) {
-                    if (file.getName().equals(target)) {
-                        return file;
-                    }
-
-                }
-            }
-        }
-        return null;
-    }
-
     public Boolean inDictionary(String word) throws IOException {
         BufferedReader reader;
         reader = new BufferedReader(new InputStreamReader(new FileInputStream("./src/main/res/raw/words.txt")));
@@ -156,23 +135,15 @@ public class BoggleState extends GameState {
                 return true;
         }
         return false;
-
     }
-
-    public Boolean wordAvailable() throws IOException {
-        File file1 = new File(".");
-        File file = findFile(file1, "words.txt");
-
-        if(file.getName().equals("words.txt")){
-            return true;
-        }
-        else{
-            return false;
-        }
- }
 
     /**
      * Updates the score based on the length of the word entered
+     * Words of size 3 and 4 = 1 point
+     *                     5 = 2 points
+     *                     6 = 3 points
+     *                     7 = 5 points
+     *             8 or more = 11 points
      *
      * @param word the word the user has submitted
      */
@@ -183,23 +154,18 @@ public class BoggleState extends GameState {
         if (word.length() <= 4 && word.length() >= 3) {
             score = 1;
         }
-
         else if (word.length() == 5) {
             score = 2;
         }
-
         else if (word.length() == 6) {
             score = 3;
         }
-
         else if (word.length() == 7) {
             score = 5;
         }
-
         else if (word.length() >= 8) {
             score = 11;
         }
-
         //Update the player's score
         player1Score = score;
     }
@@ -217,7 +183,6 @@ public class BoggleState extends GameState {
                 tmp[i][j] = board[4 - j - 1][i]; //Rotates the board
             }
         }
-
         /**
          * External Citation
          *
@@ -241,8 +206,6 @@ public class BoggleState extends GameState {
         //Adds it to the arrayList
          wordBank.add(word);
     }
-
-
 }
 
 

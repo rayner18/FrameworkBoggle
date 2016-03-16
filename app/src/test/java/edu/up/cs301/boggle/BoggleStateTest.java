@@ -1,10 +1,11 @@
 package edu.up.cs301.boggle;
 
+import org.junit.Test;
+
 import java.io.File;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
 
 /**
  * JUnit Test for testing the functionality of the BoggleState class
@@ -35,11 +36,6 @@ public class BoggleStateTest {
     }
 
     @Test
-    public void testFindFile() throws Exception {
-
-    }
-
-    @Test
     public void testInDictionary() throws Exception {
         BoggleState state = new BoggleState();
         File file = new File("words.txt");
@@ -55,11 +51,6 @@ public class BoggleStateTest {
         assertFalse(aWord3);
     }
 
-    @Test
-    public void wordAvailable() throws Exception {
-        BoggleState state = new BoggleState();
-        boolean file2 = state.wordAvailable();
-    }
 
     @Test
     public void testUpdateScore() throws Exception {
@@ -137,7 +128,6 @@ public class BoggleStateTest {
         assertEquals(state.getWordBank().get(3), testString2);
 
         assertEquals(state.getWordBank().size(), 4);
-        Boolean file2 = state.wordAvailable();
-        assertTrue(file2);
+
     }
 }
