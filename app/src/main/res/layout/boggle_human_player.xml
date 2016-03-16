@@ -351,12 +351,8 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_weight=".5"
-            android:text="Submit Score" />
-
-        <Space
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_weight=".5" />
+            android:text="Submit Score"
+            android:layout_marginRight="20dp" />
 
         <ScrollView
             android:id="@+id/wordBankScrollView"
@@ -375,15 +371,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_weight=".5"
-            android:text="Rotate Left" />
-
-        <Button
-            android:id="@+id/rotateForwardButton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_weight=".5"
-            android:text="Rotate Right" />
+            android:text="Rotate Board" />
 
     </LinearLayout>
 

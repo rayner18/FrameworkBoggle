@@ -37,16 +37,18 @@ public class BoggleState extends GameState {
     private String currentWord; //the current word the player is making
     private ArrayList<String> wordBank; //the current words in the word bank
     private boolean timer; //true if the timer is running, false if timer has stopped
+    private String[][] gameBoard = new String[4][4];
     public File FILE;
+
+
 
     public BoggleState() {
         playerTurn = 0;
         player1Score = 0;
         player2Score = 0;
         currentWord = null;
-        wordBank = null;
         timer = true;
-
+        wordBank = new ArrayList<String>();
     }
 
     public BoggleState(BoggleState state) {
@@ -56,7 +58,6 @@ public class BoggleState extends GameState {
         currentWord = state.currentWord;
         wordBank = state.wordBank;
         timer = state.timer;
-
     }
 
     public boolean isTimer() {
@@ -66,6 +67,10 @@ public class BoggleState extends GameState {
     public void setTimer(boolean timer) {
         this.timer = timer;
     }
+
+    public String[][] getGameBoard() {return gameBoard;}
+
+    public void setGameBoard(String[][] gameBoard) {this.gameBoard = gameBoard;}
 
     public int getPlayerTurn() {
         return playerTurn;
@@ -115,6 +120,8 @@ public class BoggleState extends GameState {
         } else {
             return true;
         }
+    public boolean wordLength(String word) {
+        return word.length() >= 3;
     }
 
     public void removeLetter(String word) {
@@ -146,15 +153,17 @@ public class BoggleState extends GameState {
 
     //public void inDictionary(File file, Resources resources){
     public Boolean inDictionary(String word) throws IOException {
+    public HashMap inDictionary(File file) throws FileNotFoundException {
 
             /*Scanner scanner = new Scanner(new FileReader(file.getName()));
+        Scanner scanner = new Scanner(new FileReader(file.getName()));
 
-            HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<String, String>();
 
-            while (scanner.hasNextLine()) {
-                String[] columns = scanner.nextLine().split(" ");
-                map.put(columns[0], columns[1]);
-            }
+        while (scanner.hasNextLine()) {
+            String[] columns = scanner.nextLine().split(" ");
+            map.put(columns[0], columns[1]);
+        }
 
             return map;
             */
@@ -186,6 +195,8 @@ public class BoggleState extends GameState {
 
 
 
+        // System.out.println(map);
+        return map;
     }
 
 
@@ -195,6 +206,9 @@ public class BoggleState extends GameState {
 
     public Boolean wordAvailable() throws IOException {
         File file1 = new File(".");
+        boolean file = findFile(file1, "words.txt");
+        return file;
+        //HashMap map = inDictionary(file);
         File file = findFile(file1,"words.txt");
 
         if(file.getName().equals("words.txt")){
@@ -214,9 +228,73 @@ public class BoggleState extends GameState {
     */
 
 
-
     }
 
+    /**
+     * Updates the score based on the length of the word entered
+     *
+     * @param word the word the user has submitted
+     */
+    public void updateScore(String word) {
+        int score = 0;
+
+        //Check to see how long the word is
+        if (word.length() <= 4 && word.length() >= 3) {
+            score = 1;
+        }
+
+        else if (word.length() == 5) {
+            score = 2;
+        }
+
+        else if (word.length() == 6) {
+            score = 3;
+        }
+
+        else if (word.length() == 7) {
+            score = 5;
+        }
+
+        else if (word.length() >= 8) {
+            score = 11;
+        }
+
+        //Update the player's score
+        player1Score = score;
+    }
+
+    /**
+     * Rotates the board
+     *
+     * @param board two dimensional array representing the board
+     */
+    public void rotateBoard(String[][] board) {
+        String[][] tmp = new String[4][4];
+
+        for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < 4; ++j) {
+                tmp[i][j] = board[4 - j - 1][i]; //Rotates the board
+            }
+        }
+
+        /**
+         * External Citation
+         *
+         * Date: 15 March 2016
+         * Problem: Didn't know how to rotate a two dimensional array.
+         * Resource: http://stackoverflow.com/questions/42519/how-do-you-rotate-
+         * a-two-dimensional-array
+         * Solution: Used the sample code from this post.
+         */
+
+        //Copies the rotated board to the existing board
+        gameBoard = tmp;
+    }
+
+    public void addToWordBank(String word) {
+        //Adds it to the arrayList
+         wordBank.add(word);
+    }
 
 
 }

@@ -55,7 +55,8 @@
             android:textColor="#100c00"
             android:textSize="40sp"
             android:textStyle="bold"
-            android:typeface="sans" />
+            android:typeface="sans"
+            android:layout_gravity="center" />
 
         <TextView
             android:id="@+id/opponentScoreTitleTextView"
@@ -348,11 +349,6 @@
             android:layout_weight=".5"
             android:text="Submit Score" />
 
-        <Space
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_weight=".5" />
-
         <TextView
             android:id="@+id/letterDisplayTextView"
             android:layout_width="wrap_content"
@@ -362,7 +358,8 @@
             android:text="This is where the letters go"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textSize="26sp" />
+            android:textSize="26sp"
+            android:layout_gravity="center" />
 
         <Space
             android:layout_width="20px"
@@ -371,17 +368,11 @@
 
         <Button
             android:id="@+id/rotateBackwardButton"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_weight=".5"
-            android:text="Rotate Left" />
-
-        <Button
-            android:id="@+id/rotateForwardButton"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
-            android:layout_weight=".5"
-            android:text="Rotate Right " />
+            android:text="Rotate Board"
+            android:layout_gravity="center" />
 
 
     </LinearLayout>
