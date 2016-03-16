@@ -28,4 +28,5 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
 	protected void receiveInfo(GameInfo info) {
 
 	}
+
 }
