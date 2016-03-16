@@ -1,14 +1,6 @@
 [
     {
-        "merged": "/Users/Michael/AndroidStudioProjects/FrameworkBoggle/C:\\Users\\charlesrayner\\Documents\\School\\CS 301\\HW4\\Boggle\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi-v4\\ic_launcher.png",
-        "source": "/Users/Michael/AndroidStudioProjects/FrameworkBoggle/C:\\Users\\charlesrayner\\Documents\\School\\CS 301\\HW4\\Boggle\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
-    },
-    {
-        "merged": "/Users/Michael/AndroidStudioProjects/FrameworkBoggle/C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi-v4\\ic_launcher.png",
-        "source": "/Users/Michael/AndroidStudioProjects/FrameworkBoggle/C:\\FrameworkBoggle\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
-    },
-    {
-        "merged": "/Users/Michael/AndroidStudioProjects/FrameworkBoggle/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi-v4/ic_launcher.png",
-        "source": "/Users/Michael/AndroidStudioProjects/FrameworkBoggle/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi-v4\\ic_launcher.png",
+        "source": "C:\\FrameworkBoggle\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
     }
 ]
