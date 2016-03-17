@@ -143,6 +143,13 @@ public class BoggleState extends GameState {
 
 
 
+    /**
+     * checks if tile can be removed based on the grounds that it is the last checked tile
+
+     * @param word word to be edited
+     * @param selectedLetters 2d array for the coordinates of each letter tiles
+
+     */
 
     public String removeLetter(String word, int[][] selectedLetters) {
 
@@ -180,7 +187,14 @@ public class BoggleState extends GameState {
 
 
 
+    /**
+     * checks if tile can be removed based on the grounds that it is the last picked tile
 
+     * @param curLetterRow the row that the new letter is in
+     * @param curLetterCol the col that the new letter is in
+     * @param lastLetterRow the row that the last selected letter was in
+     * @param lastLetterCol the col that the last selected letter was in
+     */
     public Boolean canRemove(int curLetterRow, int curLetterCol,
                              int lastLetterRow, int lastLetterCol) {
 
@@ -195,6 +209,16 @@ public class BoggleState extends GameState {
 
     }
 
+
+    /**
+     * adds letter to word
+
+     * @param word the word to edit
+     * @param selectedLetters 2d array for the coordinates of each letter tiles
+     * @param curLetterRow the row that the new letter is in
+     * @param curLetterCol the col that the new col is in
+     * @param letter letter to add to end of word
+     */
     public String addLetter(String word, int[][] selectedLetters, int curLetterRow, int curLetterCol, String letter) {
 
 
@@ -222,6 +246,17 @@ public class BoggleState extends GameState {
 
     }
 
+
+    /**
+     * checks if tile can be added based on the grounds that it has not already been added and
+     * it is adjacent to the last tile picked
+
+     * @param selectedLetters 2d array for the coordinates of each letter tiles
+     * @param curLetterRow the row that the new letter is in
+     * @param curLetterCol the col that the new letter is in
+     * @param lastLetterRow the row that the last selected letter was in
+     * @param lastLetterCol the col that the last selected letter was in
+     */
     public Boolean canAdd(int [][] selectedLetters, int curLetterRow, int curLetterCol,
                           int lastLetterRow, int lastLetterCol) {
 
@@ -298,8 +333,14 @@ public class BoggleState extends GameState {
         gameBoard = tmp;
     }
 
-
-    //checks if the desired tile is adjacent to the last tile selected
+    /**
+     * checks if tile to select is adjacent to last tile picked.
+     *
+     * @param lastLetterRow the row that the last selected letter was in
+     * @param lastLetterCol the col that the last selected letter was in
+     * @param curLetterRow the row that the new letter is in
+     * @param curLetterCol the col that the new letter is in
+     */
     public int isCurrentAdjacentToLast(int lastLetterRow,
                                        int lastLetterCol, int curLetterRow, int curLetterCol) {
 
