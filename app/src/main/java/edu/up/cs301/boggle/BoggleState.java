@@ -25,9 +25,9 @@ public class BoggleState extends GameState {
     private String currentWord; //the current word the player is making
     private boolean timer; //true if the timer is running, false if timer has stopped
     private String[][] gameBoard = new String[4][4];
+    private int[][] selectedLetters = new int[16][2];
 
 
-    private String[][] board = new String[4][4];
 
     public BoggleState() {
         playerTurn = 0;
@@ -36,22 +36,27 @@ public class BoggleState extends GameState {
         currentWord = null;
         timer = true;
 
-        board[0][0] = ("a");
-        board[0][1] = ("a");
-        board[0][2] = ("a");
-        board[0][3] = ("a");
-        board[1][0] = ("a");
-        board[1][1] = ("a");
-        board[1][2] = ("a");
-        board[1][3] = ("a");
-        board[2][0] = ("a");
-        board[2][1] = ("a");
-        board[2][2] = ("a");
-        board[2][3] = ("a");
-        board[3][0] = ("a");
-        board[3][1] = ("a");
-        board[3][2] = ("a");
-        board[3][3] = ("a");
+        gameBoard[0][0] = ("a");
+        gameBoard[0][1] = ("a");
+        gameBoard[0][2] = ("a");
+        gameBoard[0][3] = ("a");
+        gameBoard[1][0] = ("a");
+        gameBoard[1][1] = ("a");
+        gameBoard[1][2] = ("a");
+        gameBoard[1][3] = ("a");
+        gameBoard[2][0] = ("a");
+        gameBoard[2][1] = ("a");
+        gameBoard[2][2] = ("a");
+        gameBoard[2][3] = ("a");
+        gameBoard[3][0] = ("a");
+        gameBoard[3][1] = ("a");
+        gameBoard[3][2] = ("a");
+        gameBoard[3][3] = ("a");
+
+        for (int i = 0; i < 16; i++) {
+            selectedLetters[i][0] = 4;
+            selectedLetters[i][0] = 4;
+        }
 
         wordBank = new ArrayList<String>();
     }
@@ -134,7 +139,7 @@ public class BoggleState extends GameState {
         }
 
 
-    public String removeLetter(String word) {
+    public String removeLetter(String word, int[][] selectedLetters) {
 
 
         if ((word != null) && (word.length() > 0)) {
@@ -142,7 +147,18 @@ public class BoggleState extends GameState {
             word = word.substring(0, word.length() - 1);
 
 
+
+            int i = 0;
+
+            //4 serves as "null"
+            for (i = 0; selectedLetters[i + 1][0] != 4; i++) {;}
+
+            selectedLetters[i][0] = 4;
+            selectedLetters[i][1] = 4;
+
+
         }
+
         return word;
     }
 

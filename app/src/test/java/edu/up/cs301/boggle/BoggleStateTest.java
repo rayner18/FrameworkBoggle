@@ -25,16 +25,23 @@ public class BoggleStateTest {
     public void testRemoveLetter() throws Exception {
         BoggleState state = new BoggleState();
 
+        int[][] selectedLetters = new int[16][2];
+
+        for (int i = 0; i < 16; i++) {
+            selectedLetters[i][0] = 4;
+            selectedLetters[i][0] = 4;
+        }
+
         String word1 = ("hello");
-        word1 = state.removeLetter(word1);
+        word1 = state.removeLetter(word1, selectedLetters);
         assertEquals(word1, "hell");
 
         String word2 = ("");
-        word2 = state.removeLetter(word2);
+        word2 = state.removeLetter(word2, selectedLetters);
         assertEquals(word2, "");
 
         String word3 = ("h");
-        word3 = state.removeLetter(word2);
+        word3 = state.removeLetter(word2, selectedLetters);
         assertEquals(word3, "");
 
     }
