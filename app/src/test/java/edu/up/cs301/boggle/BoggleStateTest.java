@@ -9,7 +9,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Jacob on 3/15/2016.
+ * JUnit test for testing the functionality of the BoggleState class.
+ *
+ * @author Michael Waitt
+ * @author Charles Rayner
+ * @author Jacob Kirby
  */
 public class BoggleStateTest {
 
@@ -23,6 +27,7 @@ public class BoggleStateTest {
         boolean lengthLongEnough3 = state.wordLength("hi"); //tests a short word
         assertFalse(lengthLongEnough3);
     }
+
     @Test
     public void testRemoveLetter() throws Exception {
         BoggleState state = new BoggleState();
@@ -33,11 +38,6 @@ public class BoggleStateTest {
             selectedLetters[i][0] = 4;
             selectedLetters[i][0] = 4;
         }
-
-
-
-
-
 
         String word1 = ("hello");
         word1 = state.removeLetter(word1, selectedLetters);
@@ -64,9 +64,6 @@ public class BoggleStateTest {
         word4 = state.removeLetter(word4, selectedLetters);
 
         assertEquals(selectedLetters[1][0], 4);
-
-
-
     }
 
     @Test
@@ -111,6 +108,9 @@ public class BoggleStateTest {
         String sevenLetter = "jacuzzi";
         state.updateScore(sevenLetter);
         assertEquals(state.getPlayer1Score(), 5);
+
+        assertEquals(state.getSelectedLetters()[13][1], 4);
+        assertEquals(state.getSelectedLetters()[11][0], 4);
     }
 
     @Test
@@ -161,7 +161,6 @@ public class BoggleStateTest {
         assertEquals(state.getWordBank().get(3), testString2);
 
         assertEquals(state.getWordBank().size(), 4);
-
     }
 
     @Test
@@ -191,8 +190,6 @@ public class BoggleStateTest {
         word = state.addLetter(word, selectedLetters, 3, 4, letter);
 
         assertEquals(word, "a");
-
-
     }
 
     @Test
@@ -209,22 +206,16 @@ public class BoggleStateTest {
 
         trueOrFalse = state.canAdd(selectedLetters, 1, 2, 3, 3);
         assertEquals(trueOrFalse, false);
-
-
-
     }
 
     @Test
     public void testCanRemove() throws Exception {
         BoggleState state = new BoggleState();
 
-
         boolean trueOrFalse = state.canRemove(3, 3, 3, 3);
         assertEquals(trueOrFalse, true);
 
         trueOrFalse = state.canRemove(3, 3, 3, 4);
         assertEquals(trueOrFalse, false);
-
-
     }
 }

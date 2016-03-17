@@ -24,7 +24,7 @@
         ]
     },
     {
-        "outputFile": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\values-w820dp-v13\\values-w820dp-v13.xml",
+        "outputFile": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\values-w820dp-v13\\values-w820dp-v13.xml",
         "map": [
             {
                 "to": {
@@ -35,37 +35,13 @@
                     "endOffset": 108
                 },
                 "from": {
-                    "file": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\C:\\FrameworkBoggle\\app\\src\\main\\res\\values-w820dp\\dimens.xml",
+                    "file": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\FrameworkBoggle\\app\\src\\main\\res\\values-w820dp\\dimens.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
                         "startOffset": 295,
                         "endColumn": 57,
                         "endOffset": 348
-                    }
-                }
-            }
-        ]
-    },
-    {
-        "outputFile": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/app/build/intermediates/res/merged/debug/values-w820dp-v13/values-w820dp-v13.xml",
-        "map": [
-            {
-                "to": {
-                    "startLine": 2,
-                    "startColumn": 4,
-                    "startOffset": 55,
-                    "endColumn": 57,
-                    "endOffset": 108
-                },
-                "from": {
-                    "file": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/app/src/main/res/values-w820dp/dimens.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 291,
-                        "endColumn": 57,
-                        "endOffset": 344
                     }
                 }
             }
@@ -96,7 +72,7 @@
         ]
     },
     {
-        "outputFile": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\values-w820dp-v13\\values-w820dp-v13.xml",
+        "outputFile": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/app/build/intermediates/res/merged/debug/values-w820dp-v13/values-w820dp-v13.xml",
         "map": [
             {
                 "to": {
@@ -107,13 +83,61 @@
                     "endOffset": 108
                 },
                 "from": {
-                    "file": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\FrameworkBoggle\\app\\src\\main\\res\\values-w820dp\\dimens.xml",
+                    "file": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/app/src/main/res/values-w820dp/dimens.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 291,
+                        "endColumn": 57,
+                        "endOffset": 344
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "outputFile": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\values-w820dp-v13\\values-w820dp-v13.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 57,
+                    "endOffset": 108
+                },
+                "from": {
+                    "file": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\C:\\FrameworkBoggle\\app\\src\\main\\res\\values-w820dp\\dimens.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
                         "startOffset": 295,
                         "endColumn": 57,
                         "endOffset": 348
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "outputFile": "/Users/Michael/AndroidStudioProjects/FrameworkBoggle/app/build/intermediates/res/merged/debug/values-w820dp-v13/values-w820dp-v13.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 57,
+                    "endOffset": 108
+                },
+                "from": {
+                    "file": "/Users/Michael/AndroidStudioProjects/FrameworkBoggle/app/src/main/res/values-w820dp/dimens.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 291,
+                        "endColumn": 57,
+                        "endOffset": 344
                     }
                 }
             }

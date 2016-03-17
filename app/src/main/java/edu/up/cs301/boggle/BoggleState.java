@@ -2,7 +2,6 @@ package edu.up.cs301.boggle;
 
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,20 +10,18 @@ import java.util.ArrayList;
 import edu.up.cs301.game.infoMsg.GameState;
 
 /**
+ * This is our Game State class. This is where all the methods are for Boggle to run.
+ *
  * @author Charles Rayner
  * @author Michael Waitt
  * @author Jacob Kirby
  * @version March 2016
- *
- * This is our Game State class. This is where all the methods are for Boggle to run.
- * The methods that we implemented and are testing are wordLength, Remove Letter, findFile,
- * inDictionary, wordAvailable, update Score, rotate board, add to wordbank
  */
 public class BoggleState extends GameState {
 
     private int playerTurn; //tells which players turn it is
-    private int player1Score;
-    private int player2Score;
+    private int player1Score; //tracks the score of player1
+    private int player2Score; //tracks the score of player2
     private ArrayList<String> wordBank; //the current words in the word bank
     private String currentWord; //the current word the player is making
     private boolean timer; //true if the timer is running, false if timer has stopped
@@ -32,8 +29,9 @@ public class BoggleState extends GameState {
     private int[][] selectedLetters = new int[16][2];
 
 
-    private String[][] board = new String[4][4];
-
+    /**
+     * The BoggleState constructor. The heart and soul of Boggle. Constructs the gameState of Boggle.
+     */
     public BoggleState() {
         playerTurn = 0;
         player1Score = 0;
@@ -66,6 +64,11 @@ public class BoggleState extends GameState {
         wordBank = new ArrayList<String>();
     }
 
+    /**
+     * The BoggleState copy constructor. Constructs a deep copy of a passed in gameState.
+     *
+     * @param state the old boggleState to be copied
+     */
     public BoggleState(BoggleState state) {
         playerTurn = state.playerTurn;
         player1Score = state.player1Score;
@@ -83,13 +86,18 @@ public class BoggleState extends GameState {
         this.timer = timer;
     }
 
-    public String[][] getGameBoard() {return gameBoard;}
+    public String[][] getGameBoard() {
+        return gameBoard;
+    }
 
-    public void setGameBoard(String[][] gameBoard) {this.gameBoard = gameBoard;}
+    public void setGameBoard(String[][] gameBoard) {
+        this.gameBoard = gameBoard;
+    }
 
     public int getPlayerTurn() {
         return playerTurn;
     }
+
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn = playerTurn;
     }
@@ -126,29 +134,33 @@ public class BoggleState extends GameState {
         this.wordBank = wordBank;
     }
 
+    public int[][] getSelectedLetters() {
+        return selectedLetters;
+    }
+
+    public void setSelectedLetters(int[][] selectedLetters) {
+        this.selectedLetters = selectedLetters;
+    }
+
     /**
+     * Determines if the word is more then 3 letters, which means its playable
      *
-     * @param word
-     * @return
-     * determines if the word is more then 3 letters, which means its playable
+     * @param word the word being checked
      */
-    public boolean wordLength (String word){
-            if (word.length() < 3) {
-                return false;
-            } else {
-                return true;
-            }
+    public boolean wordLength(String word) {
+        if (word.length() < 3) {
+            return false;
+        } else {
+            return true;
         }
-
-
+    }
 
 
     /**
-     * checks if tile can be removed based on the grounds that it is the last checked tile
-
-     * @param word word to be edited
+     * Checks if tile can be removed based on the grounds that it is the last checked tile.
+     *
+     * @param word            word to be edited
      * @param selectedLetters 2d array for the coordinates of each letter tiles
-
      */
 
     public String removeLetter(String word, int[][] selectedLetters) {
@@ -158,11 +170,12 @@ public class BoggleState extends GameState {
             word = word.substring(0, word.length() - 1);
 
 
-
             int i = 0;
 
             //4 serves as "null"
-            for (i = 0; selectedLetters[i + 1][0] != 4; i++) {;}
+            for (i = 0; selectedLetters[i + 1][0] != 4; i++) {
+                ;
+            }
 
             selectedLetters[i][0] = 4;
             selectedLetters[i][1] = 4;
@@ -173,36 +186,48 @@ public class BoggleState extends GameState {
         return word;
     }
 
+    /**
+     * Checks if a word is in the dictionary
+     *
+     * @param word the word being checked
+     * @return a boolean dictating if it is a legal word
+     * @throws IOException
+     */
     public Boolean inDictionary(String word) throws IOException {
         BufferedReader reader;
         reader = new BufferedReader(new InputStreamReader(new FileInputStream("./src/main/res/raw/words.txt")));
         String line;
-        while ((line = reader.readLine())!= null){
-            if(word.equals(line))
+        while ((line = reader.readLine()) != null) {
+            if (word.equals(line))
                 return true;
         }
         return false;
 
+        /**
+         * External Citation
+         *
+         * Date: 15 March 2016
+         * Problem: Didn't know how to check for spelling errors.
+         * Resource: http://www.java-gaming.org/index.php?topic=28057.0
+         * Solution: Used the code from this post.
+         */
     }
-
 
 
     /**
      * checks if tile can be removed based on the grounds that it is the last picked tile
-
-     * @param curLetterRow the row that the new letter is in
-     * @param curLetterCol the col that the new letter is in
+     *
+     * @param curLetterRow  the row that the new letter is in
+     * @param curLetterCol  the col that the new letter is in
      * @param lastLetterRow the row that the last selected letter was in
      * @param lastLetterCol the col that the last selected letter was in
      */
     public Boolean canRemove(int curLetterRow, int curLetterCol,
                              int lastLetterRow, int lastLetterCol) {
 
-        if (curLetterRow == lastLetterRow  && curLetterCol == lastLetterCol) {
+        if (curLetterRow == lastLetterRow && curLetterCol == lastLetterCol) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
 
@@ -212,12 +237,12 @@ public class BoggleState extends GameState {
 
     /**
      * adds letter to word
-
-     * @param word the word to edit
+     *
+     * @param word            the word to edit
      * @param selectedLetters 2d array for the coordinates of each letter tiles
-     * @param curLetterRow the row that the new letter is in
-     * @param curLetterCol the col that the new col is in
-     * @param letter letter to add to end of word
+     * @param curLetterRow    the row that the new letter is in
+     * @param curLetterCol    the col that the new col is in
+     * @param letter          letter to add to end of word
      */
     public String addLetter(String word, int[][] selectedLetters, int curLetterRow, int curLetterCol, String letter) {
 
@@ -232,8 +257,7 @@ public class BoggleState extends GameState {
 
             selectedLetters[0][0] = curLetterRow;
             selectedLetters[0][1] = curLetterCol;
-        }
-        else if (word.length() > 0 ) {
+        } else if (word.length() > 0) {
             word = word.concat(letter);
 
             selectedLetters[i][0] = curLetterRow;
@@ -250,14 +274,14 @@ public class BoggleState extends GameState {
     /**
      * checks if tile can be added based on the grounds that it has not already been added and
      * it is adjacent to the last tile picked
-
+     *
      * @param selectedLetters 2d array for the coordinates of each letter tiles
-     * @param curLetterRow the row that the new letter is in
-     * @param curLetterCol the col that the new letter is in
-     * @param lastLetterRow the row that the last selected letter was in
-     * @param lastLetterCol the col that the last selected letter was in
+     * @param curLetterRow    the row that the new letter is in
+     * @param curLetterCol    the col that the new letter is in
+     * @param lastLetterRow   the row that the last selected letter was in
+     * @param lastLetterCol   the col that the last selected letter was in
      */
-    public Boolean canAdd(int [][] selectedLetters, int curLetterRow, int curLetterCol,
+    public Boolean canAdd(int[][] selectedLetters, int curLetterRow, int curLetterCol,
                           int lastLetterRow, int lastLetterCol) {
 
         boolean isSelected = false;
@@ -269,14 +293,12 @@ public class BoggleState extends GameState {
         }
 
 
-        if (isSelected == true) {
+        if (isSelected) {
             return false;
-        }
-        else if (isCurrentAdjacentToLast
+        } else if (isCurrentAdjacentToLast
                 (lastLetterRow, lastLetterCol, curLetterRow, curLetterCol) == 1) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -285,11 +307,13 @@ public class BoggleState extends GameState {
     /**
      * Updates the score based on the length of the word entered
      * Words of size 3 and 4 = 1 point
-     *                     5 = 2 points
-     *                     6 = 3 points
-     *                     7 = 5 points
-     *             8 or more = 11 points
-     *
+     * 5 = 2 points
+     * 6 = 3 points
+     * 7 = 5 points
+     * 8 or more = 11 points
+     * <p/>
+     * CAVEAT: Does not take into account who made the move. This is a feature that will be added
+     * in later versions of this class.
      *
      * @param word the word the user has submitted
      */
@@ -299,17 +323,28 @@ public class BoggleState extends GameState {
         //Check to see how long the word is
         if (word.length() <= 4 && word.length() >= 3) {
             score = 1;
-        }
-        else if (word.length() == 5) {score = 2;
-        }else if (word.length() == 6) {score = 3;
-        }else if (word.length() == 7) {score = 5;
-        }else if (word.length() >= 8) {score = 11;
+        } else if (word.length() == 5) {
+            score = 2;
+        } else if (word.length() == 6) {
+            score = 3;
+        } else if (word.length() == 7) {
+            score = 5;
+        } else if (word.length() >= 8) {
+            score = 11;
         }
         //Update the player's score
         player1Score = score;
+
+        //resets the values of the selectedLetters array
+        for (int i = 0; i < 16; i++) {
+            selectedLetters[i][0] = 4;
+            selectedLetters[i][1] = 4;
+        }
     }
+
     /**
      * Rotates the board
+     *
      * @param board two dimensional array representing the board
      */
     public void rotateBoard(String[][] board) {
@@ -338,435 +373,389 @@ public class BoggleState extends GameState {
      *
      * @param lastLetterRow the row that the last selected letter was in
      * @param lastLetterCol the col that the last selected letter was in
-     * @param curLetterRow the row that the new letter is in
-     * @param curLetterCol the col that the new letter is in
+     * @param curLetterRow  the row that the new letter is in
+     * @param curLetterCol  the col that the new letter is in
      */
     public int isCurrentAdjacentToLast(int lastLetterRow,
                                        int lastLetterCol, int curLetterRow, int curLetterCol) {
 
 
         int trueOrFalse = 0; //false is 0, true is 1
-                             //didn't use boolean because it wasn't working
+        //didn't use boolean because it wasn't working
 
         if (lastLetterRow == 0) {
             if (lastLetterCol == 0) {
                 if (curLetterRow == 0 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 1 && curLetterCol == 0) {
+                } else if (curLetterRow == 1 && curLetterCol == 0) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 1 && curLetterCol == 1) {
+                } else if (curLetterRow == 1 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }else
-                {
+                } else {
                     trueOrFalse = 0;
                 }
-            }else if (lastLetterCol == 1) {
+            } else if (lastLetterCol == 1) {
                 if (curLetterRow == 0 && curLetterCol == 0) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 0 && curLetterCol == 2) {
+                } else if (curLetterRow == 0 && curLetterCol == 2) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 1 && curLetterCol == 0) {
+                } else if (curLetterRow == 1 && curLetterCol == 0) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 1 && curLetterCol == 1) {
+                } else if (curLetterRow == 1 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 1 && curLetterCol == 2) {
+                } else if (curLetterRow == 1 && curLetterCol == 2) {
                     trueOrFalse = 1;
-                }else
-                {
+                } else {
                     trueOrFalse = 0;
                 }
-            }else if (lastLetterCol == 2) {
+            } else if (lastLetterCol == 2) {
                 if (curLetterRow == 0 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 0 && curLetterCol == 3) {
+                } else if (curLetterRow == 0 && curLetterCol == 3) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 1 && curLetterCol == 1) {
+                } else if (curLetterRow == 1 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 1 && curLetterCol == 2) {
+                } else if (curLetterRow == 1 && curLetterCol == 2) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 1 && curLetterCol == 3) {
+                } else if (curLetterRow == 1 && curLetterCol == 3) {
                     trueOrFalse = 1;
-                }else
-                {
+                } else {
                     trueOrFalse = 0;
                 }
-            }else if (lastLetterCol == 3) {
+            } else if (lastLetterCol == 3) {
                 if (curLetterRow == 0 && curLetterCol == 2) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 1 && curLetterCol == 2) {
+                } else if (curLetterRow == 1 && curLetterCol == 2) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 1 && curLetterCol == 3) {
+                } else if (curLetterRow == 1 && curLetterCol == 3) {
                     trueOrFalse = 1;
-                }else
-                {
+                } else {
                     trueOrFalse = 0;
                 }
-            }else
-            {
+            } else {
                 trueOrFalse = 0;
             }
-        }else if (lastLetterRow == 1) {
+        } else if (lastLetterRow == 1) {
             if (lastLetterCol == 0) {
                 if (curLetterRow == 0 && curLetterCol == 0) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 0 && curLetterCol == 1) {
+                } else if (curLetterRow == 0 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 1 && curLetterCol == 1) {
+                } else if (curLetterRow == 1 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }else if (curLetterRow == 2 && curLetterCol == 0) {
+                } else if (curLetterRow == 2 && curLetterCol == 0) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 2 && curLetterCol == 1) {
+                } else if (curLetterRow == 2 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }else
-                {
+                } else {
                     trueOrFalse = 0;
                 }
-            }else if (lastLetterCol == 1) {
+            } else if (lastLetterCol == 1) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow) {
+                } else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow + 1) {
+                } else if (curLetterRow == lastLetterRow + 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else
-                {
+                } else {
                     trueOrFalse = 0;
                 }
-            }else if (lastLetterCol == 2) {
+            } else if (lastLetterCol == 2) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow) {
+                } else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }
-                    else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }
-                else if (curLetterRow == lastLetterRow + 1) {
+                } else if (curLetterRow == lastLetterRow + 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else
-                {
+                } else {
                     trueOrFalse = 0;
                 }
-            }else if (lastLetterCol == 3) {
+            } else if (lastLetterCol == 3) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow) {
+                } else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow + 1) {
+                } else if (curLetterRow == lastLetterRow + 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else
-                {
+                } else {
                     trueOrFalse = 0;
                 }
-            }else
-            {
+            } else {
                 trueOrFalse = 0;
             }
-        }else if (lastLetterRow == 2) {
+        } else if (lastLetterRow == 2) {
             if (lastLetterCol == 0) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow) {
+                } else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow + 1) {
+                } else if (curLetterRow == lastLetterRow + 1) {
                     if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
                 }
-            }else if (lastLetterCol == 1) {
+            } else if (lastLetterCol == 1) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow) {
+                } else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow + 1) {
+                } else if (curLetterRow == lastLetterRow + 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else
-                {
+                } else {
                     trueOrFalse = 0;
                 }
-            }else if (lastLetterCol == 2) {
+            } else if (lastLetterCol == 2) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow) {
+                } else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow + 1) {
+                } else if (curLetterRow == lastLetterRow + 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else
-                {
+                } else {
                     trueOrFalse = 0;
                 }
-            }else if (lastLetterCol == 3) {
+            } else if (lastLetterCol == 3) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow) {
+                } else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow + 1) {
+                } else if (curLetterRow == lastLetterRow + 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }else
-                {
+                } else {
                     trueOrFalse = 0;
                 }
             }
-        }else if (lastLetterRow == 3) {
+        } else if (lastLetterRow == 3) {
             if (lastLetterCol == 0) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else{trueOrFalse = 0;
+                    } else {
+                        trueOrFalse = 0;
                     }
-                }else if (curLetterRow == lastLetterRow) {
+                } else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }else{trueOrFalse = 0;
+                    } else {
+                        trueOrFalse = 0;
                     }
-                }else{trueOrFalse = 0;
+                } else {
+                    trueOrFalse = 0;
                 }
 
-            }else if (lastLetterCol == 1) {
+            } else if (lastLetterCol == 1) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }        else
-                    {
+                    } else {
                         trueOrFalse = 0;
                     }
-                }
-                else if (curLetterRow == lastLetterRow) {
+                } else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
+                    } else {
+                        trueOrFalse = 0;
                     }
-                    else{trueOrFalse = 0;
-                    }
+                } else {
+                    trueOrFalse = 0;
                 }
-                else{trueOrFalse = 0;
-                }
-            }
-            else if (lastLetterCol == 2) {
+            } else if (lastLetterCol == 2) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
+                    } else {
+                        trueOrFalse = 0;
                     }
-                    else{trueOrFalse = 0;
-                    }
-                }
-                else if (curLetterRow == lastLetterRow) {
+                } else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    } else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
+                    } else {
+                        trueOrFalse = 0;
                     }
-                    else{trueOrFalse = 0;
-                    }
+                } else {
+                    trueOrFalse = 0;
                 }
-                else{trueOrFalse = 0;
-                }
-            }
-            else if (lastLetterCol == 3) {
+            } else if (lastLetterCol == 3) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
+                    } else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
+                    } else {
+                        trueOrFalse = 0;
                     }
-                    else{trueOrFalse = 0;
-                    }
-                }
-                else if (curLetterRow == lastLetterRow) {
+                } else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
+                    } else {
+                        trueOrFalse = 0;
                     }
-                    else{trueOrFalse = 0;
-                    }
+                } else {
+                    trueOrFalse = 0;
                 }
-                else{trueOrFalse = 0;
-                }
+            } else {
+                trueOrFalse = 0;
             }
-            else{trueOrFalse = 0;
-            }
+        } else {
+            trueOrFalse = 0;
         }
-        else {trueOrFalse = 0;
-        }
-   return trueOrFalse;
+        return trueOrFalse;
     }
+
     /**
-     * @param word
-     * Adds a sumbitted correct word to the word bank
+     * @param word Adds a sumbitted correct word to the word bank
      */
     public void addToWordBank(String word) {
         //Adds it to the arrayList
-         wordBank.add(word);
+        wordBank.add(word);
     }
 
 
