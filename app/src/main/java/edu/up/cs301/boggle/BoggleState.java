@@ -141,6 +141,9 @@ public class BoggleState extends GameState {
         }
 
 
+
+
+
     public String removeLetter(String word, int[][] selectedLetters) {
 
 
@@ -173,6 +176,74 @@ public class BoggleState extends GameState {
         }
         return false;
 
+    }
+
+
+
+
+    public Boolean canRemove(int curLetterRow, int curLetterCol,
+                             int lastLetterRow, int lastLetterCol) {
+
+        if (curLetterRow == lastLetterRow  && curLetterCol == lastLetterCol) {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+
+    }
+
+    public String addLetter(String word, int[][] selectedLetters, int curLetterRow, int curLetterCol, String letter) {
+
+
+        int i = 0;
+        while (i != 4) {
+            i++;
+        }
+
+        if (word.length() == 0) {
+            word = letter;
+
+            selectedLetters[0][0] = curLetterRow;
+            selectedLetters[0][1] = curLetterCol;
+        }
+        else if (word.length() > 0 ) {
+            word = word.concat(letter);
+
+            selectedLetters[i][0] = curLetterRow;
+            selectedLetters[i][1] = curLetterCol;
+
+
+        }
+
+        return word;
+
+    }
+
+    public Boolean canAdd(int [][] selectedLetters, int curLetterRow, int curLetterCol,
+                          int lastLetterRow, int lastLetterCol) {
+
+        boolean isSelected = false;
+
+        for (int i = 0; i < 16; i++) {
+            if (selectedLetters[i][0] == curLetterRow && selectedLetters[i][1] == curLetterCol) {
+                isSelected = true;
+            }
+        }
+
+
+        if (isSelected == true) {
+            return false;
+        }
+        else if (isCurrentAdjacentToLast
+                (lastLetterRow, lastLetterCol, curLetterRow, curLetterCol) == 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 
@@ -226,7 +297,10 @@ public class BoggleState extends GameState {
         //Copies the rotated board to the existing board
         gameBoard = tmp;
     }
-   public int isCurrentAdjacentToLast(int lastLetterRow,
+
+
+    //checks if the desired tile is adjacent to the last tile selected
+    public int isCurrentAdjacentToLast(int lastLetterRow,
                                        int lastLetterCol, int curLetterRow, int curLetterCol) {
 
 

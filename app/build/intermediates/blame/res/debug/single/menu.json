@@ -1,18 +1,22 @@
 [
     {
-        "merged": "C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\game_main.xml",
-        "source": "C:\\FrameworkBoggle\\app\\src\\main\\res\\menu\\game_main.xml"
+        "merged": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/app/build/intermediates/res/merged/debug/menu/game_main.xml",
+        "source": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/app/src/main/res/menu/game_main.xml"
     },
     {
-        "merged": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\game_main.xml",
-        "source": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\C:\\FrameworkBoggle\\app\\src\\main\\res\\menu\\game_main.xml"
+        "merged": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\Users\\charlesrayner\\Documents\\School\\CS301\\HW4\\Boggle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\game_main.xml",
+        "source": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\Users\\charlesrayner\\Documents\\School\\CS301\\HW4\\Boggle\\app\\src\\main\\res\\menu\\game_main.xml"
     },
     {
-        "merged": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\game_main.xml",
-        "source": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\src\\main\\res\\menu\\game_main.xml"
+        "merged": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\game_main.xml",
+        "source": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\C:\\FrameworkBoggle\\app\\src\\main\\res\\menu\\game_main.xml"
     },
     {
-        "merged": "C:\\Users\\charlesrayner\\Documents\\School\\CS301\\HW4\\Boggle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\game_main.xml",
-        "source": "C:\\Users\\charlesrayner\\Documents\\School\\CS301\\HW4\\Boggle\\app\\src\\main\\res\\menu\\game_main.xml"
+        "merged": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\game_main.xml",
+        "source": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\FrameworkBoggle\\app\\src\\main\\res\\menu\\game_main.xml"
+    },
+    {
+        "merged": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\menu\\game_main.xml",
+        "source": "/Users/charlesrayner/Documents/School/CS301/HW4/Boggle/C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\src\\main\\res\\menu\\game_main.xml"
     }
 ]

@@ -1,14 +1,12 @@
 package edu.up.cs301.boggle;
 
-import java.io.File;
-import java.util.regex.Pattern;
-import junit.framework.Assert;
+import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import java.io.File;
+
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
 
 /**
  * Created by Jacob on 3/15/2016.
@@ -36,6 +34,11 @@ public class BoggleStateTest {
             selectedLetters[i][0] = 4;
         }
 
+
+
+
+
+
         String word1 = ("hello");
         word1 = state.removeLetter(word1, selectedLetters);
         assertEquals(word1, "hell");
@@ -47,6 +50,22 @@ public class BoggleStateTest {
         String word3 = ("h");
         word3 = state.removeLetter(word2, selectedLetters);
         assertEquals(word3, "");
+
+        String word4 = ("hi");
+
+        //represents a letter selected at 0, 0
+        selectedLetters[0][0] = 0;
+        selectedLetters[0][1] = 0;
+
+        //represents a letter selected at 1, 0
+        selectedLetters[1][0] = 1;
+        selectedLetters[1][1] = 0;
+
+        word4 = state.removeLetter(word4, selectedLetters);
+
+        assertEquals(selectedLetters[1][0], 4);
+
+
 
     }
 
@@ -151,5 +170,61 @@ public class BoggleStateTest {
 
         assertEquals(state.isCurrentAdjacentToLast(0, 1, 0, 0), 1);
         assertEquals(state.isCurrentAdjacentToLast(1, 1, 1, 1), 0);
+    }
+
+    @Test
+    public void testAddLetter() throws Exception {
+        BoggleState state = new BoggleState();
+
+        int[][] selectedLetters = new int[16][2];
+
+        String word = "foo";
+        String letter = "b";
+
+        word = state.addLetter(word, selectedLetters, 3, 4, letter);
+
+        assertEquals(word, "foob");
+
+        word = "";
+        letter = "a";
+
+        word = state.addLetter(word, selectedLetters, 3, 4, letter);
+
+        assertEquals(word, "a");
+
+
+    }
+
+    @Test
+    public void testCanAdd() throws Exception {
+        BoggleState state = new BoggleState();
+
+        int[][] selectedLetters = new int[16][2];
+        boolean trueOrFalse = state.canAdd(selectedLetters, 3, 3, 3, 3);
+        assertEquals(trueOrFalse, false);
+
+
+        selectedLetters[0][0] = 1;
+        selectedLetters[0][1] = 2;
+
+        trueOrFalse = state.canAdd(selectedLetters, 1, 2, 3, 3);
+        assertEquals(trueOrFalse, false);
+
+
+
+    }
+
+    @Test
+    public void testCanRemove() throws Exception {
+        BoggleState state = new BoggleState();
+
+
+        boolean trueOrFalse = state.canRemove(3, 3, 3, 3);
+        assertEquals(trueOrFalse, true);
+
+        trueOrFalse = state.canRemove(3, 3, 3, 4);
+        assertEquals(trueOrFalse, false);
+
+
     }
 }
