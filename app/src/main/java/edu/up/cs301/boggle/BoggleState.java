@@ -15,6 +15,10 @@ import edu.up.cs301.game.infoMsg.GameState;
  * @author Michael Waitt
  * @author Jacob Kirby
  * @version March 2016
+ *
+ * This is our Game State class. This is where all the methods are for Boggle to run.
+ * The methods that we implemented and are testing are wordLength, Remove Letter, findFile,
+ * inDictionary, wordAvailable, update Score, rotate board, add to wordbank
  */
 public class BoggleState extends GameState {
 
@@ -120,12 +124,9 @@ public class BoggleState extends GameState {
      *
      * @param word
      * @return
-     *
      * determines if the word is more then 3 letters, which means its playable
      */
-
-
-        public boolean wordLength (String word){
+    public boolean wordLength (String word){
             if (word.length() < 3) {
                 return false;
             } else {
@@ -133,50 +134,16 @@ public class BoggleState extends GameState {
             }
         }
 
-
-    public String removeLetter(String word) {
-
-
-        if ((word != null) && (word.length() > 0)) {
-
-            word = word.substring(0, word.length() - 1);
-
-
-        }
-        return word;
-    }
-
-
-
-
     /**
      *
-     * @param dir
-     * @param target
+     * @param word
      * @return
-     *
-     * This method finds a specific file. We use it to find our dictionary file.
-     * We might not end up using this file but we made it just in case
      */
-    public File findFile(File dir, String target) {
-        File[] fileList = dir.listFiles(); //array of files in a directory
-        //loops through files and determines if they are a directory or a file
-        for (File file : fileList) {
-            if (file.isDirectory()) {
-                File result = findFile(file, target); //recursive method
-                if (result != null) {
-                    return result;
-                }
-            } else {
-                if (file.isFile()) {
-                    if (file.getName().equals(target)) {
-                        return file;
-                    }
-
-                }
-            }
+    public String removeLetter(String word) {
+        if ((word != null) && (word.length() > 0)) {
+            word = word.substring(0, word.length() - 1);
         }
-        return null;
+        return word;
     }
 
     public Boolean inDictionary(String word) throws IOException {
@@ -191,20 +158,15 @@ public class BoggleState extends GameState {
 
     }
 
-    public Boolean wordAvailable() throws IOException {
-        File file1 = new File(".");
-        File file = findFile(file1, "words.txt");
-
-        if(file.getName().equals("words.txt")){
-            return true;
-        }
-        else{
-            return false;
-        }
- }
 
     /**
      * Updates the score based on the length of the word entered
+     * Words of size 3 and 4 = 1 point
+     *                     5 = 2 points
+     *                     6 = 3 points
+     *                     7 = 5 points
+     *             8 or more = 11 points
+     *
      *
      * @param word the word the user has submitted
      */
@@ -215,41 +177,25 @@ public class BoggleState extends GameState {
         if (word.length() <= 4 && word.length() >= 3) {
             score = 1;
         }
-
-        else if (word.length() == 5) {
-            score = 2;
+        else if (word.length() == 5) {score = 2;
+        }else if (word.length() == 6) {score = 3;
+        }else if (word.length() == 7) {score = 5;
+        }else if (word.length() >= 8) {score = 11;
         }
-
-        else if (word.length() == 6) {
-            score = 3;
-        }
-
-        else if (word.length() == 7) {
-            score = 5;
-        }
-
-        else if (word.length() >= 8) {
-            score = 11;
-        }
-
         //Update the player's score
         player1Score = score;
     }
-
     /**
      * Rotates the board
-     *
      * @param board two dimensional array representing the board
      */
     public void rotateBoard(String[][] board) {
         String[][] tmp = new String[4][4];
-
         for (int i = 0; i < 4; ++i) {
             for (int j = 0; j < 4; ++j) {
                 tmp[i][j] = board[4 - j - 1][i]; //Rotates the board
             }
         }
-
         /**
          * External Citation
          *
@@ -263,18 +209,7 @@ public class BoggleState extends GameState {
         //Copies the rotated board to the existing board
         gameBoard = tmp;
     }
-
-
-
-
-
-
-
-
-
-
-
-    public int isCurrentAdjacentToLast(int lastLetterRow,
+   public int isCurrentAdjacentToLast(int lastLetterRow,
                                        int lastLetterCol, int curLetterRow, int curLetterCol) {
 
 
@@ -285,119 +220,125 @@ public class BoggleState extends GameState {
             if (lastLetterCol == 0) {
                 if (curLetterRow == 0 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 1 && curLetterCol == 0) {
+                }else if (curLetterRow == 1 && curLetterCol == 0) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 1 && curLetterCol == 1) {
+                }else if (curLetterRow == 1 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }
-                else
+                }else
                 {
                     trueOrFalse = 0;
                 }
-            }
-            else if (lastLetterCol == 1) {
+            }else if (lastLetterCol == 1) {
                 if (curLetterRow == 0 && curLetterCol == 0) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 0 && curLetterCol == 2) {
+                }else if (curLetterRow == 0 && curLetterCol == 2) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 1 && curLetterCol == 0) {
+                }else if (curLetterRow == 1 && curLetterCol == 0) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 1 && curLetterCol == 1) {
+                }else if (curLetterRow == 1 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 1 && curLetterCol == 2) {
+                }else if (curLetterRow == 1 && curLetterCol == 2) {
                     trueOrFalse = 1;
-                }
-                else
+                }else
                 {
                     trueOrFalse = 0;
                 }
-            }
-            else if (lastLetterCol == 2) {
+            }else if (lastLetterCol == 2) {
                 if (curLetterRow == 0 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 0 && curLetterCol == 3) {
+                }else if (curLetterRow == 0 && curLetterCol == 3) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 1 && curLetterCol == 1) {
+                }else if (curLetterRow == 1 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 1 && curLetterCol == 2) {
+                }else if (curLetterRow == 1 && curLetterCol == 2) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 1 && curLetterCol == 3) {
+                }else if (curLetterRow == 1 && curLetterCol == 3) {
                     trueOrFalse = 1;
-                }
-                else
+                }else
                 {
                     trueOrFalse = 0;
                 }
-            }
-            else if (lastLetterCol == 3) {
+            }else if (lastLetterCol == 3) {
                 if (curLetterRow == 0 && curLetterCol == 2) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 1 && curLetterCol == 2) {
+                }else if (curLetterRow == 1 && curLetterCol == 2) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 1 && curLetterCol == 3) {
+                }else if (curLetterRow == 1 && curLetterCol == 3) {
                     trueOrFalse = 1;
-                }
-                else
+                }else
                 {
                     trueOrFalse = 0;
                 }
-            }
-            else
+            }else
             {
                 trueOrFalse = 0;
             }
-        }
-        else if (lastLetterRow == 1) {
+        }else if (lastLetterRow == 1) {
             if (lastLetterCol == 0) {
                 if (curLetterRow == 0 && curLetterCol == 0) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 0 && curLetterCol == 1) {
+                }else if (curLetterRow == 0 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 1 && curLetterCol == 1) {
+                }else if (curLetterRow == 1 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }
-                else if (curLetterRow == 2 && curLetterCol == 0) {
+                }else if (curLetterRow == 2 && curLetterCol == 0) {
                     trueOrFalse = 1;
                 }
                 else if (curLetterRow == 2 && curLetterCol == 1) {
                     trueOrFalse = 1;
-                }
-                else
+                }else
                 {
                     trueOrFalse = 0;
                 }
-            }
-            else if (lastLetterCol == 1) {
+            }else if (lastLetterCol == 1) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
+                    }else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    }else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }
-                    else
+                    }else
                     {
                         trueOrFalse = 0;
                     }
+                }else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }else if (curLetterRow == lastLetterRow + 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }else
+                {
+                    trueOrFalse = 0;
                 }
-                else if (curLetterRow == lastLetterRow) {
+            }else if (lastLetterCol == 2) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
                     }
@@ -412,328 +353,209 @@ public class BoggleState extends GameState {
                 else if (curLetterRow == lastLetterRow + 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
+                    }else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    }else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }
-                    else
+                    }else
                     {
                         trueOrFalse = 0;
                     }
-                }
-                else
+                }else
                 {
                     trueOrFalse = 0;
                 }
-            }
-            else if (lastLetterCol == 2) {
+            }else if (lastLetterCol == 3) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
+                    }else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
-                        trueOrFalse = 1;
-                    }
-                    else
+                    }else
                     {
                         trueOrFalse = 0;
                     }
-                }
-                else if (curLetterRow == lastLetterRow) {
+                }else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
-                        trueOrFalse = 1;
-                    }
-                    else
+                    }else
                     {
                         trueOrFalse = 0;
                     }
-                }
-                else if (curLetterRow == lastLetterRow + 1) {
+                }else if (curLetterRow == lastLetterRow + 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
+                    }else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
-                        trueOrFalse = 1;
-                    }
-                    else
+                    }else
                     {
                         trueOrFalse = 0;
                     }
-                }
-                else
+                }else
                 {
                     trueOrFalse = 0;
                 }
-            }
-            else if (lastLetterCol == 3) {
-                if (curLetterRow == lastLetterRow - 1) {
-                    if (curLetterCol == lastLetterCol - 1) {
-                        trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
-                        trueOrFalse = 1;
-                    }
-                    else
-                    {
-                        trueOrFalse = 0;
-                    }
-                }
-                else if (curLetterRow == lastLetterRow) {
-                    if (curLetterCol == lastLetterCol - 1) {
-                        trueOrFalse = 1;
-                    }
-                    else
-                    {
-                        trueOrFalse = 0;
-                    }
-                }
-                else if (curLetterRow == lastLetterRow + 1) {
-                    if (curLetterCol == lastLetterCol - 1) {
-                        trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
-                        trueOrFalse = 1;
-                    }
-                    else
-                    {
-                        trueOrFalse = 0;
-                    }
-                }
-                else
-                {
-                    trueOrFalse = 0;
-                }
-            }
-            else
+            }else
             {
                 trueOrFalse = 0;
             }
-        }
-        else if (lastLetterRow == 2) {
+        }else if (lastLetterRow == 2) {
             if (lastLetterCol == 0) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    }else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }
-                    else
+                    }else
                     {
                         trueOrFalse = 0;
                     }
-                }
-                else if (curLetterRow == lastLetterRow) {
+                }else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }
-                    else
+                    }else
                     {
                         trueOrFalse = 0;
                     }
-                }
-                else if (curLetterRow == lastLetterRow + 1) {
+                }else if (curLetterRow == lastLetterRow + 1) {
                     if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    }else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }
-                    else
+                    }else
                     {
                         trueOrFalse = 0;
                     }
                 }
-            }
-            else if (lastLetterCol == 1) {
+            }else if (lastLetterCol == 1) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
+                    }else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    }else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }
-                    else
+                    }else
                     {
                         trueOrFalse = 0;
                     }
-                }
-                else if (curLetterRow == lastLetterRow) {
+                }else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    }else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }
-                    else
+                    }else
                     {
                         trueOrFalse = 0;
                     }
-                }
-                else if (curLetterRow == lastLetterRow + 1) {
+                }else if (curLetterRow == lastLetterRow + 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
+                    }else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    }else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }
-                    else
+                    }else
                     {
                         trueOrFalse = 0;
                     }
+                }else
+                {
+                    trueOrFalse = 0;
                 }
-                else
+            }else if (lastLetterCol == 2) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }else if (curLetterRow == lastLetterRow + 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol + 1) {
+                        trueOrFalse = 1;
+                    }else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }else
+                {
+                    trueOrFalse = 0;
+                }
+            }else if (lastLetterCol == 3) {
+                if (curLetterRow == lastLetterRow - 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }else if (curLetterRow == lastLetterRow) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }else if (curLetterRow == lastLetterRow + 1) {
+                    if (curLetterCol == lastLetterCol - 1) {
+                        trueOrFalse = 1;
+                    }else if (curLetterCol == lastLetterCol) {
+                        trueOrFalse = 1;
+                    }else
+                    {
+                        trueOrFalse = 0;
+                    }
+                }else
                 {
                     trueOrFalse = 0;
                 }
             }
-            else if (lastLetterCol == 2) {
-                if (curLetterRow == lastLetterRow - 1) {
-                    if (curLetterCol == lastLetterCol - 1) {
-                        trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
-                        trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
-                        trueOrFalse = 1;
-                    }
-                    else
-                    {
-                        trueOrFalse = 0;
-                    }
-                }
-                else if (curLetterRow == lastLetterRow) {
-                    if (curLetterCol == lastLetterCol - 1) {
-                        trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
-                        trueOrFalse = 1;
-                    }
-                    else
-                    {
-                        trueOrFalse = 0;
-                    }
-                }
-                else if (curLetterRow == lastLetterRow + 1) {
-                    if (curLetterCol == lastLetterCol - 1) {
-                        trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
-                        trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
-                        trueOrFalse = 1;
-                    }
-                    else
-                    {
-                        trueOrFalse = 0;
-                    }
-                }
-                else
-                {
-                    trueOrFalse = 0;
-                }
-            }
-            else if (lastLetterCol == 3) {
-                if (curLetterRow == lastLetterRow - 1) {
-                    if (curLetterCol == lastLetterCol - 1) {
-                        trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
-                        trueOrFalse = 1;
-                    }
-                    else
-                    {
-                        trueOrFalse = 0;
-                    }
-                }
-                else if (curLetterRow == lastLetterRow) {
-                    if (curLetterCol == lastLetterCol - 1) {
-                        trueOrFalse = 1;
-                    }
-                    else
-                    {
-                        trueOrFalse = 0;
-                    }
-                }
-                else if (curLetterRow == lastLetterRow + 1) {
-                    if (curLetterCol == lastLetterCol - 1) {
-                        trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
-                        trueOrFalse = 1;
-                    }
-                    else
-                    {
-                        trueOrFalse = 0;
-                    }
-                }
-                else
-                {
-                    trueOrFalse = 0;
-                }
-            }
-        }
-        else if (lastLetterRow == 3) {
+        }else if (lastLetterRow == 3) {
             if (lastLetterCol == 0) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    }else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
+                    }else{trueOrFalse = 0;
                     }
-                    else
-                    {
-                        trueOrFalse = 0;
-                    }
-                }
-                else if (curLetterRow == lastLetterRow) {
+                }else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
+                    }else{trueOrFalse = 0;
                     }
-                    else
-                    {
-                        trueOrFalse = 0;
-                    }
-                }
-                else
-                {
-                    trueOrFalse = 0;
+                }else{trueOrFalse = 0;
                 }
 
-            }
-            else if (lastLetterCol == 1) {
+            }else if (lastLetterCol == 1) {
                 if (curLetterRow == lastLetterRow - 1) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol) {
+                    }else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
-                    }
-                    else if (curLetterCol == lastLetterCol + 1) {
+                    }else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
-                    }
-                    else
+                    }        else
                     {
                         trueOrFalse = 0;
                     }
@@ -745,14 +567,10 @@ public class BoggleState extends GameState {
                     else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
                     }
-                    else
-                    {
-                        trueOrFalse = 0;
+                    else{trueOrFalse = 0;
                     }
                 }
-                else
-                {
-                    trueOrFalse = 0;
+                else{trueOrFalse = 0;
                 }
             }
             else if (lastLetterCol == 2) {
@@ -766,9 +584,7 @@ public class BoggleState extends GameState {
                     else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
                     }
-                    else
-                    {
-                        trueOrFalse = 0;
+                    else{trueOrFalse = 0;
                     }
                 }
                 else if (curLetterRow == lastLetterRow) {
@@ -778,14 +594,10 @@ public class BoggleState extends GameState {
                     else if (curLetterCol == lastLetterCol + 1) {
                         trueOrFalse = 1;
                     }
-                    else
-                    {
-                        trueOrFalse = 0;
+                    else{trueOrFalse = 0;
                     }
                 }
-                else
-                {
-                    trueOrFalse = 0;
+                else{trueOrFalse = 0;
                 }
             }
             else if (lastLetterCol == 3) {
@@ -796,41 +608,27 @@ public class BoggleState extends GameState {
                     else if (curLetterCol == lastLetterCol) {
                         trueOrFalse = 1;
                     }
-                    else
-                    {
-                        trueOrFalse = 0;
+                    else{trueOrFalse = 0;
                     }
                 }
                 else if (curLetterRow == lastLetterRow) {
                     if (curLetterCol == lastLetterCol - 1) {
                         trueOrFalse = 1;
                     }
-                    else
-                    {
-                        trueOrFalse = 0;
+                    else{trueOrFalse = 0;
                     }
                 }
-                else
-                {
-                    trueOrFalse = 0;
+                else{trueOrFalse = 0;
                 }
             }
-            else
-            {
-                trueOrFalse = 0;
+            else{trueOrFalse = 0;
             }
         }
-        else {
-            trueOrFalse = 0;
+        else {trueOrFalse = 0;
         }
-
-
-        return trueOrFalse;
+   return trueOrFalse;
     }
-
-
     /**
-     *
      * @param word
      * Adds a sumbitted correct word to the word bank
      */
