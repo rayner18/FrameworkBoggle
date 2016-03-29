@@ -73,6 +73,7 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 		}
 		else if(action instanceof BoggleDeSelectTileAction){
 			String word = state.getCurrentWord();
+			System.out.println(BoggleHumanPlayer.buttonLetter);
 			System.out.println("remove 0: " + word);
 			word = state.addLetter(word, BoggleHumanPlayer.buttonLetter);
 			System.out.println(word+ " << THIS IS THE WORD ");

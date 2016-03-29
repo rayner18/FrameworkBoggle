@@ -346,7 +346,7 @@ public class BoggleState extends GameState {
         if(letter.equals(tile1ButtonLetter) ||
                 (letter.equals(tile5ButtonLetter))||
                 (letter.equals(tile9ButtonLetter))||
-                (letter.equals(tile11ButtonLetter))){
+                (letter.equals(tile13ButtonLetter))){
 
             return 0;
         }
