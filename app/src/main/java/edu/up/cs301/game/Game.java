@@ -30,6 +30,6 @@ public interface Game {
 	 * @param action
 	 *            the action to send
 	 */
-	public abstract void sendAction(GameAction action,String letter);
+	public abstract void sendAction(GameAction action);
 	
 }
