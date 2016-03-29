@@ -6,13 +6,13 @@ import edu.up.cs301.game.actionMsg.GameAction;
 /**
  * Created by Jacob on 3/26/2016.
  */
-public class BoggleSumbitScoreAction extends GameAction {
+public class BoggleSubmitScoreAction extends GameAction {
     /**
      * constructor for GameAction
      *
      * @param player the player who created the action
      */
-    public BoggleSumbitScoreAction(GamePlayer player) {
+    public BoggleSubmitScoreAction(GamePlayer player) {
         super(player);
     }
 }
