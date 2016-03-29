@@ -133,7 +133,7 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="G"
+                android:text="S"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
