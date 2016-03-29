@@ -166,7 +166,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile1ButtonLetter = tile1Button.getText().toString();
 				tile1ButtonPushed = true; //button is pushed
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 				tile1ButtonPushed = true; //button is pushed
 				//yourScoreNumberTextView.setText("" + state.getPlayer1Score());
 			} else if (v == tile1Button && tile1ButtonPushed) {
@@ -174,8 +174,8 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile1Button.setBackgroundResource(R.mipmap.wood1);
 				buttonLetter = tile1ButtonLetter = tile1Button.getText().toString();
 				tile1ButtonPushed = false; //the button is no longer pushed
-				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+					deSelect = new BoggleDeSelectTileAction(this);
+					game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile2Button && !tile2ButtonPushed) {
@@ -185,7 +185,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile2ButtonPushed = true; //button is pushed
 				buttonLetter = tile2ButtonLetter = tile2Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 				//yourScoreNumberTextView.setText("" + state.getPlayer1Score());
 			} else if (v == tile2Button && tile2ButtonPushed) {
@@ -194,7 +194,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile2ButtonLetter = tile2Button.getText().toString();
 				tile2ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile3Button && !tile3ButtonPushed) {
@@ -204,7 +204,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile3ButtonPushed = true; //button is pushed
 				buttonLetter = tile3ButtonLetter = tile3Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile3Button && tile3ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -212,7 +212,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile3ButtonLetter = tile3Button.getText().toString();
 				tile3ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile4Button && !tile4ButtonPushed) {
@@ -222,7 +222,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile4ButtonPushed = true; //button is pushed
 				buttonLetter = tile4ButtonLetter = tile4Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile4Button && tile4ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -230,7 +230,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile4ButtonLetter = tile4Button.getText().toString();
 				tile4ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile5Button && !tile5ButtonPushed) {
@@ -240,7 +240,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile5ButtonPushed = true; //button is pushed
 				buttonLetter = tile5ButtonLetter = tile5Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile5Button && tile5ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -248,7 +248,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile5ButtonLetter = tile5Button.getText().toString();
 				tile5ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile6Button && !tile6ButtonPushed) {
@@ -258,7 +258,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile6ButtonPushed = true; //button is pushed
 				buttonLetter = tile6ButtonLetter = tile6Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile6Button && tile6ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -266,7 +266,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile6ButtonLetter = tile6Button.getText().toString();
 				tile6ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 		if (v == tile7Button && !tile7ButtonPushed) {
@@ -276,7 +276,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 			tile7ButtonPushed = true; //button is pushed
 			buttonLetter = tile7ButtonLetter = tile7Button.getText().toString();
 			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+			game.sendAction(select,buttonLetter);
 
 		} else if (v == tile7Button && tile7ButtonPushed) {
 			//if Button pressed again, changes background back to original background
@@ -284,7 +284,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 			buttonLetter = tile7ButtonLetter = tile7Button.getText().toString();
 			tile7ButtonPushed = false; //the button is no longer pushed
 			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
+			game.sendAction(deSelect,buttonLetter);
 		}
 
 
@@ -295,7 +295,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile8ButtonPushed = true; //button is pushed
 			    buttonLetter = tile8ButtonLetter = tile8Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile8Button && tile8ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -303,7 +303,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 			    buttonLetter = tile8ButtonLetter = tile8Button.getText().toString();
 				tile8ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile9Button && !tile9ButtonPushed) {
@@ -313,7 +313,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile9ButtonPushed = true; //button is pushed
 				buttonLetter = tile9ButtonLetter = tile9Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile9Button && tile9ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -321,7 +321,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile9ButtonLetter = tile9Button.getText().toString();
 				tile9ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile10Button && !tile10ButtonPushed) {
@@ -331,7 +331,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile10ButtonPushed = true; //button is pushed
 				buttonLetter = tile10ButtonLetter = tile10Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile10Button && tile10ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -339,7 +339,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile10ButtonLetter = tile10Button.getText().toString();
 				tile10ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile11Button && !tile11ButtonPushed) {
@@ -349,7 +349,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile11ButtonPushed = true; //button is pushed
 				buttonLetter = tile11ButtonLetter = tile11Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile11Button && tile11ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -357,7 +357,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile11ButtonLetter = tile11Button.getText().toString();
 				tile11ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile12Button && !tile12ButtonPushed) {
@@ -367,7 +367,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile12ButtonPushed = true; //button is pushed
 				buttonLetter = tile12ButtonLetter = tile12Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile12Button && tile12ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -375,7 +375,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile12ButtonLetter = tile12Button.getText().toString();
 				tile12ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile13Button && !tile13ButtonPushed) {
@@ -385,7 +385,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile13ButtonPushed = true; //button is pushed
 				buttonLetter = tile13ButtonLetter = tile13Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile13Button && tile13ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -393,7 +393,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile13ButtonLetter = tile13Button.getText().toString();
 				tile13ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile14Button && !tile14ButtonPushed) {
@@ -403,7 +403,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile14ButtonPushed = true; //button is pushed
 				buttonLetter = tile14ButtonLetter = tile14Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile14Button && tile14ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -411,7 +411,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile14ButtonLetter = tile14Button.getText().toString();
 				tile14ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile15Button && !tile15ButtonPushed) {
@@ -421,7 +421,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile15ButtonPushed = true; //button is pushed
 				buttonLetter = tile15ButtonLetter = tile15Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile15Button && tile15ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -429,7 +429,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile15ButtonLetter = tile15Button.getText().toString();
 				tile15ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 
 			if (v == tile16Button && !tile16ButtonPushed) {
@@ -439,7 +439,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				tile16ButtonPushed = true; //button is pushed
 				buttonLetter = tile16ButtonLetter = tile16Button.getText().toString();
 				select = new BoggleSelectTileAction(this);
-				game.sendAction(select);
+				game.sendAction(select,buttonLetter);
 
 			} else if (v == tile16Button && tile16ButtonPushed) {
 				//if Button pressed again, changes background back to original background
@@ -447,7 +447,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 				buttonLetter = tile16ButtonLetter = tile16Button.getText().toString();
 				tile16ButtonPushed = false; //the button is no longer pushed
 				deSelect = new BoggleDeSelectTileAction(this);
-				game.sendAction(deSelect);
+				game.sendAction(deSelect,buttonLetter);
 			}
 	}
 	}

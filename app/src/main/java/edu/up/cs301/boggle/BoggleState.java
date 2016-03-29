@@ -138,11 +138,6 @@ public class BoggleState extends GameState {
         return selectedLetters;
     }
 
-    public void setSelectedLetters(int curRow, int curCol) {
-        selectedLetters[0][0] = curRow;
-        selectedLetters[0][1] = curCol;
-
-    }
     private void setSelectedLetters(int[][] selectedLetters){
         int i;
         int j;
@@ -166,11 +161,11 @@ public class BoggleState extends GameState {
         }
     }
 
+    //removes temporary letter
     public String removeLetter(String word){
         if ((word != null) && (word.length() > 0)) {
             word = word.substring(0, word.length() - 1);
             return word;
-
         }
         return null;
     }
@@ -196,8 +191,6 @@ public class BoggleState extends GameState {
                     selectedLetters[i - 1][0] = 4;
                     selectedLetters[i - 1][1] = 4;
                 }
-
-
             }
             return word;
         }
@@ -242,12 +235,10 @@ public class BoggleState extends GameState {
     public Boolean canRemove(int curLetterRow, int curLetterCol,
                              int lastLetterRow, int lastLetterCol) {
 
-        System.out.println(curLetterRow);
-        System.out.println(curLetterCol);
-        System.out.println(lastLetterRow);
-        System.out.println(lastLetterCol);
-
-
+        //System.out.println(curLetterRow);
+        //System.out.println(curLetterCol);
+        //System.out.println(lastLetterRow);
+        //System.out.println(lastLetterCol);
         if (curLetterRow == lastLetterRow && curLetterCol == lastLetterCol) {
             return true;
         } else {
@@ -370,14 +361,6 @@ public class BoggleState extends GameState {
     }
 
 
-    public int getCurLetterCol() {
-        for (int i = 0; i < 16; i++) {
-            if (selectedLetters[i][0] == 4) return selectedLetters[i][1];
-        }
-        return 4;
-    }
-
-
 
     /**
      * adds letter to word
@@ -414,6 +397,7 @@ public class BoggleState extends GameState {
         return word;
         }
 
+    //used to add temporary letters
     public String addLetter(String word, String letter){
         if (word.length() == 0) {
             word = letter;

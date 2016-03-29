@@ -46,23 +46,30 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 
 		if(action instanceof BoggleSelectTileAction){
 
-			String word = state.getCurrentWord();
+			String word = state.getCurrentWord(); //gets the current word
+			//adds a temporary letter so we can get curRow and CurCol
 			word = state.addLetter(word, BoggleHumanPlayer.buttonLetter);
-			System.out.println(word);
+			//System.out.println(word);
 			curRow = state.getCurLetterRow(word);
 			curCol = state.getCurLetterCol(word);
-
+			//checks to see if we are adding the first letter to the word, or if letters already
+			//exsist
 			if (word.length() > 1) {
+				//if there is already letters in the word, it is safe to check for lastRow and LastCol
 				lastRow = state.getLastCurLetterRow(word);
 				lastCol = state.getLastCurLetterCol(word);
 			}
 			else{
+				//if no letters in word yet, the pushed leter will become the first letter
 				state.setCurrentWord(word);
 				return true;
 			}
-
+			//checks if the curLetter is adjacent to the lastLetter
 			if(state.canAdd(state.getSelectedLetters(),curRow,curCol,lastRow,lastCol)){
+				//removes the temporary letter
 				word = state.removeLetter(word);
+				//now adds the letter again through another method that will keep track of its
+				//location and put it into SelectedLetters()
 				String finalWord = state.addLetter(word, state.getSelectedLetters(),curRow,curCol,
 						BoggleHumanPlayer.buttonLetter);
 				state.setCurrentWord(finalWord);
@@ -72,23 +79,25 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 			return false;
 		}
 		else if(action instanceof BoggleDeSelectTileAction){
-			String word = state.getCurrentWord();
-			System.out.println(BoggleHumanPlayer.buttonLetter);
-			System.out.println("remove 0: " + word);
+			String word = state.getCurrentWord(); //gets current word
+			//System.out.println(BoggleHumanPlayer.buttonLetter);
+			//System.out.println("remove 0: " + word);
+			//temporarily adds the letter to the word, so we can get the curRow and CurCol
 			word = state.addLetter(word, BoggleHumanPlayer.buttonLetter);
-			System.out.println(word+ " << THIS IS THE WORD ");
+			//System.out.println(word+ " << THIS IS THE WORD ");
 			curRow = state.getCurLetterRow(word);
 			curCol = state.getCurLetterCol(word);
 			lastRow = state.getLastCurLetterRow(word);
 			lastCol = state.getLastCurLetterCol(word);
+			//checks to see if the letter is adjacent to previous letter
 			if(state.canRemove(curRow,curCol,lastRow,lastCol)){
-				System.out.println("you are here!");
-
-
+				//System.out.println("you are here!");
+				//removes the letter we temporarily added
 				word = state.removeLetter(word,state.getSelectedLetters());
-				System.out.println("remove 1: " + word);
+				//System.out.println("remove 1: " + word);
+				//removes the actual letter we want to remove
 				word = state.removeLetter(word,state.getSelectedLetters());
-				System.out.println("remove 2: " + word);
+				//System.out.println("remove 2: " + word);
 
 
 				state.setCurrentWord(word);
