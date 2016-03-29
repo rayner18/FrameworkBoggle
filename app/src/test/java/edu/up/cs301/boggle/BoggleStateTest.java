@@ -31,14 +31,11 @@ public class BoggleStateTest {
     @Test
     public void testRemoveLetter() throws Exception {
         BoggleState state = new BoggleState();
-
         int[][] selectedLetters = new int[16][2];
-
         for (int i = 0; i < 16; i++) {
-            selectedLetters[i][0] = 4;
-            selectedLetters[i][0] = 4;
+            selectedLetters[i][0] = 4; //4 repersents null
+            selectedLetters[i][1] = 4;// 4 repersents null
         }
-
         String word1 = ("hello");
         word1 = state.removeLetter(word1, selectedLetters);
         assertEquals(word1, "hell");
@@ -86,28 +83,29 @@ public class BoggleStateTest {
     public void testUpdateScore() throws Exception {
         BoggleState state = new BoggleState();
         String longWord = "pneumonoultramicroscopicsilicovolcanoconiosis";
-        state.updateScore(longWord);
-        assertEquals(state.getPlayer1Score(), 11);
+        int score1 = state.updateScore(longWord);
+        assertEquals(score1, 11);
 
         String littleWord = "hue";
-        state.updateScore(littleWord);
-        assertEquals(state.getPlayer1Score(), 1);
+        int score2 = state.updateScore(littleWord);
+        assertEquals(score2, 1);
 
         String fourLetter = "goku";
-        state.updateScore(fourLetter);
-        assertEquals(state.getPlayer1Score(), 1);
+        int score3 = state.updateScore(fourLetter);
+        assertEquals(score3, 1);
 
         String fiveLetter = "hello";
-        state.updateScore(fiveLetter);
-        assertEquals(state.getPlayer1Score(), 2);
+        int score4 = state.updateScore(fiveLetter);
+        assertEquals(score4, 2);
 
         String sixLetter = "pizzaz";
-        state.updateScore(sixLetter);
-        assertEquals(state.getPlayer1Score(), 3);
+        int score5 = state.updateScore(sixLetter);
+        assertEquals(score5, 3);
 
         String sevenLetter = "jacuzzi";
-        state.updateScore(sevenLetter);
-        assertEquals(state.getPlayer1Score(), 5);
+        int score6 = state.updateScore(sevenLetter);
+        assertEquals(score6, 5);
+
 
         assertEquals(state.getSelectedLetters()[13][1], 4);
         assertEquals(state.getSelectedLetters()[11][0], 4);
@@ -180,15 +178,21 @@ public class BoggleStateTest {
         String word = "foo";
         String letter = "b";
 
-        word = state.addLetter(word, selectedLetters, 3, 4, letter);
+        //word = state.addLetter(word, selectedLetters, 3, 4, letter);
 
-        assertEquals(word, "foob");
+
+
+        //assertEquals(word, "foob");
 
         word = "";
-        letter = "a";
-
-        word = state.addLetter(word, selectedLetters, 3, 4, letter);
-
+        //letter = "a";
+        String letter2 = BoggleHumanPlayer.tile7ButtonLetter = "a";
+        //word = state.addLetter(word, selectedLetters, 3, 4, letter);
+        word = state.addLetter(word,letter2);
+        int curCol = state.getCurLetterCol(word);
+        int curRow = state.getCurLetterRow(word);
+        assertEquals(curCol,1);
+        assertEquals(2,curRow);
         assertEquals(word, "a");
     }
 
