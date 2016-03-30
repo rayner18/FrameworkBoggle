@@ -4,9 +4,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
 import edu.up.cs301.game.R;
@@ -22,10 +20,23 @@ import edu.up.cs301.game.infoMsg.GameInfo;
  * @version March 2016
  */
 public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, OnClickListener {
+	// the most recent game state, as given to us by the CounterLocalGame
+	private BoggleState state;
+	// the android activity that we are running
+	private GameMainActivity myActivity;
+	protected TextView yourScoreNumberTextView; //human players score
+	protected TextView letterDisplayTextView; //currentWord that is being spelled
+	protected Button submitScoreButton; //sumbit score button on the GUI
+	//buttons on the board
+	protected Button tile1Button, tile2Button, tile3Button, tile4Button, tile5Button, tile6Button,
+			tile7Button, tile8Button, tile9Button, tile10Button, tile11Button, tile12Button, tile13Button,
+			tile14Button, tile15Button, tile16Button;
+
+	//--------- PLEASE DISREGARD THE REST OF THE INSTANCE VARIABLES FOR THE HOMEWORK ----------
+	// -------- THESE VARIABLES ARE NOT SET IN STONE, JUST FOR TESTING RIGHT NOW --------------
+
 	// The TextView the displays the current counter value
-	protected TextView yourScoreNumberTextView;
-	protected TextView letterDisplayTextView;
-	protected Button submitScoreButton;
+
 	public static String buttonLetter;
 
 	public static String tile1ButtonLetter, tile2ButtonLetter, tile3ButtonLetter, tile4ButtonLetter,
@@ -33,21 +44,15 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 			tile9ButtonLetter, tile10ButtonLetter, tile11ButtonLetter, tile12ButtonLetter,
 			tile13ButtonLetter, tile14ButtonLetter, tile15ButtonLetter, tile16ButtonLetter;
 
-
-	// the most recent game state, as given to us by the CounterLocalGame
-	private BoggleState state;
-
 	public static Boolean tile1ButtonPushed, tile2ButtonPushed, tile3ButtonPushed, tile4ButtonPushed,
 			tile5ButtonPushed, tile6ButtonPushed, tile7ButtonPushed, tile8ButtonPushed,
 			tile9ButtonPushed, tile10ButtonPushed, tile11ButtonPushed, tile12ButtonPushed,
 			tile13ButtonPushed, tile14ButtonPushed, tile15ButtonPushed, tile16ButtonPushed ;
 
-	protected Button tile1Button, tile2Button, tile3Button, tile4Button, tile5Button, tile6Button,
-			tile7Button, tile8Button, tile9Button, tile10Button, tile11Button, tile12Button, tile13Button,
-			tile14Button, tile15Button, tile16Button;
 
-	// the android activity that we are running
-	private GameMainActivity myActivity;
+
+    //--------------------------------------------------------------------------------------------
+
 
 	/**
 	 * constructor
@@ -70,6 +75,11 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 			letterDisplayTextView.setText("" + state.getCurrentWord());
 		}
 	}
+
+	/**
+	 * sets up the GUI
+	 * @param activity
+	 */
 	public void setAsGui(GameMainActivity activity) {
 
 		// remember the activity
@@ -154,9 +164,15 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 		yourScoreNumberTextView = (TextView)activity.findViewById(R.id.yourScoreNumberTextView);
 		letterDisplayTextView = (TextView)activity.findViewById(R.id.letterDisplayTextView);
 	}
+
+	/**
+	 *
+	 * @param v
+	 */
 	public void onClick(View v) {
 		BoggleSelectTileAction select;
 		BoggleDeSelectTileAction deSelect;
+
 
 		if (v == tile1Button && !tile1ButtonPushed) {
 			//Sets background of button to black when pushed

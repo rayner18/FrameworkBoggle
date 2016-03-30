@@ -10,9 +10,8 @@ import edu.up.cs301.game.GameMainActivity;
 import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
 
-
 /**
- * A computer version of a Boggle Game
+ * The Smart AI
  *
  * @author Charles Rayner
  * @author Michael Waitt
@@ -25,7 +24,7 @@ public class BoggleComputerPlayer2 extends BoggleComputerPlayer1 {
 	/**
 	 * constructor
 	 *
-	 * @param name the player's name (e.g., "John")
+	 * @param name the player's name
 	 */
 	public BoggleComputerPlayer2(String name) {
 		super(name);

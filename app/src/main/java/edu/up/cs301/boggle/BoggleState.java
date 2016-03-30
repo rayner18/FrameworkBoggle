@@ -27,8 +27,10 @@ public class BoggleState extends GameState {
     private ArrayList<String> wordBank; //the current words in the word bank
     private String currentWord; //the current word the player is making
     private boolean timer; //true if the timer is running, false if timer has stopped
-    private String[][] gameBoard = new String[4][4];
-    private int[][] selectedLetters = new int[16][2]; //re
+    private String[][] gameBoard = new String[4][4]; //a 2D array of all letters on board
+    private int[][] selectedLetters = new int[16][2]; //tells where the selected letters are located
+    private String[] buttonLetter = new String[16];  //array of the letters available
+    private boolean[] buttonPushed = new boolean[16]; //array that tells which button have been pushed
 
 
     /**
@@ -41,15 +43,21 @@ public class BoggleState extends GameState {
         currentWord = "";
         timer = true;
 
+        int n;
+        int z;
+        for(z = 0; z < 16; z++){
+            buttonLetter[z] = "";
+        }
+        for(n = 0; n < 16; n++){
+            buttonPushed[n] = false;
+        }
+
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 gameBoard[i][j] = ("a");
             }
         }
-        for (int k = 0; k < 16; k++) {
-            selectedLetters[k][0] = 0;
-            selectedLetters[k][1] = 0;
-        }
+
 
         wordBank = new ArrayList<String>();
     }
@@ -72,6 +80,15 @@ public class BoggleState extends GameState {
         for (int k = 0; k < 16; k++) {
             selectedLetters[k][0] = state.selectedLetters[k][0];
             selectedLetters[k][1] = state.selectedLetters[k][1];
+        }
+
+        int n;
+        int z;
+        for(z = 0; z < 16; z++){
+            buttonLetter[z] = state.buttonLetter[z];
+        }
+        for(n = 0; n < 16; n++){
+            buttonPushed[n] = state.buttonPushed[n];
         }
         wordBank = state.wordBank;
         timer = state.timer;
@@ -148,6 +165,19 @@ public class BoggleState extends GameState {
         }
     }
 
+    public boolean[] getButtonPushed(){
+        return buttonPushed;
+    }
+    public void setButtonPushed(boolean[] buttonPushed){
+        this.buttonPushed = buttonPushed;
+    }
+    public String[] getButtonLetter(){
+        return buttonLetter;
+    }
+    public void setButtonLetter(String[] buttonLetter){
+        this.buttonLetter = buttonLetter;
+    }
+
     /**
      * Determines if the word is more then 3 letters, which means its playable
      *
@@ -161,7 +191,11 @@ public class BoggleState extends GameState {
         }
     }
 
-    //removes temporary letter
+    /**
+     * removes temporary letter
+     * @param word
+     * @return
+     */
     public String removeLetter(String word){
         if ((word != null) && (word.length() > 0)) {
             word = word.substring(0, word.length() - 1);
@@ -246,6 +280,11 @@ public class BoggleState extends GameState {
         }
     }
 
+    /**
+     * finds current letter Column
+     * @param word
+     * @return
+     */
     public int getCurLetterCol(String word) {
 
         if((word.substring(word.length()-1).equals(tile1ButtonLetter)) ||
@@ -274,6 +313,11 @@ public class BoggleState extends GameState {
         return 4;
     }
 
+    /**
+     * finds current letter Row
+     * @param word
+     * @return
+     */
     public int getCurLetterRow(String word) {
 
         if((word.substring(word.length()-1).equals(tile1ButtonLetter)) ||
@@ -301,6 +345,12 @@ public class BoggleState extends GameState {
         }
         return 4;
     }
+
+    /**
+     * finds last letter Col
+     * @param word
+     * @return
+     */
     public int getLastCurLetterCol(String word) {
             System.out.println("--------" + word.charAt(word.length()-2));
             String letter = ""+word.charAt(word.length() - 2);
@@ -331,6 +381,11 @@ public class BoggleState extends GameState {
         return 4;
     }
 
+    /**
+     * finds last letter Row
+     * @param word
+     * @return
+     */
     public int getLastCurLetterRow(String word) {
         String letter = ""+word.charAt(word.length() - 2);
 
@@ -397,7 +452,12 @@ public class BoggleState extends GameState {
         return word;
         }
 
-    //used to add temporary letters
+    /**
+     * adds temporary letter
+     * @param word
+     * @param letter
+     * @return
+     */
     public String addLetter(String word, String letter){
         if (word.length() == 0) {
             word = letter;
@@ -441,11 +501,9 @@ public class BoggleState extends GameState {
 
 
         if (isSelected) {
-
             return false;
         } else if (isCurrentAdjacentToLast
                 (lastLetterRow, lastLetterCol, curLetterRow, curLetterCol) == 1) {
-
             return true;
         } else {
             return false;
