@@ -57,6 +57,12 @@ public class BoggleState extends GameState {
                 gameBoard[i][j] = ("a");
             }
         }
+        for (int k = 0; k < 16; k++) {
+            selectedLetters[k][0] = 0;
+            selectedLetters[k][1] = 0;
+        }
+
+
 
 
         wordBank = new ArrayList<String>();
@@ -490,6 +496,7 @@ public class BoggleState extends GameState {
     public Boolean canAdd(int[][] selectedLetters, int curLetterRow, int curLetterCol,
                           int lastLetterRow, int lastLetterCol) {
 
+        
         boolean isSelected = false;
         setSelectedLetters(selectedLetters);
         for (int i = 0; i < 16; i++) {
