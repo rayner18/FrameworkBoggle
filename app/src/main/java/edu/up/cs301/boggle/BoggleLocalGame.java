@@ -18,6 +18,9 @@ import edu.up.cs301.game.infoMsg.GameState;
 public class BoggleLocalGame extends LocalGame implements BoggleGame {
 	private BoggleState state;
 
+	/**
+	 * Constuctor for Local Class
+	 */
 	public BoggleLocalGame(){
 		state = new BoggleState();
 	}
@@ -37,6 +40,13 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 		return null;
 	}
 
+	/**
+	 * Where all the actions are configured
+	 * @param action
+	 * 			The move that the player has sent to the game
+	 *
+	 * @return
+	 */
 	@Override
 	protected boolean makeMove(GameAction action) {
 

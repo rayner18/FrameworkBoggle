@@ -4,7 +4,10 @@ import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.actionMsg.GameAction;
 
 /**
- * Created by Jacob on 3/26/2016.
+ @author Charles Rayner
+  * @author Michael Waitt
+ * @author Jacob Kirby
+ * Action class for selecting a tile
  */
 public class BoggleSelectTileAction extends GameAction {
 
@@ -13,7 +16,7 @@ public class BoggleSelectTileAction extends GameAction {
 
 
     /**
-     * constructor for GameAction
+     * constructor for BoggleSelectTileAction
      *
      * @param player the player who created the action
      */

@@ -5,7 +5,7 @@ import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.util.Tickable;
 
 /**
- * A computer-version of a boggle-player.
+ * The Dumb AI
  * 
  * @author Charles Rayner
  * @author Michael Waitt
@@ -18,7 +18,7 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
 	/**
 	 * constructor
 	 *
-	 * @param name the player's name (e.g., "John")
+	 * @param name the player's name
 	 */
 	public BoggleComputerPlayer1(String name) {
 		super(name);

@@ -4,11 +4,14 @@ import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.actionMsg.GameAction;
 
 /**
- * Created by Jacob on 3/26/2016.
+ *@author Charles Rayner
+ * @author Michael Waitt
+ * @author Jacob Kirby
+ * Action class for removing a letter or deselecting a letter
  */
 public class BoggleDeSelectTileAction extends GameAction {
     /**
-     * constructor for GameAction
+     * constructor for BoggleDeSelectTileAction
      *
      * @param player the player who created the action
      */
