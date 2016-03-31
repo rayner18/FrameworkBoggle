@@ -133,7 +133,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="S"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -143,7 +142,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="F"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -153,7 +151,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="P"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -163,7 +160,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="E"
                 android:textAlignment="center"
                 android:textSize="65sp" />
         </LinearLayout>
@@ -180,7 +176,6 @@
                 android:layout_margin="1dp"
                 android:adjustViewBounds="false"
                 android:background="@mipmap/wood1"
-                android:text="O"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -191,7 +186,6 @@
                 android:layout_gravity="left"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="K"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -201,7 +195,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="U"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -211,7 +204,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="G"
                 android:textAlignment="center"
                 android:textSize="65sp" />
         </LinearLayout>
@@ -227,7 +219,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="R"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -238,7 +229,6 @@
                 android:layout_gravity="left|bottom"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="A"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -248,7 +238,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="T"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -258,7 +247,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="Qu"
                 android:textAlignment="center"
                 android:textSize="65sp" />
         </LinearLayout>
@@ -274,7 +262,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="L"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -284,7 +271,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="Y"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -294,7 +280,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="N"
                 android:textAlignment="center"
                 android:textSize="65sp" />
 
@@ -304,7 +289,6 @@
                 android:layout_height="100dp"
                 android:layout_margin="1dp"
                 android:background="@mipmap/wood1"
-                android:text="B"
                 android:textAlignment="center"
                 android:textSize="65sp" />
         </LinearLayout>
@@ -328,7 +312,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="0.55"
-            android:text="Letters after they enter "
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="26sp"

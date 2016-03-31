@@ -16,8 +16,7 @@ public class BoggleMoveAction extends GameAction {
 	// to satisfy the serializable interface
 	private static final long serialVersionUID = 28062013L;
 
-	//whether this move is a plus (true) or minus (false)
-	private boolean isPlus;
+
 	
 	/**
 	 * Constructor for the BoggleMoveAction class.
@@ -29,17 +28,8 @@ public class BoggleMoveAction extends GameAction {
 	 */
 	public BoggleMoveAction(GamePlayer player, boolean isPlus) {
 		super(player);
-		this.isPlus = isPlus;
+
 	}
 	
-	/**
-	 * getter method, to tell whether the move is a "plus"
-	 * 
-	 * @return
-	 * 		a boolean that tells whether this move is a "plus"
-	 */
-	public boolean isPlus() {
-		return isPlus;
-		
-	}
+
 }//class BoggleMoveAction

@@ -5,12 +5,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
 import edu.up.cs301.game.R;
-import edu.up.cs301.game.actionMsg.GameAction;
 import edu.up.cs301.game.infoMsg.GameInfo;
 
 /**
@@ -68,6 +65,23 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 			state = (BoggleState)info;
 			yourScoreNumberTextView.setText("" + state.getPlayer1Score());
 			letterDisplayTextView.setText("" + state.getCurrentWord());
+            String[][] gameBoard = state.getGameBoard();
+            tile1Button.setText(state.getCurLetterFromBoard(0, 0, gameBoard));
+            tile2Button.setText(state.getCurLetterFromBoard(1, 0, gameBoard));
+            tile3Button.setText(state.getCurLetterFromBoard(2, 0, gameBoard));
+            tile4Button.setText(state.getCurLetterFromBoard(3, 0, gameBoard));
+            tile5Button.setText(state.getCurLetterFromBoard(0, 1, gameBoard));
+            tile6Button.setText(state.getCurLetterFromBoard(1, 1, gameBoard));
+            tile7Button.setText(state.getCurLetterFromBoard(2, 1, gameBoard));
+            tile8Button.setText(state.getCurLetterFromBoard(3, 1, gameBoard));
+            tile9Button.setText(state.getCurLetterFromBoard(0, 2, gameBoard));
+            tile10Button.setText(state.getCurLetterFromBoard(1, 2, gameBoard));
+            tile11Button.setText(state.getCurLetterFromBoard(2, 2, gameBoard));
+            tile12Button.setText(state.getCurLetterFromBoard(3, 2, gameBoard));
+            tile13Button.setText(state.getCurLetterFromBoard(0, 3, gameBoard));
+            tile14Button.setText(state.getCurLetterFromBoard(1, 3, gameBoard));
+            tile15Button.setText(state.getCurLetterFromBoard(2, 3, gameBoard));
+            tile16Button.setText(state.getCurLetterFromBoard(3, 3, gameBoard));
 		}
 	}
 	public void setAsGui(GameMainActivity activity) {
@@ -80,8 +94,19 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 
 		// if we have a game state, "simulate" that we have just received
 		// the state from the game so that the GUI values are updated
-		if (state != null) {
+
+        String[][] gameBoard = new String[4][4];
+        for (int i = 0; i < 3; i++) {
+            gameBoard[i][0] = "a";
+            gameBoard[i][1] = "a";
+            gameBoard[i][2] = "a";
+            gameBoard[i][3] = "a";
+        }
+
+
+        if (state != null) {
 			receiveInfo(state);
+            gameBoard = state.getGameBoard();
 		}
 		tile1ButtonPushed = false;
 		tile2ButtonPushed = false;
@@ -100,53 +125,70 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 		tile15ButtonPushed = false;
 		tile16ButtonPushed = false;
 
+
 		tile1Button = (Button)activity.findViewById(R.id.tile1Button);
 		tile1Button.setOnClickListener(this);
+
 
 		tile2Button = (Button)activity.findViewById(R.id.tile2Button);
 		tile2Button.setOnClickListener(this);
 
+
 		tile3Button = (Button)activity.findViewById(R.id.tile3Button);
 		tile3Button.setOnClickListener(this);
+
 
 		tile4Button = (Button)activity.findViewById(R.id.tile4Button);
 		tile4Button.setOnClickListener(this);
 
+
 		tile5Button = (Button)activity.findViewById(R.id.tile5Button);
 		tile5Button.setOnClickListener(this);
+
 
 		tile6Button = (Button)activity.findViewById(R.id.tile6Button);
 		tile6Button.setOnClickListener(this);
 
+
 		tile7Button = (Button)activity.findViewById(R.id.tile7Button);
 		tile7Button.setOnClickListener(this);
+
 
 		tile8Button = (Button)activity.findViewById(R.id.tile8Button);
 		tile8Button.setOnClickListener(this);
 
+
 		tile9Button = (Button)activity.findViewById(R.id.tile9Button);
 		tile9Button.setOnClickListener(this);
+
 
 		tile10Button = (Button)activity.findViewById(R.id.tile10Button);
 		tile10Button.setOnClickListener(this);
 
+
 		tile11Button = (Button)activity.findViewById(R.id.tile11Button);
 		tile11Button.setOnClickListener(this);
+
 
 		tile12Button = (Button)activity.findViewById(R.id.tile12Button);
 		tile12Button.setOnClickListener(this);
 
+
 		tile13Button = (Button)activity.findViewById(R.id.tile13Button);
 		tile13Button.setOnClickListener(this);
+
 
 		tile14Button = (Button)activity.findViewById(R.id.tile14Button);
 		tile14Button.setOnClickListener(this);
 
+
 		tile15Button = (Button)activity.findViewById(R.id.tile15Button);
 		tile15Button.setOnClickListener(this);
 
+
 		tile16Button = (Button)activity.findViewById(R.id.tile16Button);
 		tile16Button.setOnClickListener(this);
+
 
 		submitScoreButton = (Button)activity.findViewById(R.id.submitScoreButton);
 		submitScoreButton.setOnClickListener(this);
@@ -154,303 +196,491 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 		yourScoreNumberTextView = (TextView)activity.findViewById(R.id.yourScoreNumberTextView);
 		letterDisplayTextView = (TextView)activity.findViewById(R.id.letterDisplayTextView);
 	}
+
+
+
 	public void onClick(View v) {
 		BoggleSelectTileAction select;
+
+
+
+
 		BoggleDeSelectTileAction deSelect;
 
+
+		int[][] selectedLetters = state.getSelectedLetters();
+		int lastLetterRow = state.getLastLetterRow(selectedLetters);
+		int lastLetterCol = state.getLastLetterCol(selectedLetters);
+        String currentWord = state.getCurrentWord();
+
+        String[][] gameBoard = state.getGameBoard();
+
+
+
 		if (v == tile1Button && !tile1ButtonPushed) {
-			//Sets background of button to black when pushed
+            int curLetterRow = 0;
+            int curLetterCol = 0;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-			tile1Button.setBackgroundColor(0x86090404);
+            if (canAdd) {
+                tile1Button.setBackgroundColor(0x86090404);
+                tile1ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
-			buttonLetter = tile1ButtonLetter = tile1Button.getText().toString();
-			tile1ButtonPushed = true; //button is pushed
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
-			tile1ButtonPushed = true; //button is pushed
-			//yourScoreNumberTextView.setText("" + state.getPlayer1Score());
 		} else if (v == tile1Button && tile1ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile1Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile1ButtonLetter = tile1Button.getText().toString();
-			tile1ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 0;
+            int curLetterCol = 0;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile2Button && !tile2ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile1Button.setBackgroundResource(R.mipmap.wood1);
+                tile1ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile2Button.setBackgroundColor(0x86090404);
-			tile2ButtonPushed = true; //button is pushed
-			buttonLetter = tile2ButtonLetter = tile2Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile2Button && !tile2ButtonPushed) {
+            int curLetterRow = 1;
+            int curLetterCol = 0;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-			//yourScoreNumberTextView.setText("" + state.getPlayer1Score());
+            if (canAdd) {
+                tile2Button.setBackgroundColor(0x86090404);
+                tile2ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
+
 		} else if (v == tile2Button && tile2ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile2Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile2ButtonLetter = tile2Button.getText().toString();
-			tile2ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 1;
+            int curLetterCol = 0;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile3Button && !tile3ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile2Button.setBackgroundResource(R.mipmap.wood1);
+                tile2ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile3Button.setBackgroundColor(0x86090404);
-			tile3ButtonPushed = true; //button is pushed
-			buttonLetter = tile3ButtonLetter = tile3Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile3Button && !tile3ButtonPushed) {
+            int curLetterRow = 2;
+            int curLetterCol = 0;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile3Button.setBackgroundColor(0x86090404);
+                tile3ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile3Button && tile3ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile3Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile3ButtonLetter = tile3Button.getText().toString();
-			tile3ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 2;
+            int curLetterCol = 0;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile4Button && !tile4ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile3Button.setBackgroundResource(R.mipmap.wood1);
+                tile3ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile4Button.setBackgroundColor(0x86090404);
-			tile4ButtonPushed = true; //button is pushed
-			buttonLetter = tile4ButtonLetter = tile4Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+
+		} else if (v == tile4Button && !tile4ButtonPushed) {
+            int curLetterRow = 3;
+            int curLetterCol = 0;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile4Button.setBackgroundColor(0x86090404);
+                tile4ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile4Button && tile4ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile4Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile4ButtonLetter = tile4Button.getText().toString();
-			tile4ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 3;
+            int curLetterCol = 0;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile5Button && !tile5ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile4Button.setBackgroundResource(R.mipmap.wood1);
+                tile4ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile5Button.setBackgroundColor(0x86090404);
-			tile5ButtonPushed = true; //button is pushed
-			buttonLetter = tile5ButtonLetter = tile5Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile5Button && !tile5ButtonPushed) {
+            int curLetterRow = 0;
+            int curLetterCol = 1;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile5Button.setBackgroundColor(0x86090404);
+                tile5ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile5Button && tile5ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile5Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile5ButtonLetter = tile5Button.getText().toString();
-			tile5ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 0;
+            int curLetterCol = 1;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile6Button && !tile6ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile5Button.setBackgroundResource(R.mipmap.wood1);
+                tile5ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile6Button.setBackgroundColor(0x86090404);
-			tile6ButtonPushed = true; //button is pushed
-			buttonLetter = tile6ButtonLetter = tile6Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile6Button && !tile6ButtonPushed) {
+            int curLetterRow = 1;
+            int curLetterCol = 1;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile6Button.setBackgroundColor(0x86090404);
+                tile6ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile6Button && tile6ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile6Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile6ButtonLetter = tile6Button.getText().toString();
-			tile6ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 1;
+            int curLetterCol = 1;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile7Button && !tile7ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile6Button.setBackgroundResource(R.mipmap.wood1);
+                tile6ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile7Button.setBackgroundColor(0x86090404);
-			tile7ButtonPushed = true; //button is pushed
-			buttonLetter = tile7ButtonLetter = tile7Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile7Button && !tile7ButtonPushed) {
+            int curLetterRow = 2;
+            int curLetterCol = 1;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile7Button.setBackgroundColor(0x86090404);
+                tile7ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile7Button && tile7ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile7Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile7ButtonLetter = tile7Button.getText().toString();
-			tile7ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 2;
+            int curLetterCol = 1;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
+            if (canRemove) {
+                tile7Button.setBackgroundResource(R.mipmap.wood1);
+                tile7ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-		if (v == tile8Button && !tile8ButtonPushed) {
-			//Sets background of button to black when pushed
+		} else if (v == tile8Button && !tile8ButtonPushed) {
+            int curLetterRow = 3;
+            int curLetterCol = 1;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-			tile8Button.setBackgroundColor(0x86090404);
-			tile8ButtonPushed = true; //button is pushed
-			buttonLetter = tile8ButtonLetter = tile8Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+            if (canAdd) {
+                tile8Button.setBackgroundColor(0x86090404);
+                tile8ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile8Button && tile8ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile8Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile8ButtonLetter = tile8Button.getText().toString();
-			tile8ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 3;
+            int curLetterCol = 1;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile9Button && !tile9ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile8Button.setBackgroundResource(R.mipmap.wood1);
+                tile8ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile9Button.setBackgroundColor(0x86090404);
-			tile9ButtonPushed = true; //button is pushed
-			buttonLetter = tile9ButtonLetter = tile9Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile9Button && !tile9ButtonPushed) {
+            int curLetterRow = 0;
+            int curLetterCol = 2;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile9Button.setBackgroundColor(0x86090404);
+                tile9ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile9Button && tile9ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile9Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile9ButtonLetter = tile9Button.getText().toString();
-			tile9ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 0;
+            int curLetterCol = 2;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile10Button && !tile10ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile9Button.setBackgroundResource(R.mipmap.wood1);
+                tile9ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile10Button.setBackgroundColor(0x86090404);
-			tile10ButtonPushed = true; //button is pushed
-			buttonLetter = tile10ButtonLetter = tile10Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile10Button && !tile10ButtonPushed) {
+            int curLetterRow = 1;
+            int curLetterCol = 2;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile10Button.setBackgroundColor(0x86090404);
+                tile10ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile10Button && tile10ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile10Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile10ButtonLetter = tile10Button.getText().toString();
-			tile10ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 1;
+            int curLetterCol = 2;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile11Button && !tile11ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile10Button.setBackgroundResource(R.mipmap.wood1);
+                tile10ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile11Button.setBackgroundColor(0x86090404);
-			tile11ButtonPushed = true; //button is pushed
-			buttonLetter = tile11ButtonLetter = tile11Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile11Button && !tile11ButtonPushed) {
+            int curLetterRow = 2;
+            int curLetterCol = 2;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile11Button.setBackgroundColor(0x86090404);
+                tile11ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile11Button && tile11ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile11Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile11ButtonLetter = tile11Button.getText().toString();
-			tile11ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 2;
+            int curLetterCol = 2;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile12Button && !tile12ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile11Button.setBackgroundResource(R.mipmap.wood1);
+                tile11ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile12Button.setBackgroundColor(0x86090404);
-			tile12ButtonPushed = true; //button is pushed
-			buttonLetter = tile12ButtonLetter = tile12Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile12Button && !tile12ButtonPushed) {
+            int curLetterRow = 3;
+            int curLetterCol = 2;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile12Button.setBackgroundColor(0x86090404);
+                tile12ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile12Button && tile12ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile12Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile12ButtonLetter = tile12Button.getText().toString();
-			tile12ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 3;
+            int curLetterCol = 2;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile13Button && !tile13ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile12Button.setBackgroundResource(R.mipmap.wood1);
+                tile12ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile13Button.setBackgroundColor(0x86090404);
-			tile13ButtonPushed = true; //button is pushed
-			buttonLetter = tile13ButtonLetter = tile13Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile13Button && !tile13ButtonPushed) {
+            int curLetterRow = 0;
+            int curLetterCol = 3;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if(canAdd) {
+                tile13Button.setBackgroundColor(0x86090404);
+                tile13ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile13Button && tile13ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile13Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile13ButtonLetter = tile13Button.getText().toString();
-			tile13ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 0;
+            int curLetterCol = 3;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile14Button && !tile14ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile13Button.setBackgroundResource(R.mipmap.wood1);
+                tile13ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile14Button.setBackgroundColor(0x86090404);
-			tile14ButtonPushed = true; //button is pushed
-			buttonLetter = tile14ButtonLetter = tile14Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile14Button && !tile14ButtonPushed) {
+            int curLetterRow = 1;
+            int curLetterCol = 3;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile14Button.setBackgroundColor(0x86090404);
+                tile14ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile14Button && tile14ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile14Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile14ButtonLetter = tile14Button.getText().toString();
-			tile14ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 1;
+            int curLetterCol = 3;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile15Button && !tile15ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile14Button.setBackgroundResource(R.mipmap.wood1);
+                tile14ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile15Button.setBackgroundColor(0x86090404);
-			tile15ButtonPushed = true; //button is pushed
-			buttonLetter = tile15ButtonLetter = tile15Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile15Button && !tile15ButtonPushed) {
+            int curLetterRow = 2;
+            int curLetterCol = 3;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile15Button.setBackgroundColor(0x86090404);
+                tile15ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile15Button && tile15ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile15Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile15ButtonLetter = tile15Button.getText().toString();
-			tile15ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
-		}
+            int curLetterRow = 2;
+            int curLetterCol = 3;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-		if (v == tile16Button && !tile16ButtonPushed) {
-			//Sets background of button to black when pushed
+            if (canRemove) {
+                tile15Button.setBackgroundResource(R.mipmap.wood1);
+                tile15ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 
-			tile16Button.setBackgroundColor(0x86090404);
-			tile16ButtonPushed = true; //button is pushed
-			buttonLetter = tile16ButtonLetter = tile16Button.getText().toString();
-			select = new BoggleSelectTileAction(this);
-			game.sendAction(select);
+		} else if (v == tile16Button && !tile16ButtonPushed) {
+            int curLetterRow = 3;
+            int curLetterCol = 3;
+            boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canAdd) {
+                tile16Button.setBackgroundColor(0x86090404);
+                tile16ButtonPushed = true;
+                select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
+                game.sendAction(select);
+                state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
+            }
 
 		} else if (v == tile16Button && tile16ButtonPushed) {
-			//if Button pressed again, changes background back to original background
-			tile16Button.setBackgroundResource(R.mipmap.wood1);
-			buttonLetter = tile16ButtonLetter = tile16Button.getText().toString();
-			tile16ButtonPushed = false; //the button is no longer pushed
-			deSelect = new BoggleDeSelectTileAction(this);
-			game.sendAction(deSelect);
+            int curLetterRow = 3;
+            int curLetterCol = 3;
+            boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
+            state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
+
+            if (canRemove) {
+                tile16Button.setBackgroundResource(R.mipmap.wood1);
+                tile16ButtonPushed = false;
+                deSelect = new BoggleDeSelectTileAction(this);
+                game.sendAction(deSelect);
+                state.removeLetter(currentWord, selectedLetters);
+            }
 		}
+
+
+
+
+
+
+
 	}
+
+
+
+
 }
+
+
 // class BoggleHumanPlayer
 
 

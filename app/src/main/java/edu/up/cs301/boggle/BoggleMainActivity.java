@@ -1,5 +1,7 @@
 package edu.up.cs301.boggle;
 
+import android.os.Bundle;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -90,5 +92,7 @@ public class BoggleMainActivity extends GameMainActivity {
 	public LocalGame createLocalGame() {
 		return new BoggleLocalGame();
 	}
+
+
 
 }
