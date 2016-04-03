@@ -41,7 +41,9 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 
 	protected Button tile1Button, tile2Button, tile3Button, tile4Button, tile5Button, tile6Button,
 			tile7Button, tile8Button, tile9Button, tile10Button, tile11Button, tile12Button, tile13Button,
-			tile14Button, tile15Button, tile16Button;
+			tile14Button, tile15Button, tile16Button, rotateButton;
+
+    protected TextView timer;
 
 	// the android activity that we are running
 	private GameMainActivity myActivity;
@@ -82,6 +84,12 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
             tile14Button.setText(state.getCurLetterFromBoard(1, 3, gameBoard));
             tile15Button.setText(state.getCurLetterFromBoard(2, 3, gameBoard));
             tile16Button.setText(state.getCurLetterFromBoard(3, 3, gameBoard));
+
+
+            String time = (""+(state.getSecondsLeft()));
+            StringBuilder str = new StringBuilder(time);
+            str.insert(1, ":");
+            timer.setText(str);
 		}
 	}
 	public void setAsGui(GameMainActivity activity) {
@@ -195,17 +203,20 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 
 		yourScoreNumberTextView = (TextView)activity.findViewById(R.id.yourScoreNumberTextView);
 		letterDisplayTextView = (TextView)activity.findViewById(R.id.letterDisplayTextView);
+
+        rotateButton = (Button)activity.findViewById(R.id.rotateBackwardButton);
+        rotateButton.setOnClickListener(this);
+
+        timer = (TextView)activity.findViewById(R.id.timerText);
 	}
 
 
 
 	public void onClick(View v) {
 		BoggleSelectTileAction select;
-
-
-
-
-		BoggleDeSelectTileAction deSelect;
+        BoggleDeSelectTileAction deSelect;
+        BoggleSubmitScoreAction submitScore;
+        BoggleRotateAction rotateAction;
 
 
 		int[][] selectedLetters = state.getSelectedLetters();
@@ -668,12 +679,80 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 		}
 
 
+        if(v == submitScoreButton){
+
+
+
+            submitScore = new BoggleSubmitScoreAction(this,state.getCurrentWord());
+            game.sendAction(submitScore);
+            int i;
+            for(i = 0;i<20;i++){
+                selectedLetters[i][0] = 4;
+                selectedLetters[i][1] = 4;
+
+            }
+            state.setSelectedLetters(selectedLetters);
+            tile1Button.setBackgroundResource(R.mipmap.wood1);
+            tile2Button.setBackgroundResource(R.mipmap.wood1);
+            tile3Button.setBackgroundResource(R.mipmap.wood1);
+            tile4Button.setBackgroundResource(R.mipmap.wood1);
+            tile5Button.setBackgroundResource(R.mipmap.wood1);
+            tile6Button.setBackgroundResource(R.mipmap.wood1);
+            tile7Button.setBackgroundResource(R.mipmap.wood1);
+            tile8Button.setBackgroundResource(R.mipmap.wood1);
+            tile9Button.setBackgroundResource(R.mipmap.wood1);
+            tile10Button.setBackgroundResource(R.mipmap.wood1);
+            tile11Button.setBackgroundResource(R.mipmap.wood1);
+            tile12Button.setBackgroundResource(R.mipmap.wood1);
+            tile13Button.setBackgroundResource(R.mipmap.wood1);
+            tile14Button.setBackgroundResource(R.mipmap.wood1);
+            tile15Button.setBackgroundResource(R.mipmap.wood1);
+            tile16Button.setBackgroundResource(R.mipmap.wood1);
+
+            tile1ButtonPushed = false;
+            tile2ButtonPushed = false;
+            tile3ButtonPushed = false;
+            tile4ButtonPushed = false;
+            tile5ButtonPushed = false;
+            tile6ButtonPushed = false;
+            tile7ButtonPushed = false;
+            tile8ButtonPushed = false;
+            tile9ButtonPushed = false;
+            tile10ButtonPushed = false;
+            tile11ButtonPushed = false;
+            tile12ButtonPushed = false;
+            tile13ButtonPushed = false;
+            tile14ButtonPushed = false;
+            tile15ButtonPushed = false;
+            tile16ButtonPushed = false;
 
 
 
 
 
-	}
+
+
+
+
+
+
+
+        }
+
+
+        if(v == rotateButton) {
+            rotateAction = new BoggleRotateAction(this);
+            game.sendAction(rotateAction);
+        }
+
+
+
+
+
+
+
+
+    }
 
 
 

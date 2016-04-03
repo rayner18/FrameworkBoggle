@@ -1,12 +1,17 @@
 package edu.up.cs301.boggle;
 
 
+import android.app.Activity;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
 
 import edu.up.cs301.game.infoMsg.GameState;
@@ -34,6 +39,8 @@ public class BoggleState extends GameState {
     private String curLetter;
     private int curLetterRow;
     private int curLetterCol;
+    private int secondsLeft;
+    private static HashSet<String> dictionary = null;
 
 
 
@@ -54,6 +61,7 @@ public class BoggleState extends GameState {
         curLetter = "a";
         curLetterRow = 4;
         curLetterCol = 4;
+        secondsLeft = 300;
 
         Random r1 = new Random();
         char c1 = (char)(r1.nextInt(26) + 'A');
@@ -206,6 +214,7 @@ public class BoggleState extends GameState {
         curLetter = state.curLetter;
         curLetterRow = state.curLetterRow;
         curLetterCol = state.curLetterCol;
+        secondsLeft = state.secondsLeft;
 
         gameBoard = Arrays.copyOf(state.gameBoard, state.gameBoard.length);
 
@@ -289,6 +298,10 @@ public class BoggleState extends GameState {
         this.selectedLetters = Arrays.copyOf(selectedLetters, selectedLetters.length);
     }
 
+    public int getSecondsLeft() {return secondsLeft;}
+
+    public void setSecondsLeft(int seconds) {this.secondsLeft = seconds;}
+
 
     /**
      * Determines if the word is more then 3 letters, which means its playable
@@ -336,13 +349,35 @@ public class BoggleState extends GameState {
      */
     public Boolean inDictionary(String word) throws IOException {
         BufferedReader reader;
-        reader = new BufferedReader(new InputStreamReader(new FileInputStream("./src/main/res/raw/words.txt")));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (word.equals(line))
-                return true;
+
+        word = word.toLowerCase();
+
+        if(dictionary == null){
+            dictionary = new HashSet<String>();
+            int count = 0;
+            try {
+                Activity myActivity = BoggleMainActivity.activity;
+                InputStream ins = myActivity.getResources().
+                        openRawResource(myActivity.getResources().getIdentifier("words","raw", myActivity.getPackageName()));
+                reader = new BufferedReader(new InputStreamReader(ins));
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    dictionary.add(line.toLowerCase());
+                    count++;
+                }
+                Log.i("count is ", "" + count);
+            }
+            catch(IOException e){
+                System.out.println("ERRORRRRRRRR");
+                return false;
+            }
+
         }
-        return false;
+        Log.i("looking up", word);
+        boolean rtnVal = dictionary.contains(word);
+        Log.i("lookup found: ", ""+rtnVal);
+        return rtnVal;
 
         /**
          * External Citation

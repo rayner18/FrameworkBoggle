@@ -22,9 +22,9 @@ import edu.up.cs301.game.GamePlayer;
  * @version July 2013
  */
 public abstract class GameAction implements Serializable {
-	
-	// to support the Serializable interface
-	private static final long serialVersionUID = 30672013L;
+
+    // to support the Serializable interface
+    private static final long serialVersionUID = 30672013L;
 
     // the player who generated the request
     private GamePlayer player;
@@ -48,14 +48,14 @@ public abstract class GameAction implements Serializable {
     public GamePlayer getPlayer() {
         return player;
     }
-    
+
     /** Resets the source of the action. The intent is that it be used only
      *  by ProxyGame and ProxyPlayer.
-     *  
+     *
      * @param p
      * 		the new player to which the action is to be associated
      */
     public void setPlayer(GamePlayer p) {
-    	this.player = p;
+        this.player = p;
     }
 }
