@@ -61,7 +61,7 @@ public class BoggleState extends GameState {
         curLetter = "a";
         curLetterRow = 4;
         curLetterCol = 4;
-        secondsLeft = 300;
+        secondsLeft = 180;
 
         Random r1 = new Random();
         char c1 = (char)(r1.nextInt(26) + 'A');

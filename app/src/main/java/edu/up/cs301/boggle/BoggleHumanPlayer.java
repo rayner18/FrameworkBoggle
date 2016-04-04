@@ -1,9 +1,12 @@
 package edu.up.cs301.boggle;
 
+import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
@@ -19,54 +22,54 @@ import edu.up.cs301.game.infoMsg.GameInfo;
  * @version March 2016
  */
 public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, OnClickListener {
-	// The TextView the displays the current counter value
-	protected TextView yourScoreNumberTextView;
-	protected TextView letterDisplayTextView;
-	protected Button submitScoreButton;
-	public static String buttonLetter;
+    // The TextView the displays the current counter value
+    protected TextView yourScoreNumberTextView;
+    protected TextView letterDisplayTextView;
+    protected Button submitScoreButton;
+    public static String buttonLetter;
 
-	public static String tile1ButtonLetter, tile2ButtonLetter, tile3ButtonLetter, tile4ButtonLetter,
-			tile5ButtonLetter, tile6ButtonLetter, tile7ButtonLetter, tile8ButtonLetter,
-			tile9ButtonLetter, tile10ButtonLetter, tile11ButtonLetter, tile12ButtonLetter,
-			tile13ButtonLetter, tile14ButtonLetter, tile15ButtonLetter, tile16ButtonLetter;
+    public static String tile1ButtonLetter, tile2ButtonLetter, tile3ButtonLetter, tile4ButtonLetter,
+            tile5ButtonLetter, tile6ButtonLetter, tile7ButtonLetter, tile8ButtonLetter,
+            tile9ButtonLetter, tile10ButtonLetter, tile11ButtonLetter, tile12ButtonLetter,
+            tile13ButtonLetter, tile14ButtonLetter, tile15ButtonLetter, tile16ButtonLetter;
 
 
-	// the most recent game state, as given to us by the CounterLocalGame
-	private BoggleState state;
+    // the most recent game state, as given to us by the CounterLocalGame
+    private BoggleState state;
 
-	public static Boolean tile1ButtonPushed, tile2ButtonPushed, tile3ButtonPushed, tile4ButtonPushed,
-			tile5ButtonPushed, tile6ButtonPushed, tile7ButtonPushed, tile8ButtonPushed,
-			tile9ButtonPushed, tile10ButtonPushed, tile11ButtonPushed, tile12ButtonPushed,
-			tile13ButtonPushed, tile14ButtonPushed, tile15ButtonPushed, tile16ButtonPushed ;
+    public static Boolean tile1ButtonPushed, tile2ButtonPushed, tile3ButtonPushed, tile4ButtonPushed,
+            tile5ButtonPushed, tile6ButtonPushed, tile7ButtonPushed, tile8ButtonPushed,
+            tile9ButtonPushed, tile10ButtonPushed, tile11ButtonPushed, tile12ButtonPushed,
+            tile13ButtonPushed, tile14ButtonPushed, tile15ButtonPushed, tile16ButtonPushed;
 
-	protected Button tile1Button, tile2Button, tile3Button, tile4Button, tile5Button, tile6Button,
-			tile7Button, tile8Button, tile9Button, tile10Button, tile11Button, tile12Button, tile13Button,
-			tile14Button, tile15Button, tile16Button, rotateButton;
+    protected Button tile1Button, tile2Button, tile3Button, tile4Button, tile5Button, tile6Button,
+            tile7Button, tile8Button, tile9Button, tile10Button, tile11Button, tile12Button, tile13Button,
+            tile14Button, tile15Button, tile16Button, rotateButton;
 
     protected TextView timer;
 
-	// the android activity that we are running
-	private GameMainActivity myActivity;
+    // the android activity that we are running
+    private GameMainActivity myActivity;
 
-	/**
-	 * constructor
-	 *
-	 * @param name
-	 *     the name of a player
-	 */
-	public BoggleHumanPlayer(String name) {
-		super(name);
-	}
-	public View getTopView() {
-		return myActivity.findViewById(R.id.AppLayout);
-	}
+    /**
+     * constructor
+     *
+     * @param name the name of a player
+     */
+    public BoggleHumanPlayer(String name) {
+        super(name);
+    }
 
-	@Override
-	public void receiveInfo(GameInfo info) {
-		if(info instanceof BoggleState){
-			state = (BoggleState)info;
-			yourScoreNumberTextView.setText("" + state.getPlayer1Score());
-			letterDisplayTextView.setText("" + state.getCurrentWord());
+    public View getTopView() {
+        return myActivity.findViewById(R.id.AppLayout);
+    }
+
+    @Override
+    public void receiveInfo(GameInfo info) {
+        if (info instanceof BoggleState) {
+            state = (BoggleState) info;
+            yourScoreNumberTextView.setText("" + state.getPlayer1Score());
+            letterDisplayTextView.setText("" + state.getCurrentWord());
             String[][] gameBoard = state.getGameBoard();
             tile1Button.setText(state.getCurLetterFromBoard(0, 0, gameBoard));
             tile2Button.setText(state.getCurLetterFromBoard(1, 0, gameBoard));
@@ -86,22 +89,27 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
             tile16Button.setText(state.getCurLetterFromBoard(3, 3, gameBoard));
 
 
-            String time = (""+(state.getSecondsLeft()));
-            StringBuilder str = new StringBuilder(time);
-            str.insert(1, ":");
-            timer.setText(str);
-		}
-	}
-	public void setAsGui(GameMainActivity activity) {
+            String seconds = ""+state.getSecondsLeft() % 60;
+            String minutes = ""+state.getSecondsLeft() / 60;
+            if (seconds.length()<2) {
+                seconds = "0"+seconds;
+            }
 
-		// remember the activity
-		myActivity = activity;
+            String time = (minutes + ":" + seconds);
+            timer.setText(time);
+        }
+    }
 
-		// Load the layout resource for our GUI
-		activity.setContentView(R.layout.boggle_human_player);
+    public void setAsGui(GameMainActivity activity) {
 
-		// if we have a game state, "simulate" that we have just received
-		// the state from the game so that the GUI values are updated
+        // remember the activity
+        myActivity = activity;
+
+        // Load the layout resource for our GUI
+        activity.setContentView(R.layout.boggle_human_player);
+
+        // if we have a game state, "simulate" that we have just received
+        // the state from the game so that the GUI values are updated
 
         String[][] gameBoard = new String[4][4];
         for (int i = 0; i < 3; i++) {
@@ -113,122 +121,120 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 
 
         if (state != null) {
-			receiveInfo(state);
+            receiveInfo(state);
             gameBoard = state.getGameBoard();
-		}
-		tile1ButtonPushed = false;
-		tile2ButtonPushed = false;
-		tile3ButtonPushed = false;
-		tile4ButtonPushed = false;
-		tile5ButtonPushed = false;
-		tile6ButtonPushed = false;
-		tile7ButtonPushed = false;
-		tile8ButtonPushed = false;
-		tile9ButtonPushed = false;
-		tile10ButtonPushed = false;
-		tile11ButtonPushed = false;
-		tile12ButtonPushed = false;
-		tile13ButtonPushed = false;
-		tile14ButtonPushed = false;
-		tile15ButtonPushed = false;
-		tile16ButtonPushed = false;
+        }
+        tile1ButtonPushed = false;
+        tile2ButtonPushed = false;
+        tile3ButtonPushed = false;
+        tile4ButtonPushed = false;
+        tile5ButtonPushed = false;
+        tile6ButtonPushed = false;
+        tile7ButtonPushed = false;
+        tile8ButtonPushed = false;
+        tile9ButtonPushed = false;
+        tile10ButtonPushed = false;
+        tile11ButtonPushed = false;
+        tile12ButtonPushed = false;
+        tile13ButtonPushed = false;
+        tile14ButtonPushed = false;
+        tile15ButtonPushed = false;
+        tile16ButtonPushed = false;
 
 
-		tile1Button = (Button)activity.findViewById(R.id.tile1Button);
-		tile1Button.setOnClickListener(this);
+        tile1Button = (Button) activity.findViewById(R.id.tile1Button);
+        tile1Button.setOnClickListener(this);
 
 
-		tile2Button = (Button)activity.findViewById(R.id.tile2Button);
-		tile2Button.setOnClickListener(this);
+        tile2Button = (Button) activity.findViewById(R.id.tile2Button);
+        tile2Button.setOnClickListener(this);
 
 
-		tile3Button = (Button)activity.findViewById(R.id.tile3Button);
-		tile3Button.setOnClickListener(this);
+        tile3Button = (Button) activity.findViewById(R.id.tile3Button);
+        tile3Button.setOnClickListener(this);
 
 
-		tile4Button = (Button)activity.findViewById(R.id.tile4Button);
-		tile4Button.setOnClickListener(this);
+        tile4Button = (Button) activity.findViewById(R.id.tile4Button);
+        tile4Button.setOnClickListener(this);
 
 
-		tile5Button = (Button)activity.findViewById(R.id.tile5Button);
-		tile5Button.setOnClickListener(this);
+        tile5Button = (Button) activity.findViewById(R.id.tile5Button);
+        tile5Button.setOnClickListener(this);
 
 
-		tile6Button = (Button)activity.findViewById(R.id.tile6Button);
-		tile6Button.setOnClickListener(this);
+        tile6Button = (Button) activity.findViewById(R.id.tile6Button);
+        tile6Button.setOnClickListener(this);
 
 
-		tile7Button = (Button)activity.findViewById(R.id.tile7Button);
-		tile7Button.setOnClickListener(this);
+        tile7Button = (Button) activity.findViewById(R.id.tile7Button);
+        tile7Button.setOnClickListener(this);
 
 
-		tile8Button = (Button)activity.findViewById(R.id.tile8Button);
-		tile8Button.setOnClickListener(this);
+        tile8Button = (Button) activity.findViewById(R.id.tile8Button);
+        tile8Button.setOnClickListener(this);
 
 
-		tile9Button = (Button)activity.findViewById(R.id.tile9Button);
-		tile9Button.setOnClickListener(this);
+        tile9Button = (Button) activity.findViewById(R.id.tile9Button);
+        tile9Button.setOnClickListener(this);
 
 
-		tile10Button = (Button)activity.findViewById(R.id.tile10Button);
-		tile10Button.setOnClickListener(this);
+        tile10Button = (Button) activity.findViewById(R.id.tile10Button);
+        tile10Button.setOnClickListener(this);
 
 
-		tile11Button = (Button)activity.findViewById(R.id.tile11Button);
-		tile11Button.setOnClickListener(this);
+        tile11Button = (Button) activity.findViewById(R.id.tile11Button);
+        tile11Button.setOnClickListener(this);
 
 
-		tile12Button = (Button)activity.findViewById(R.id.tile12Button);
-		tile12Button.setOnClickListener(this);
+        tile12Button = (Button) activity.findViewById(R.id.tile12Button);
+        tile12Button.setOnClickListener(this);
 
 
-		tile13Button = (Button)activity.findViewById(R.id.tile13Button);
-		tile13Button.setOnClickListener(this);
+        tile13Button = (Button) activity.findViewById(R.id.tile13Button);
+        tile13Button.setOnClickListener(this);
 
 
-		tile14Button = (Button)activity.findViewById(R.id.tile14Button);
-		tile14Button.setOnClickListener(this);
+        tile14Button = (Button) activity.findViewById(R.id.tile14Button);
+        tile14Button.setOnClickListener(this);
 
 
-		tile15Button = (Button)activity.findViewById(R.id.tile15Button);
-		tile15Button.setOnClickListener(this);
+        tile15Button = (Button) activity.findViewById(R.id.tile15Button);
+        tile15Button.setOnClickListener(this);
 
 
-		tile16Button = (Button)activity.findViewById(R.id.tile16Button);
-		tile16Button.setOnClickListener(this);
+        tile16Button = (Button) activity.findViewById(R.id.tile16Button);
+        tile16Button.setOnClickListener(this);
 
 
-		submitScoreButton = (Button)activity.findViewById(R.id.submitScoreButton);
-		submitScoreButton.setOnClickListener(this);
+        submitScoreButton = (Button) activity.findViewById(R.id.submitScoreButton);
+        submitScoreButton.setOnClickListener(this);
 
-		yourScoreNumberTextView = (TextView)activity.findViewById(R.id.yourScoreNumberTextView);
-		letterDisplayTextView = (TextView)activity.findViewById(R.id.letterDisplayTextView);
+        yourScoreNumberTextView = (TextView) activity.findViewById(R.id.yourScoreNumberTextView);
+        letterDisplayTextView = (TextView) activity.findViewById(R.id.letterDisplayTextView);
 
-        rotateButton = (Button)activity.findViewById(R.id.rotateBackwardButton);
+        rotateButton = (Button) activity.findViewById(R.id.rotateBackwardButton);
         rotateButton.setOnClickListener(this);
 
-        timer = (TextView)activity.findViewById(R.id.timerText);
-	}
+        timer = (TextView) activity.findViewById(R.id.timerText);
+    }
 
 
-
-	public void onClick(View v) {
-		BoggleSelectTileAction select;
+    public void onClick(View v) {
+        BoggleSelectTileAction select;
         BoggleDeSelectTileAction deSelect;
         BoggleSubmitScoreAction submitScore;
         BoggleRotateAction rotateAction;
 
 
-		int[][] selectedLetters = state.getSelectedLetters();
-		int lastLetterRow = state.getLastLetterRow(selectedLetters);
-		int lastLetterCol = state.getLastLetterCol(selectedLetters);
+        int[][] selectedLetters = state.getSelectedLetters();
+        int lastLetterRow = state.getLastLetterRow(selectedLetters);
+        int lastLetterCol = state.getLastLetterCol(selectedLetters);
         String currentWord = state.getCurrentWord();
 
         String[][] gameBoard = state.getGameBoard();
 
 
-
-		if (v == tile1Button && !tile1ButtonPushed) {
+        if (v == tile1Button && !tile1ButtonPushed) {
             int curLetterRow = 0;
             int curLetterCol = 0;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -242,7 +248,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile1Button && tile1ButtonPushed) {
+        } else if (v == tile1Button && tile1ButtonPushed) {
             int curLetterRow = 0;
             int curLetterCol = 0;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -256,7 +262,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile2Button && !tile2ButtonPushed) {
+        } else if (v == tile2Button && !tile2ButtonPushed) {
             int curLetterRow = 1;
             int curLetterCol = 0;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -270,7 +276,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile2Button && tile2ButtonPushed) {
+        } else if (v == tile2Button && tile2ButtonPushed) {
             int curLetterRow = 1;
             int curLetterCol = 0;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -284,7 +290,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile3Button && !tile3ButtonPushed) {
+        } else if (v == tile3Button && !tile3ButtonPushed) {
             int curLetterRow = 2;
             int curLetterCol = 0;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -298,7 +304,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile3Button && tile3ButtonPushed) {
+        } else if (v == tile3Button && tile3ButtonPushed) {
             int curLetterRow = 2;
             int curLetterCol = 0;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -313,7 +319,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
             }
 
 
-		} else if (v == tile4Button && !tile4ButtonPushed) {
+        } else if (v == tile4Button && !tile4ButtonPushed) {
             int curLetterRow = 3;
             int curLetterCol = 0;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -327,7 +333,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile4Button && tile4ButtonPushed) {
+        } else if (v == tile4Button && tile4ButtonPushed) {
             int curLetterRow = 3;
             int curLetterCol = 0;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -341,7 +347,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile5Button && !tile5ButtonPushed) {
+        } else if (v == tile5Button && !tile5ButtonPushed) {
             int curLetterRow = 0;
             int curLetterCol = 1;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -355,7 +361,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile5Button && tile5ButtonPushed) {
+        } else if (v == tile5Button && tile5ButtonPushed) {
             int curLetterRow = 0;
             int curLetterCol = 1;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -369,7 +375,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile6Button && !tile6ButtonPushed) {
+        } else if (v == tile6Button && !tile6ButtonPushed) {
             int curLetterRow = 1;
             int curLetterCol = 1;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -383,7 +389,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile6Button && tile6ButtonPushed) {
+        } else if (v == tile6Button && tile6ButtonPushed) {
             int curLetterRow = 1;
             int curLetterCol = 1;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -397,7 +403,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile7Button && !tile7ButtonPushed) {
+        } else if (v == tile7Button && !tile7ButtonPushed) {
             int curLetterRow = 2;
             int curLetterCol = 1;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -411,7 +417,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile7Button && tile7ButtonPushed) {
+        } else if (v == tile7Button && tile7ButtonPushed) {
             int curLetterRow = 2;
             int curLetterCol = 1;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -425,7 +431,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile8Button && !tile8ButtonPushed) {
+        } else if (v == tile8Button && !tile8ButtonPushed) {
             int curLetterRow = 3;
             int curLetterCol = 1;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -439,7 +445,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile8Button && tile8ButtonPushed) {
+        } else if (v == tile8Button && tile8ButtonPushed) {
             int curLetterRow = 3;
             int curLetterCol = 1;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -453,7 +459,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile9Button && !tile9ButtonPushed) {
+        } else if (v == tile9Button && !tile9ButtonPushed) {
             int curLetterRow = 0;
             int curLetterCol = 2;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -467,7 +473,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile9Button && tile9ButtonPushed) {
+        } else if (v == tile9Button && tile9ButtonPushed) {
             int curLetterRow = 0;
             int curLetterCol = 2;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -481,7 +487,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile10Button && !tile10ButtonPushed) {
+        } else if (v == tile10Button && !tile10ButtonPushed) {
             int curLetterRow = 1;
             int curLetterCol = 2;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -495,7 +501,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile10Button && tile10ButtonPushed) {
+        } else if (v == tile10Button && tile10ButtonPushed) {
             int curLetterRow = 1;
             int curLetterCol = 2;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -509,7 +515,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile11Button && !tile11ButtonPushed) {
+        } else if (v == tile11Button && !tile11ButtonPushed) {
             int curLetterRow = 2;
             int curLetterCol = 2;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -523,7 +529,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile11Button && tile11ButtonPushed) {
+        } else if (v == tile11Button && tile11ButtonPushed) {
             int curLetterRow = 2;
             int curLetterCol = 2;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -537,7 +543,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile12Button && !tile12ButtonPushed) {
+        } else if (v == tile12Button && !tile12ButtonPushed) {
             int curLetterRow = 3;
             int curLetterCol = 2;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -551,7 +557,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile12Button && tile12ButtonPushed) {
+        } else if (v == tile12Button && tile12ButtonPushed) {
             int curLetterRow = 3;
             int curLetterCol = 2;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -565,13 +571,13 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile13Button && !tile13ButtonPushed) {
+        } else if (v == tile13Button && !tile13ButtonPushed) {
             int curLetterRow = 0;
             int curLetterCol = 3;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
             state.setCurLetter(state.getCurLetterFromBoard(curLetterRow, curLetterCol, gameBoard));
 
-            if(canAdd) {
+            if (canAdd) {
                 tile13Button.setBackgroundColor(0x86090404);
                 tile13ButtonPushed = true;
                 select = new BoggleSelectTileAction(this, curLetterRow, curLetterCol);
@@ -579,7 +585,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile13Button && tile13ButtonPushed) {
+        } else if (v == tile13Button && tile13ButtonPushed) {
             int curLetterRow = 0;
             int curLetterCol = 3;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -593,7 +599,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile14Button && !tile14ButtonPushed) {
+        } else if (v == tile14Button && !tile14ButtonPushed) {
             int curLetterRow = 1;
             int curLetterCol = 3;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -607,7 +613,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile14Button && tile14ButtonPushed) {
+        } else if (v == tile14Button && tile14ButtonPushed) {
             int curLetterRow = 1;
             int curLetterCol = 3;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -621,7 +627,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile15Button && !tile15ButtonPushed) {
+        } else if (v == tile15Button && !tile15ButtonPushed) {
             int curLetterRow = 2;
             int curLetterCol = 3;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -635,7 +641,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile15Button && tile15ButtonPushed) {
+        } else if (v == tile15Button && tile15ButtonPushed) {
             int curLetterRow = 2;
             int curLetterCol = 3;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -649,7 +655,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.removeLetter(currentWord, selectedLetters);
             }
 
-		} else if (v == tile16Button && !tile16ButtonPushed) {
+        } else if (v == tile16Button && !tile16ButtonPushed) {
             int curLetterRow = 3;
             int curLetterCol = 3;
             boolean canAdd = state.canAdd(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -663,7 +669,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 state.addLetter(currentWord, selectedLetters, curLetterRow, curLetterCol, gameBoard[curLetterRow][curLetterCol]);
             }
 
-		} else if (v == tile16Button && tile16ButtonPushed) {
+        } else if (v == tile16Button && tile16ButtonPushed) {
             int curLetterRow = 3;
             int curLetterCol = 3;
             boolean canRemove = state.canRemove(selectedLetters, curLetterRow, curLetterCol, lastLetterRow, lastLetterCol);
@@ -676,17 +682,14 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
                 game.sendAction(deSelect);
                 state.removeLetter(currentWord, selectedLetters);
             }
-		}
+        }
 
 
-        if(v == submitScoreButton){
-
-
-
-            submitScore = new BoggleSubmitScoreAction(this,state.getCurrentWord());
+        if (v == submitScoreButton) {
+            submitScore = new BoggleSubmitScoreAction(this, state.getCurrentWord());
             game.sendAction(submitScore);
             int i;
-            for(i = 0;i<20;i++){
+            for (i = 0; i < 20; i++) {
                 selectedLetters[i][0] = 4;
                 selectedLetters[i][1] = 4;
 
@@ -725,36 +728,23 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
             tile14ButtonPushed = false;
             tile15ButtonPushed = false;
             tile16ButtonPushed = false;
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
 
-        if(v == rotateButton) {
-            rotateAction = new BoggleRotateAction(this);
-            game.sendAction(rotateAction);
+        if (v == rotateButton) {
+            if (!tile1ButtonPushed && !tile2ButtonPushed && !tile3ButtonPushed && !tile4ButtonPushed &&
+                    !tile5ButtonPushed && !tile6ButtonPushed && !tile7ButtonPushed && !tile8ButtonPushed &&
+                            !tile9ButtonPushed && !tile10ButtonPushed && !tile11ButtonPushed && !tile12ButtonPushed &&
+                                    !tile13ButtonPushed && !tile14ButtonPushed && !tile15ButtonPushed &&
+                                            !tile16ButtonPushed) {
+                rotateAction = new BoggleRotateAction(this);
+                game.sendAction(rotateAction);
+            }
+            else {
+                Toast.makeText(myActivity, "Invalid Move!", Toast.LENGTH_SHORT).show();
+            }
         }
-
-
-
-
-
-
-
-
     }
-
-
 
 
 }
