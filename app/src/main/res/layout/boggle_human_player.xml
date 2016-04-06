@@ -35,7 +35,7 @@
             android:id="@+id/yourScoreNumberTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2.00"
+            android:layout_weight="5.29"
             android:text="00"
             android:textAlignment="textStart"
             android:textColor="#100c00"
