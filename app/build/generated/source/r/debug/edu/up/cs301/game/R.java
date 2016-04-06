@@ -33,7 +33,6 @@ public final class R {
         public static final int AppLayout=0x7f0b0000;
         public static final int BottemLayout=0x7f0b001b;
         public static final int MainLayout=0x7f0b0009;
-        public static final int Timer=0x7f0b001f;
         public static final int TitleLayout=0x7f0b0007;
         public static final int TopLayout=0x7f0b0001;
         public static final int addPlayerButton=0x7f0b002e;
@@ -57,7 +56,7 @@ public final class R {
         public static final int remoteNameEditText=0x7f0b0034;
         public static final int remoteTabLayout=0x7f0b0027;
         public static final int remote_player_spinner=0x7f0b0035;
-        public static final int rotateBackwardButton=0x7f0b001e;
+        public static final int rotateBackwardButton=0x7f0b001f;
         public static final int saveConfigButton=0x7f0b0021;
         public static final int serverIPCode=0x7f0b0036;
         public static final int submitScoreButton=0x7f0b001c;
@@ -84,6 +83,7 @@ public final class R {
         public static final int tile9Button=0x7f0b0012;
         public static final int timerText=0x7f0b0004;
         public static final int titleTextView=0x7f0b0008;
+        public static final int usedWordsTextView=0x7f0b001e;
         public static final int wordBankScrollView=0x7f0b001d;
         public static final int yourScoreNumberTextView=0x7f0b0003;
         public static final int yourScoreTextView=0x7f0b0002;

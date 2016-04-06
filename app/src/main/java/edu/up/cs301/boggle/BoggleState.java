@@ -655,13 +655,6 @@ public class BoggleState extends GameState {
         //Adds it to the arrayList
         wordBank.add(word);
     }
-
-
-
-
-
-
-
 }
 
 

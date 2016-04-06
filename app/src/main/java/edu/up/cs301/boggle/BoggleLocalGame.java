@@ -1,6 +1,7 @@
 package edu.up.cs301.boggle;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -91,18 +92,23 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 		else if(action instanceof BoggleSubmitScoreAction){
 			BoggleSubmitScoreAction BSSA = (BoggleSubmitScoreAction)action;
 			String word = BSSA.currentWord;
-			if(state.wordLength(word)&& state.inDictionary(word)){
-				int score = state.updateScore(word);
-				System.out.println("THE SCORE IS:" + score);
-				state.setPlayer1Score(state.getPlayer1Score() + score);
-				state.addToWordBank(word);
-				state.setCurrentWord("");
-				return true;
+			if(state.wordLength(word)&&state.inDictionary(word)){
+				if (state.getWordBank().contains(word)) {
 
+				}
+				else {
+					int score = state.updateScore(word);
+					System.out.println("THE SCORE IS:" + score);
+					state.setPlayer1Score(state.getPlayer1Score() + score);
+					state.addToWordBank(word);
+					state.setCurrentWord("");
+					return true;
+				}
 			}
 			state.setCurrentWord("");
 			return true;
 		}
+
 		else if (action instanceof BoggleRotateAction) {
 			state.rotateBoard(state.getGameBoard());
 			return true;

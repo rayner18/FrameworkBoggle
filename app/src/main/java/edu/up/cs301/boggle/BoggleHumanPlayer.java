@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
 import edu.up.cs301.game.R;
@@ -23,9 +26,7 @@ import edu.up.cs301.game.infoMsg.GameInfo;
  */
 public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, OnClickListener {
     // The TextView the displays the current counter value
-    protected TextView yourScoreNumberTextView;
-    protected TextView letterDisplayTextView;
-    protected Button submitScoreButton;
+    protected TextView letterDisplayTextView, timer, yourScoreNumberTextView, usedWordsTextView;
     public static String buttonLetter;
 
     public static String tile1ButtonLetter, tile2ButtonLetter, tile3ButtonLetter, tile4ButtonLetter,
@@ -44,9 +45,8 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 
     protected Button tile1Button, tile2Button, tile3Button, tile4Button, tile5Button, tile6Button,
             tile7Button, tile8Button, tile9Button, tile10Button, tile11Button, tile12Button, tile13Button,
-            tile14Button, tile15Button, tile16Button, rotateButton;
+            tile14Button, tile15Button, tile16Button, rotateButton, submitScoreButton;
 
-    protected TextView timer;
 
     // the android activity that we are running
     private GameMainActivity myActivity;
@@ -216,6 +216,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
         rotateButton.setOnClickListener(this);
 
         timer = (TextView) activity.findViewById(R.id.timerText);
+        usedWordsTextView = (TextView)activity.findViewById(R.id.usedWordsTextView);
     }
 
 
@@ -686,6 +687,17 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 
 
         if (v == submitScoreButton) {
+            try {
+                if (!state.getWordBank().contains(state.getCurrentWord()) && state.inDictionary(state.getCurrentWord()) &&
+                        state.wordLength(state.getCurrentWord())) {
+                    usedWordsTextView.setText(state.getCurrentWord()+"\n"+usedWordsTextView.getText());
+                }
+                else {
+                    Toast.makeText(myActivity, "Invalid Word!", Toast.LENGTH_SHORT).show();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             submitScore = new BoggleSubmitScoreAction(this, state.getCurrentWord());
             game.sendAction(submitScore);
             int i;
