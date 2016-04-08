@@ -73,6 +73,7 @@ public class BoggleMainActivity extends GameMainActivity {
 		// Add the default players to the configuration
 		defaultConfig.addPlayer("Human", 0); // player 1: a human player
 		defaultConfig.addPlayer("Computer", 1); // player 2: a computer player
+		defaultConfig.setRemoteData("Remote Human Player", "", 0);
 
 		// Set the default remote-player setup:
 		// - player name: "Remote Player"
@@ -95,6 +96,12 @@ public class BoggleMainActivity extends GameMainActivity {
 		return new BoggleLocalGame();
 	}
 
+	public void setGameOver(boolean b) {
+		super.setGameOver(b);
+		if (b){
+			//setContentView(R.layout.game_config_main);
+		}
+	}// setGameOver
 
 
 }

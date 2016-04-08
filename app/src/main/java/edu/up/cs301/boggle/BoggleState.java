@@ -29,18 +29,21 @@ import static edu.up.cs301.boggle.BoggleHumanPlayer.*;
 public class BoggleState extends GameState {
 
     private int playerTurn; //tells which players turn it is
+    private boolean gameOver;
     private int player1Score; //tracks the score of player1
     private int player2Score; //tracks the score of player2
     private ArrayList<String> wordBank; //the current words in the word bank
     private String currentWord; //the current word the player is making
     private boolean timer; //true if the timer is running, false if timer has stopped
     private String[][] gameBoard = new String[4][4];
+    private boolean[][] visited = new boolean[4][4];
     private int[][] selectedLetters = new int[20][2];
     private String curLetter;
     private int curLetterRow;
     private int curLetterCol;
     private int secondsLeft;
     private static HashSet<String> dictionary = null;
+    private ArrayList<String> found;
 
 
 
@@ -53,6 +56,15 @@ public class BoggleState extends GameState {
      * The BoggleState constructor. The heart and soul of Boggle. Constructs the gameState of Boggle.
      */
     public BoggleState() {
+
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 4; y++) {
+                visited[x][y] = false;
+                if (!visited[x][y]) {
+                    System.out.println("HERE");
+                }
+            }
+        }
         playerTurn = 0;
         player1Score = 0;
         player2Score = 0;
@@ -61,7 +73,8 @@ public class BoggleState extends GameState {
         curLetter = "a";
         curLetterRow = 4;
         curLetterCol = 4;
-        secondsLeft = 180;
+        secondsLeft = 20;
+        gameOver = false;
 
         Random r1 = new Random();
         char c1 = (char)(r1.nextInt(26) + 'A');
@@ -128,6 +141,7 @@ public class BoggleState extends GameState {
                 }
             }
         }
+
 
         //tests guaranteed vowel
 //        for (int i = 0; i < 4; i++) {
@@ -215,9 +229,10 @@ public class BoggleState extends GameState {
         curLetterRow = state.curLetterRow;
         curLetterCol = state.curLetterCol;
         secondsLeft = state.secondsLeft;
+        gameOver = state.gameOver;
 
         gameBoard = Arrays.copyOf(state.gameBoard, state.gameBoard.length);
-
+        visited = Arrays.copyOf(state.visited,state.gameBoard.length);
 
         selectedLetters = Arrays.copyOf(state.selectedLetters, state.selectedLetters.length);
 
@@ -285,12 +300,40 @@ public class BoggleState extends GameState {
         this.wordBank = wordBank;
     }
 
+    public HashSet<String> getDictionary(){
+        return dictionary;
+    }
+    public ArrayList<String> getFound(){
+        return found;
+    }
+
     public int[][] getSelectedLetters() {
 
 
         return Arrays.copyOf(selectedLetters, selectedLetters.length);
 
 
+    }
+
+    public void setGameOver(boolean isGameOver){
+        this.gameOver = isGameOver;
+
+    }
+    public void resetVisited() {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; i < 4; j++) {
+                visited[i][j] = false;
+            }
+        }
+    }
+    public boolean[][] getVisited() {
+
+        return visited;
+    }
+
+
+    public boolean getGameOver(){
+        return gameOver;
     }
 
     public void setSelectedLetters(int[][] selectedLetters){
@@ -609,7 +652,35 @@ public class BoggleState extends GameState {
         //Copies the rotated board to the existing board
         gameBoard = tmp;
     }
+//------------------------------------------------------------------------
+public void findWords(HashSet<String> dict, String[][] board, int row, int col, String currWord, boolean[][] visited, ArrayList<String> found) {
 
+    for (int x = row-1; x <= row + 1; x++) {
+        for (int y = col - 1; y <= col + 1; y++) {
+            try {
+
+                if (visited[x][x]) return;  //base case
+                visited[x][y] = true;
+            }catch(ArrayIndexOutOfBoundsException e){
+                continue;
+                }
+
+
+            String word = currWord + board[x][y];
+            System.out.println(word);
+            if (dict.contains(word)) {
+                found.add(word);
+            }
+
+            findWords(dict, board, x, y, word, visited, found);
+
+        }
+
+
+    }
+}
+
+//------------------------------------------------------------------------
     /**
      * checks if tile to select is adjacent to last tile picked.
      *

@@ -80,6 +80,7 @@ public abstract class GameMainActivity extends Activity implements
 	TableLayout playerTable = null;
 	ArrayList<TableRow> tableRows = new ArrayList<TableRow>();
 
+
 	/*
 	 * ====================================================================
 	 * Abstract Methods
@@ -98,6 +99,7 @@ public abstract class GameMainActivity extends Activity implements
 	 *         modified by the user if this is allowed.)
 	 */
 	public abstract GameConfig createDefaultConfig();
+
 
 	/**
 	 * createLocalGame
