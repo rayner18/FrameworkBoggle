@@ -226,6 +226,9 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
         BoggleSubmitScoreAction submitScore;
         BoggleRotateAction rotateAction;
 
+        if(this.state == null){
+            return;
+        }
 
         int[][] selectedLetters = state.getSelectedLetters();
         int lastLetterRow = state.getLastLetterRow(selectedLetters);

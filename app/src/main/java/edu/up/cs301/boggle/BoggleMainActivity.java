@@ -67,13 +67,13 @@ public class BoggleMainActivity extends GameMainActivity {
 		// - from 1 to 2 players
 		// - name of game is "Counter Game"
 		// - port number as defined above
-		GameConfig defaultConfig = new GameConfig(playerTypes, 1, 2, "Boggle Game",
+		GameConfig defaultConfig = new GameConfig(playerTypes, 2, 2, "Boggle Game",
 				PORT_NUMBER);
 
 		// Add the default players to the configuration
 		defaultConfig.addPlayer("Human", 0); // player 1: a human player
 		defaultConfig.addPlayer("Computer", 1); // player 2: a computer player
-		defaultConfig.setRemoteData("Remote Human Player", "", 0);
+		defaultConfig.setRemoteData("Remote Human Player", "", 2);
 
 		// Set the default remote-player setup:
 		// - player name: "Remote Player"

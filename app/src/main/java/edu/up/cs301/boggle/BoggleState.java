@@ -655,29 +655,30 @@ public class BoggleState extends GameState {
 //------------------------------------------------------------------------
 public void findWords(HashSet<String> dict, String[][] board, int row, int col, String currWord, boolean[][] visited, ArrayList<String> found) {
 
-    for (int x = row-1; x <= row + 1; x++) {
-        for (int y = col - 1; y <= col + 1; y++) {
+    for (int x = row; x <= row ; x++) {
+        for (int y = col ; y <= col; y++) {
             try {
 
-                if (visited[x][x]) return;  //base case
+                if (visited[x][y]) return;  //base case
                 visited[x][y] = true;
-            }catch(ArrayIndexOutOfBoundsException e){
+
+            }
+            catch(ArrayIndexOutOfBoundsException e){
                 continue;
                 }
-
 
             String word = currWord + board[x][y];
             System.out.println(word);
             if (dict.contains(word)) {
                 found.add(word);
             }
-
             findWords(dict, board, x, y, word, visited, found);
 
         }
 
 
     }
+    return;
 }
 
 //------------------------------------------------------------------------
