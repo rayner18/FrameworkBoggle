@@ -44,6 +44,7 @@ public class BoggleState extends GameState {
     private static HashSet<String> dictionary = null;
     private ArrayList<String> found;
     private int gameOver;
+    public String word = "a";
 
     /**
      * The BoggleState constructor. The heart and soul of Boggle. Constructs the gameState of Boggle.
@@ -559,24 +560,29 @@ public class BoggleState extends GameState {
 //------------------------------------------------------------------------
 public void findWords(HashSet<String> dict, String[][] board, int row, int col, String currWord, boolean[][] visited, ArrayList<String> found) {
 
-    for (int x = row-1; x <= row+1 ; x++) {
-        for (int y = row-1; y <= col+1; y++) {
-            try {
-                if (visited[x][y]) return;  //base case
-                visited[x][y] = true;
 
-            }
-            catch(ArrayIndexOutOfBoundsException e){
-                continue;
+    for (int x = row-1; x <= row+1 ; x++) {
+        for (int y = col-1; y <= col+1; y++) {
+
+//            if (row >= 0 && col >= 0) {
+                try {
+                    if (visited[x][y]) return;  //base case
+                    visited[x][y] = true;
+
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    return;
                 }
 
-            String word = currWord + board[x][y];
-            System.out.println(word);
-            if (dict.contains(word)) {
-                System.out.println(" -------- Adding word!!! ------");
-                found.add(word);
-            }
-            findWords(dict, board, x, y, word, visited, found);
+                System.out.println("ASDF: " + currWord + " ! " + board[x][y] + x + y);
+                word = currWord + board[x][y];
+                System.out.println(word);
+                if (dict.contains("hi")) {
+                    System.out.println(" -------- Adding word!!! ------");
+                    found.add("hi");
+                }
+
+                findWords(dict, board, x, y, word, visited, found);
+//            }
 
         }
     }
