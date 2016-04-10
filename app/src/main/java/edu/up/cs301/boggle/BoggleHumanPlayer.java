@@ -25,7 +25,10 @@ import edu.up.cs301.game.infoMsg.GameInfo;
  * @version March 2016
  */
 public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, OnClickListener {
-    // The TextView the displays the current counter value
+    // the most recent game state, as given to us by the CounterLocalGame
+    private BoggleState state;
+
+    // The TextViews that displays the current counter value
     protected TextView letterDisplayTextView, timer, yourScoreNumberTextView, usedWordsTextView;
     public static String buttonLetter;
 
@@ -33,10 +36,6 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
             tile5ButtonLetter, tile6ButtonLetter, tile7ButtonLetter, tile8ButtonLetter,
             tile9ButtonLetter, tile10ButtonLetter, tile11ButtonLetter, tile12ButtonLetter,
             tile13ButtonLetter, tile14ButtonLetter, tile15ButtonLetter, tile16ButtonLetter;
-
-
-    // the most recent game state, as given to us by the CounterLocalGame
-    private BoggleState state;
 
     public static Boolean tile1ButtonPushed, tile2ButtonPushed, tile3ButtonPushed, tile4ButtonPushed,
             tile5ButtonPushed, tile6ButtonPushed, tile7ButtonPushed, tile8ButtonPushed,
@@ -47,13 +46,11 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
             tile7Button, tile8Button, tile9Button, tile10Button, tile11Button, tile12Button, tile13Button,
             tile14Button, tile15Button, tile16Button, rotateButton, submitScoreButton;
 
-
     // the android activity that we are running
     private GameMainActivity myActivity;
 
     /**
      * constructor
-     *
      * @param name the name of a player
      */
     public BoggleHumanPlayer(String name) {
@@ -87,7 +84,6 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
             tile14Button.setText(state.getCurLetterFromBoard(1, 3, gameBoard));
             tile15Button.setText(state.getCurLetterFromBoard(2, 3, gameBoard));
             tile16Button.setText(state.getCurLetterFromBoard(3, 3, gameBoard));
-
 
             String seconds = ""+state.getSecondsLeft() % 60;
             String minutes = ""+state.getSecondsLeft() / 60;

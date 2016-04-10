@@ -21,37 +21,25 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
     boolean[][] visited = new  boolean[4][4];  //array to see if the tile has been locked at yet
     String[][] board = new String[4][4];//array of all the letters on the board
     ArrayList<String> found = new ArrayList<String>(); // list of all the words found by the computer
-
-
 	/**
 	 * constructor
 	 *
 	 * @param name the player's name
 	 */
-	public BoggleComputerPlayer1(String name)
-    {
-		super(name);
+	public BoggleComputerPlayer1(String name){super(name);}
 
-
-
-    }
-
-
-	@Override
+    @Override
 	protected void receiveInfo(GameInfo info) {
-
 
         if (info instanceof BoggleState) {
             state = (BoggleState) info;
-            try {
+            try{
                 boolean l = state.inDictionary("hi");
-            } catch (IOException e) {
-
-            }
+            }catch(IOException e){}
             visited = state.getVisited(); //array to see if the tile has been locked at yet
             board = state.getGameBoard(); //array of all the letters on the board
             found = state.getFound(); // list of all the words found by the computer
-            for (int row = 0; row < 4; row++) // goes through all the rows
+            for (int row = 0; row < 4; row++)// goes through all the rows
             {
                 for (int col = 0; col < 4; col++)  // goes through all the columns
                 {
@@ -59,13 +47,12 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
                     for (int i = 0; i < 4; i++) {
                         for (int j = 0; j < 4; j++) {
                             visited[i][j] = false;
-
                         }
                     }
                     //makes the current location true
                     visited[row][col] = true;
                     //calls the recursive method
-                    state.findWords(state.getDictionary(), board, 0, 0, "" + board[row][col], visited, found);
+                    state.findWords(state.getDictionary(), board, row, col, "" + board[row][col], visited, found);
                 }
             }
 
@@ -73,4 +60,5 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
         }
 
 
-    }}
+    }
+}

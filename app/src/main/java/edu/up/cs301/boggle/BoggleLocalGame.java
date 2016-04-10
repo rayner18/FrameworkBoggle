@@ -42,7 +42,13 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 
 	@Override
 	protected String checkIfGameOver() {
-		return null;
+		if(state.getGameOver() == 1){
+			return "Game Over";
+		}
+		else{
+			return null;
+		}
+
 	}
 
 	/**
