@@ -310,8 +310,7 @@ public class BoggleState extends GameState {
             int count = 0;
             try {
                 Activity myActivity = BoggleMainActivity.activity;
-                InputStream ins = myActivity.getResources().
-                        openRawResource(myActivity.getResources().getIdentifier("words","raw", myActivity.getPackageName()));
+                InputStream ins = myActivity.getResources().openRawResource(myActivity.getResources().getIdentifier("words","raw", myActivity.getPackageName()));
                 reader = new BufferedReader(new InputStreamReader(ins));
                 String line;
 
@@ -319,10 +318,9 @@ public class BoggleState extends GameState {
                     dictionary.add(line.toLowerCase());
                     count++;
                 }
-                Log.i("count is ", "" + count);
+              //  Log.i("count is ", "" + count);
             }
             catch(IOException e){
-                System.out.println("ERRORRRRRRRR");
                 return false;
             }
 
@@ -429,11 +427,7 @@ public class BoggleState extends GameState {
     public void addLetter(String word, int[][] selectedLetters, int curLetterRow, int curLetterCol, String letter) {
 
         int index = getLastLetterIndex(selectedLetters);
-
-
-
-
-        selectedLetters[index + 1][0] = curLetterRow;
+     selectedLetters[index + 1][0] = curLetterRow;
         selectedLetters[index + 1][1] = curLetterCol;
 
 
@@ -577,7 +571,7 @@ public void findWords(HashSet<String> dict, String[][] board, int row, int col, 
                 }
 
             String word = currWord + board[x][y];
-            //System.out.println(word);
+            System.out.println(word);
             if (dict.contains(word)) {
                 System.out.println(" -------- Adding word!!! ------");
                 found.add(word);
