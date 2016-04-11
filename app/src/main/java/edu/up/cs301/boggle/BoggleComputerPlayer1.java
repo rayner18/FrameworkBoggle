@@ -44,16 +44,10 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
                 }
 
                 visited = state.getVisited(); //array to see if the tile has been locked at yet
-                board = state.getGameBoard(); //array of all the letters on the board
+                board = state.getGameBoard();
+                found = state.getFound();//array of all the letters on the board
 
-//                board[0][0] = "A";
-//                board[0][1] = "b";
-//                board[0][2] = "c";
-//                board[0][3] = "d";
-//                board[0][0] = "a";
-//                board[0][1] = "b";
-//                board[0][2] = "c";
-//                board[0][3] = "d";
+
 
                 found = state.getFound(); // list of all the words found by the computer
                 for (int row = 0; row < 4; row++)// goes through all the rows
@@ -70,6 +64,7 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
                         visited[row][col] = true;
                         //calls the recursive method
                         state.findWords(state.getDictionary(), board, row, col, board[row][col], visited, found);
+
                     }
                 }
 

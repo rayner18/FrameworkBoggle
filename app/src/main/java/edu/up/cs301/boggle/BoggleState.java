@@ -36,13 +36,14 @@ public class BoggleState extends GameState {
     private boolean timer; //true if the timer is running, false if timer has stopped
     private String[][] gameBoard = new String[4][4];
     private boolean[][] visited = new boolean[4][4];
+
     private int[][] selectedLetters = new int[20][2];
     private String curLetter;
     private int curLetterRow;
     private int curLetterCol;
     private int secondsLeft;
     private static HashSet<String> dictionary = null;
-    private ArrayList<String> found;
+    private ArrayList<String> found = new ArrayList<String>();
     private int gameOver;
     public String word;
 
@@ -50,7 +51,7 @@ public class BoggleState extends GameState {
      * The BoggleState constructor. The heart and soul of Boggle. Constructs the gameState of Boggle.
      */
     public BoggleState() {
-
+        //this.found = new ArrayList<String>();
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
                 visited[x][y] = false;
@@ -127,6 +128,7 @@ public class BoggleState extends GameState {
                 if (gameBoard[i][j].equals("Q")) {
                     gameBoard[i][j] = ("Qu");
                 }
+
             }
         }
 
@@ -181,7 +183,11 @@ public class BoggleState extends GameState {
             selectedLetters[k][1] = 4;
         }
         wordBank = new ArrayList<String>();
+        gameBoard[0][0] = "P";
+        gameBoard[0][1] = "I";
+        gameBoard[0][2] = "E";
     }
+
 
     /**
      * DEEP COPY
@@ -215,6 +221,7 @@ public class BoggleState extends GameState {
     public void setGameBoard(String[][] gameBoard){
         this.gameBoard = Arrays.copyOf(gameBoard, gameBoard.length);
     }
+
     public int getPlayerTurn() {return playerTurn;}
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn = playerTurn;
@@ -244,7 +251,15 @@ public class BoggleState extends GameState {
         this.wordBank = wordBank;
     }
     public HashSet<String> getDictionary(){return dictionary;}
+
+
+
     public ArrayList<String> getFound(){return found;}
+    public void setFound(String s){
+        this.found.add(s);
+    }
+
+
     public int getGameOver(){return this.gameOver;}
     public void setGameOver(int gameOver) {this.gameOver = gameOver;}
     public int[][] getSelectedLetters() {
@@ -566,22 +581,31 @@ public void findWords(HashSet<String> dict, String[][] board, int row, int col, 
 
 //            if (row >= 0 && col >= 0) {
                 try {
-                    if (visited[x][y]) return;  //base case
+                    if (visited[x][y]) continue;  //base case
                     visited[x][y] = true;
 
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    return;
+                    continue;
                 }
 
-                System.out.println("ASDF: " + currWord + " ! " + board[x][y] + x + y);
                 word = currWord + board[x][y];
-                System.out.println(word);
-                if (dict.contains(word)) {
-                    System.out.println(" -------- Adding word!!! ------");
-                    found.add(word);
+
+                if (found.contains(word)) continue;
+
+                if (word.length() > 2 && dict.contains(word.toLowerCase())) {
+                    System.out.println(" -------- Adding word!!! ------ " + word);
+                    setFound(word);
+                }
+            boolean[][] copy = new boolean[4][4];
+               for(int i = 0; i < 4; i++){
+                    for(int j = 0; j < 4; j++){
+
+                        copy[i][j] = visited[i][j];
+                    }
                 }
 
-                findWords(dict, board, x, y, word, visited, found);
+            //copy = Arrays.copyOf(visited, visited.length);
+                findWords(dict, board, x, y, word, copy, found);
 //            }
 
         }

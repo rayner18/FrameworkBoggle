@@ -81,6 +81,11 @@ public class BoggleMainActivity extends GameMainActivity {
 		// - default player type: human player
 		defaultConfig.setRemoteData("Remote Player", "", 0);
 
+		//DEBUG
+		defaultConfig.setUserModifiable(false);
+
+
+
 		// return the configuration
 		return defaultConfig;
 	}//createDefaultConfig
