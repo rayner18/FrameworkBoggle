@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.LocalGame;
@@ -60,9 +61,23 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 	 */
 	@Override
 	protected boolean makeMove(GameAction action) throws IOException {
+		if(action instanceof BoggleComputerSubmitScoreAction){
+            BoggleComputerSubmitScoreAction BCSA = (BoggleComputerSubmitScoreAction)action;
+            ArrayList<String> found = BCSA.curArray();
+            int index = state.getArrayIndex(); // gets the index of where to pick a word from comp wordbank
 
-
-		if(action instanceof BoggleSelectTileAction){
+            //If all the words are already used from the computers word bank
+            if(index >= found.size()){return false;}
+            String word = found.get(index); // the word the computer will sumbit
+            index++;
+            state.setCompUsedWords(word); //puts the words used by the computer in array
+            // increases the index so that a new word will be selected from the comps word bank
+            state.setArrayIndex(index);
+            int score = state.updateScore(word); //calculates the score for the word
+			state.setPlayer2Score(score + state.getPlayer2Score()); //sets the comps score
+            return true;
+		}
+		else if(action instanceof BoggleSelectTileAction){
 
 			BoggleSelectTileAction BSTA = (BoggleSelectTileAction)action;
 

@@ -43,10 +43,13 @@ public class BoggleState extends GameState {
     private int curLetterCol;
     private int secondsLeft;
     private static HashSet<String> dictionary = null;
+    //list of all the words possible for computer to use
     private ArrayList<String> found = new ArrayList<String>();
-    private int gameOver;
+    //list of all the words used by computer for points
+    private ArrayList<String> compUsedWords = new ArrayList<String>();
+    private int gameOver; //determines if game is over
     public String word;
-
+   public int arrayIndex;
     /**
      * The BoggleState constructor. The heart and soul of Boggle. Constructs the gameState of Boggle.
      */
@@ -61,6 +64,7 @@ public class BoggleState extends GameState {
             }
         }
         gameOver = 0;
+        arrayIndex = 1;
         playerTurn = 0;
         player1Score = 0;
         player2Score = 0;
@@ -69,7 +73,7 @@ public class BoggleState extends GameState {
         curLetter = "a";
         curLetterRow = 4;
         curLetterCol = 4;
-        secondsLeft = 20;
+        secondsLeft = 180;
 
 
         Random r1 = new Random();
@@ -216,12 +220,18 @@ public class BoggleState extends GameState {
 
     //--------------------------- Getter/Setter End -----------------------------
     public boolean isTimer() {return timer;}
+    public ArrayList<String> getCompUsedWords() {return compUsedWords;}
+    public void setCompUsedWords(String word){compUsedWords.add(word);}
+
     public void setTimer(boolean timer) {this.timer = timer;}
     public String[][] getGameBoard() {return Arrays.copyOf(gameBoard, gameBoard.length);}
     public void setGameBoard(String[][] gameBoard){
         this.gameBoard = Arrays.copyOf(gameBoard, gameBoard.length);
     }
 
+    public int getArrayIndex() {return arrayIndex;}
+
+    public void setArrayIndex(int arrayIndex) {this.arrayIndex = arrayIndex;}
     public int getPlayerTurn() {return playerTurn;}
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn = playerTurn;
@@ -252,10 +262,10 @@ public class BoggleState extends GameState {
     }
     public HashSet<String> getDictionary(){return dictionary;}
 
-
-
     public ArrayList<String> getFound(){return found;}
     public void setFound(String s){
+
+
         this.found.add(s);
     }
 
@@ -593,7 +603,7 @@ public void findWords(HashSet<String> dict, String[][] board, int row, int col, 
                 if (found.contains(word)) continue;
 
                 if (word.length() > 2 && dict.contains(word.toLowerCase())) {
-                    System.out.println(" -------- Adding word!!! ------ " + word);
+
                     setFound(word);
                 }
             boolean[][] copy = new boolean[4][4];
@@ -605,11 +615,12 @@ public void findWords(HashSet<String> dict, String[][] board, int row, int col, 
                 }
 
             //copy = Arrays.copyOf(visited, visited.length);
-                findWords(dict, board, x, y, word, copy, found);
+            findWords(dict, board, x, y, word, copy, found);
 //            }
 
         }
     }
+
     return;
 }
 

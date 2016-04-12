@@ -29,7 +29,8 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
     private BoggleState state;
 
     // The TextViews that displays the current counter value
-    protected TextView letterDisplayTextView, timer, yourScoreNumberTextView, usedWordsTextView;
+    protected TextView letterDisplayTextView, timer, yourScoreNumberTextView, usedWordsTextView,
+            opponentScoreNumberTextView;
     public static String buttonLetter;
 
     public static String tile1ButtonLetter, tile2ButtonLetter, tile3ButtonLetter, tile4ButtonLetter,
@@ -66,6 +67,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
         if (info instanceof BoggleState) {
             state = (BoggleState) info;
             yourScoreNumberTextView.setText("" + state.getPlayer1Score());
+            opponentScoreNumberTextView.setText("" + state.getPlayer2Score());
             letterDisplayTextView.setText("" + state.getCurrentWord());
             String[][] gameBoard = state.getGameBoard();
             tile1Button.setText(state.getCurLetterFromBoard(0, 0, gameBoard));
@@ -207,6 +209,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 
         yourScoreNumberTextView = (TextView) activity.findViewById(R.id.yourScoreNumberTextView);
         letterDisplayTextView = (TextView) activity.findViewById(R.id.letterDisplayTextView);
+        opponentScoreNumberTextView = (TextView) activity.findViewById(R.id.opponentScoreNumberTextView);
 
         rotateButton = (Button) activity.findViewById(R.id.rotateBackwardButton);
         rotateButton.setOnClickListener(this);

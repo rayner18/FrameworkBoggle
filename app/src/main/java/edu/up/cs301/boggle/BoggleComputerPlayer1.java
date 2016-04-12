@@ -17,38 +17,35 @@ import java.util.Random;
  * @version March 2016
  */
 public class BoggleComputerPlayer1 extends GameComputerPlayer implements BogglePlayer, Tickable {
-	BoggleState state;
-    boolean[][] visited = new  boolean[4][4];  //array to see if the tile has been locked at yet
+    BoggleState state;
+    BoggleComputerSubmitScoreAction submitScore;
+    boolean[][] visited = new boolean[4][4];  //array to see if the tile has been locked at yet
     String[][] board = new String[4][4];//array of all the letters on the board
     ArrayList<String> found = new ArrayList<String>(); // list of all the words found by the computer
     int tested = 0;
-	/**
-	 * constructor
-	 *
-	 * @param name the player's name
-	 */
-	public BoggleComputerPlayer1(String name)
-    {super(name);
+
+    /**
+     * constructor
+     *
+     * @param name the player's name
+     */
+    public BoggleComputerPlayer1(String name) {
+        super(name);
 
     }
 
     @Override
-	protected void receiveInfo(GameInfo info) {
+    protected void receiveInfo(GameInfo info) {
 
         if (info instanceof BoggleState) {
             state = (BoggleState) info;
-            if (tested == 0) {
-                try {
+            visited = state.getVisited(); //array to see if the tile has been locked at yet
+            board = state.getGameBoard();
+            found = state.getFound();//array of all the letters on the board
+            try {
                     boolean l = state.inDictionary("hi");
                 } catch (IOException e) {
                 }
-
-                visited = state.getVisited(); //array to see if the tile has been locked at yet
-                board = state.getGameBoard();
-                found = state.getFound();//array of all the letters on the board
-
-
-
                 found = state.getFound(); // list of all the words found by the computer
                 for (int row = 0; row < 4; row++)// goes through all the rows
                 {
@@ -67,14 +64,18 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
 
                     }
                 }
+                    //Submits a word every 1 in 5 chance
+                    Random rand = new Random();
+                    int random = rand.nextInt(5);
+                    if (random == 1) {
+                        submitScore = new BoggleComputerSubmitScoreAction(this, found);
+                        game.sendAction(submitScore);
+                    } else {
+                        return;
+                    }
 
-
+                    return;
             }
-            tested = 1;
         }
-        else if(tested == 1){
-            return;
-        }
-
     }
-}
+

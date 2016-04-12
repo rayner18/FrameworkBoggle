@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\Users\kirby18\StudioProjects\FrameworkBoggle\app\src\main\assets"/></dataSet><dataSet config="debug"><source path="C:\Users\kirby18\StudioProjects\FrameworkBoggle\app\src\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="C:\FrameworkBoggle5\app\src\main\assets"/></dataSet><dataSet config="debug"><source path="C:\FrameworkBoggle5\app\src\debug\assets"/></dataSet></merger>
