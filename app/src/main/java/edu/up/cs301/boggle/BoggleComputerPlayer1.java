@@ -22,7 +22,7 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
     boolean[][] visited = new boolean[4][4];  //array to see if the tile has been locked at yet
     String[][] board = new String[4][4];//array of all the letters on the board
     ArrayList<String> found = new ArrayList<String>(); // list of all the words found by the computer
-    int tested = 0;
+    int tested;
 
     /**
      * constructor
@@ -41,12 +41,14 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
             state = (BoggleState) info;
             visited = state.getVisited(); //array to see if the tile has been locked at yet
             board = state.getGameBoard();
-            found = state.getFound();//array of all the letters on the board
-            try {
+            found = state.getFound();
+            tested = state.getTested();
+            System.out.println("----------"+state.getTested());
+            if(tested == 0) {
+                try {
                     boolean l = state.inDictionary("hi");
                 } catch (IOException e) {
                 }
-                found = state.getFound(); // list of all the words found by the computer
                 for (int row = 0; row < 4; row++)// goes through all the rows
                 {
                     for (int col = 0; col < 4; col++)  // goes through all the columns
@@ -62,19 +64,24 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
                         //calls the recursive method
                         state.findWords(state.getDictionary(), board, row, col, board[row][col], visited, found);
 
+
                     }
                 }
-                    //Submits a word every 1 in 5 chance
-                    Random rand = new Random();
-                    int random = rand.nextInt(5);
-                    if (random == 1) {
-                        submitScore = new BoggleComputerSubmitScoreAction(this, found);
-                        game.sendAction(submitScore);
-                    } else {
-                        return;
-                    }
-
+                state.setTested(1);
+            }
+            else {
+                //Submits a word every 1 in 5 chance
+                Random rand = new Random();
+                int random = rand.nextInt(5);
+                if (random == 1) {
+                    submitScore = new BoggleComputerSubmitScoreAction(this, found);
+                    game.sendAction(submitScore);
+                } else {
                     return;
+                }
+            }
+
+            return;
             }
         }
     }

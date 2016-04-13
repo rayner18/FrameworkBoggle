@@ -70,6 +70,9 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
             opponentScoreNumberTextView.setText("" + state.getPlayer2Score());
             letterDisplayTextView.setText("" + state.getCurrentWord());
             String[][] gameBoard = state.getGameBoard();
+            int seconds1 = state.getSecondsLeft();
+
+
             tile1Button.setText(state.getCurLetterFromBoard(0, 0, gameBoard));
             tile2Button.setText(state.getCurLetterFromBoard(1, 0, gameBoard));
             tile3Button.setText(state.getCurLetterFromBoard(2, 0, gameBoard));

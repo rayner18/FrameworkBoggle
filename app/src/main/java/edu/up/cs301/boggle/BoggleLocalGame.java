@@ -43,6 +43,7 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 
 	@Override
 	protected String checkIfGameOver() {
+        System.out.println("HEEERRREE   " + state.getGameOver());
 		if(state.getGameOver() == 1){
 			return "Game Over";
 		}
@@ -134,6 +135,9 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 			state.rotateBoard(state.getGameBoard());
 			return true;
 		}
+        else if(action instanceof BoggleTimerOutAction){
+            checkIfGameOver();
+        }
 
 		return false;
 	}
@@ -143,10 +147,17 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 	 * that this will be overridden in many games.
 	 */
 	protected void timerTicked() {
-		int seconds = state.getSecondsLeft();
+        int seconds = state.getSecondsLeft();
+
+        if (seconds == 0){
+            state.setGameOver(1);
+
+        }
+
 		if (seconds > 0) {
 			seconds--;
 		}
+
 		state.setSecondsLeft(seconds);
 		sendAllUpdatedState();
 	}
