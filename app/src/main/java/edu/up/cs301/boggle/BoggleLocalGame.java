@@ -43,9 +43,23 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 
 	@Override
 	protected String checkIfGameOver() {
-        System.out.println("HEEERRREE   " + state.getGameOver());
+        System.out.println("CHECKING IF GAME OVER" + state.getGameOver());
 		if(state.getGameOver() == 1){
-			return "Game Over";
+			int winner = state.getWinner();
+			String winTxt = "";
+
+			if (winner == 1) {
+				winTxt = "Game over! "+playerNames[0]+" wins with a score of "+state.getPlayer1Score()+"!";
+			}
+
+			else if (winner == 2) {
+				winTxt = "Game over! "+playerNames[1]+" wins with a score of "+state.getPlayer1Score()+"!";
+			}
+
+			else if (winner == 3) {
+				winTxt = "It's a draw! "+playerNames[0]+" and "+playerNames[1]+" tie with a score of "+state.getPlayer1Score()+" each!";
+			}
+			return winTxt;
 		}
 		else{
 			return null;
@@ -157,7 +171,7 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 		if (seconds > 0) {
 			seconds--;
 		}
-
+		checkIfGameOver();
 		state.setSecondsLeft(seconds);
 		sendAllUpdatedState();
 	}

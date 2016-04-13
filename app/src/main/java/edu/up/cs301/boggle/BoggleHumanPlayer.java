@@ -98,6 +98,9 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 
             String time = (minutes + ":" + seconds);
             timer.setText(time);
+//            if (!state.isTimer()) {
+//                state.setGameOver(1);
+//            }
         }
     }
 

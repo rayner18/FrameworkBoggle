@@ -78,7 +78,7 @@ public class BoggleState extends GameState {
         curLetter = "a";
         curLetterRow = 4;
         curLetterCol = 4;
-        secondsLeft = 40;
+        secondsLeft = 30;
 
 
         Random r1 = new Random();
@@ -237,6 +237,19 @@ public class BoggleState extends GameState {
     }
 
     public int getArrayIndex() {return arrayIndex;}
+
+    public int getWinner() {
+        if (getPlayer1Score() > getPlayer2Score()) {
+            return 1;
+        }
+        else if (getPlayer2Score()>getPlayer1Score()) {
+            return 2;
+        }
+        else {
+            return 3;
+        }
+    }
+
 
     public void setArrayIndex(int arrayIndex) {this.arrayIndex = arrayIndex;}
     public int getPlayerTurn() {return playerTurn;}
