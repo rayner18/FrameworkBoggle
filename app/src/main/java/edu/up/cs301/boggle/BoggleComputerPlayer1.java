@@ -44,7 +44,7 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
             found = state.getFound();
             tested = state.getTested();
             System.out.println("----------"+state.getTested());
-            if(tested == 0) {
+            //if(tested == 0) {
                 try {
                     boolean l = state.inDictionary("hi");
                 } catch (IOException e) {
@@ -65,11 +65,12 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
                         state.findWords(state.getDictionary(), board, row, col, board[row][col], visited, found);
 
 
-                    }
+                   // }
                 }
-                state.setTested(1);
+               // state.setTested(1);
+               // System.out.println("------" + state.getTested());
             }
-            else {
+
                 //Submits a word every 1 in 5 chance
                 Random rand = new Random();
                 int random = rand.nextInt(5);
@@ -82,7 +83,7 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
             }
 
             return;
-            }
+
         }
     }
 
