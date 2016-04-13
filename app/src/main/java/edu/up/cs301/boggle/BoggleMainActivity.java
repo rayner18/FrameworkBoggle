@@ -82,7 +82,7 @@ public class BoggleMainActivity extends GameMainActivity {
 		defaultConfig.setRemoteData("Remote Player", "", 0);
 
 		//DEBUG
-		defaultConfig.setUserModifiable(false);
+		//defaultConfig.setUserModifiable(false);
 
 
 

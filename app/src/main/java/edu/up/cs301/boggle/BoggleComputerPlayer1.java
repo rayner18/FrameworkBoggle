@@ -31,6 +31,7 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
      */
     public BoggleComputerPlayer1(String name) {
         super(name);
+        this.tested = 0;
 
     }
 
@@ -42,9 +43,12 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
             visited = state.getVisited(); //array to see if the tile has been locked at yet
             board = state.getGameBoard();
             found = state.getFound();
-            tested = state.getTested();
-            System.out.println("----------"+state.getTested());
-            //if(tested == 0) {
+
+
+         //   if(state.getDictionary() == null) {
+
+                System.out.println(" You are inside");
+
                 try {
                     boolean l = state.inDictionary("hi");
                 } catch (IOException e) {
@@ -64,16 +68,15 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
                         //calls the recursive method
                         state.findWords(state.getDictionary(), board, row, col, board[row][col], visited, found);
 
-
-                   // }
+                   }
                 }
-               // state.setTested(1);
-               // System.out.println("------" + state.getTested());
-            }
+             //return;
+            //}else {
 
                 //Submits a word every 1 in 5 chance
                 Random rand = new Random();
                 int random = rand.nextInt(5);
+                System.out.println("Random number" + random);
                 if (random == 1) {
                     submitScore = new BoggleComputerSubmitScoreAction(this, found);
                     game.sendAction(submitScore);
@@ -81,9 +84,8 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
                     return;
                 }
             }
-
-            return;
-
-        }
+        //}
+        return;
     }
+}
 

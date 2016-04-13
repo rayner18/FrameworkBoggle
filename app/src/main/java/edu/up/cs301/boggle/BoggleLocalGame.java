@@ -53,7 +53,7 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 			}
 
 			else if (winner == 2) {
-				winTxt = "Game over! "+playerNames[1]+" wins with a score of "+state.getPlayer1Score()+"!";
+				winTxt = "Game over! "+playerNames[1]+" wins with a score of "+state.getPlayer2Score()+"!";
 			}
 
 			else if (winner == 3) {
@@ -76,18 +76,22 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 	 */
 	@Override
 	protected boolean makeMove(GameAction action) throws IOException {
-		if(action instanceof BoggleComputerSubmitScoreAction){
+
+        if(action instanceof BoggleComputerSubmitScoreAction){
             BoggleComputerSubmitScoreAction BCSA = (BoggleComputerSubmitScoreAction)action;
             ArrayList<String> found = BCSA.curArray();
             int index = state.getArrayIndex(); // gets the index of where to pick a word from comp wordbank
-
             //If all the words are already used from the computers word bank
-            if(index >= found.size()){return false;}
+
+            if(index >= found.size()) {
+                return false;
+            }
             String word = found.get(index); // the word the computer will sumbit
             index++;
             state.setCompUsedWords(word); //puts the words used by the computer in array
             // increases the index so that a new word will be selected from the comps word bank
             state.setArrayIndex(index);
+            System.out.println("----"+word+ "------");
             int score = state.updateScore(word); //calculates the score for the word
 			state.setPlayer2Score(score + state.getPlayer2Score()); //sets the comps score
             return true;

@@ -45,13 +45,12 @@ public class BoggleState extends GameState {
     private static HashSet<String> dictionary = null;
     //list of all the words possible for computer to use
     private ArrayList<String> found = new ArrayList<String>();
+    private ArrayList<String> copy = new ArrayList<String>();
     //list of all the words used by computer for points
     private ArrayList<String> compUsedWords = new ArrayList<String>();
     private int gameOver; //determines if game is over
     public String word;
     public int arrayIndex;
-
-
     public int tested;
 
     /**
@@ -62,9 +61,6 @@ public class BoggleState extends GameState {
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
                 visited[x][y] = false;
-                if (!visited[x][y]) {
-                    System.out.println("HERE");
-                }
             }
         }
         gameOver = 0;
@@ -78,7 +74,7 @@ public class BoggleState extends GameState {
         curLetter = "a";
         curLetterRow = 4;
         curLetterCol = 4;
-        secondsLeft = 30;
+        secondsLeft = 180;
 
 
         Random r1 = new Random();
@@ -192,9 +188,7 @@ public class BoggleState extends GameState {
             selectedLetters[k][1] = 4;
         }
         wordBank = new ArrayList<String>();
-        gameBoard[0][0] = "P";
-        gameBoard[0][1] = "I";
-        gameBoard[0][2] = "E";
+
     }
 
 
@@ -216,10 +210,14 @@ public class BoggleState extends GameState {
         gameOver = state.gameOver;
         wordBank = state.wordBank;
         timer = state.timer;
+        tested = state.tested;
 
         gameBoard = Arrays.copyOf(state.gameBoard, state.gameBoard.length);
         visited = Arrays.copyOf(state.visited,state.gameBoard.length);
         selectedLetters = Arrays.copyOf(state.selectedLetters, state.selectedLetters.length);
+        for(int i = 0; i < found.size(); i++){
+            state.found.add(this.found.get(i));
+        }
     }
 
 
@@ -227,7 +225,6 @@ public class BoggleState extends GameState {
     public boolean isTimer() {return timer;}
     public ArrayList<String> getCompUsedWords() {return compUsedWords;}
     public void setCompUsedWords(String word){compUsedWords.add(word);}
-
     public int getTested() {return tested;}
     public void setTested(int tested) {this.tested = tested;}
     public void setTimer(boolean timer) {this.timer = timer;}
@@ -239,18 +236,10 @@ public class BoggleState extends GameState {
     public int getArrayIndex() {return arrayIndex;}
 
     public int getWinner() {
-        if (getPlayer1Score() > getPlayer2Score()) {
-            return 1;
-        }
-        else if (getPlayer2Score()>getPlayer1Score()) {
-            return 2;
-        }
-        else {
-            return 3;
-        }
+        if (getPlayer1Score() > getPlayer2Score()) {return 1;}
+        else if (getPlayer2Score()>getPlayer1Score()) {return 2;}
+        else {return 3;}
     }
-
-
     public void setArrayIndex(int arrayIndex) {this.arrayIndex = arrayIndex;}
     public int getPlayerTurn() {return playerTurn;}
     public void setPlayerTurn(int playerTurn) {
@@ -606,6 +595,7 @@ public class BoggleState extends GameState {
 public void findWords(HashSet<String> dict, String[][] board, int row, int col, String currWord, boolean[][] visited, ArrayList<String> found) {
 
 
+    tested = 1;
 
     for (int x = row-1; x <= row+1 ; x++) {
         for (int y = col-1; y <= col+1; y++) {
@@ -634,6 +624,7 @@ public void findWords(HashSet<String> dict, String[][] board, int row, int col, 
                         copy[i][j] = visited[i][j];
                     }
                 }
+
             ArrayList<String> copy2 = new ArrayList<String>();
             for(int i = 0; i< found.size(); i++){
                 copy2.add(found.get(i));
