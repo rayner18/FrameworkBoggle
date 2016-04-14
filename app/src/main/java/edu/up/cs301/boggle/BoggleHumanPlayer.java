@@ -1,7 +1,5 @@
 package edu.up.cs301.boggle;
 
-import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -9,7 +7,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
@@ -69,10 +66,14 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
             yourScoreNumberTextView.setText("" + state.getPlayer1Score());
             opponentScoreNumberTextView.setText("" + state.getPlayer2Score());
             letterDisplayTextView.setText("" + state.getCurrentWord());
-            for(int i = 0; i <= state.getCompUsedWords().size();i++){
-                 System.out.println("WORDDD" + state.getCompUsedWords());
-            }
-            //compWordTextView.setText(""+state.getCompUsedWords());
+
+//            if (!(state.getCompCurWord().equals(state.getCompPrevWord()))) {
+//                compWordTextView.setText("" + state.getCompCurWord() + "\n" + compWordTextView.getText());
+//                state.getCompUsedWords().add(state.getCompCurWord());
+//                state.setCompPrevWord(state.getCompCurWord());
+//                state.setCompCurWord("");
+//            }
+
             String[][] gameBoard = state.getGameBoard();
             int seconds1 = state.getSecondsLeft();
 
@@ -102,9 +103,6 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 
             String time = (minutes + ":" + seconds);
             timer.setText(time);
-//            if (!state.isTimer()) {
-//                state.setGameOver(1);
-//            }
         }
     }
 

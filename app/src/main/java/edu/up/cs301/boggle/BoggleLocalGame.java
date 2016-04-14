@@ -1,8 +1,5 @@
 package edu.up.cs301.boggle;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -59,6 +56,7 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 			else if (winner == 3) {
 				winTxt = "It's a draw! "+playerNames[0]+" and "+playerNames[1]+" tie with a score of "+state.getPlayer1Score()+" each!";
 			}
+			sendAllUpdatedState();
 			return winTxt;
 		}
 		else{
@@ -87,7 +85,7 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
             }
             String word = found.get(index); // the word the computer will sumbit
             index++;
-            state.setCompUsedWords(word); //puts the words used by the computer in array
+			state.setCompCurWord(word); //sets the word that was just submitted
             sendAllUpdatedState();
             // increases the index so that a new word will be selected from the comps word bank
             state.setArrayIndex(index);

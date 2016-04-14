@@ -348,7 +348,7 @@
                 android:id="@+id/usedWordsTextView"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#FF000000"
+                android:textColor="@color/black"
                 android:gravity="center_horizontal" />
         </ScrollView>
 
@@ -364,7 +364,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/compWordTextView"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
         </ScrollView>
 
         <Button

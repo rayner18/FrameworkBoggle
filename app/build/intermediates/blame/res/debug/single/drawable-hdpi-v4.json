@@ -1,26 +1,14 @@
 [
     {
-        "merged": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_launcher.png",
-        "source": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\waitt18\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\purple_delete_button.png",
+        "source": "C:\\Users\\waitt18\\FrameworkBoggle\\app\\src\\main\\res\\drawable-hdpi\\purple_delete_button.png"
     },
     {
-        "merged": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_action_search.png",
-        "source": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\src\\main\\res\\drawable-hdpi\\ic_action_search.png"
+        "merged": "C:\\Users\\waitt18\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\waitt18\\FrameworkBoggle\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\FrameworkBoggle5\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_action_search.png",
-        "source": "C:\\FrameworkBoggle5\\app\\src\\main\\res\\drawable-hdpi\\ic_action_search.png"
-    },
-    {
-        "merged": "C:\\FrameworkBoggle5\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_launcher.png",
-        "source": "C:\\FrameworkBoggle5\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
-    },
-    {
-        "merged": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\purple_delete_button.png",
-        "source": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\src\\main\\res\\drawable-hdpi\\purple_delete_button.png"
-    },
-    {
-        "merged": "C:\\FrameworkBoggle5\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\purple_delete_button.png",
-        "source": "C:\\FrameworkBoggle5\\app\\src\\main\\res\\drawable-hdpi\\purple_delete_button.png"
+        "merged": "C:\\Users\\waitt18\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_action_search.png",
+        "source": "C:\\Users\\waitt18\\FrameworkBoggle\\app\\src\\main\\res\\drawable-hdpi\\ic_action_search.png"
     }
 ]

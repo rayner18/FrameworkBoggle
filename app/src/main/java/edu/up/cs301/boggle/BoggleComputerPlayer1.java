@@ -66,12 +66,10 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
                         state.findWords(state.getDictionary(), board, row, col, board[row][col], visited, found);
                     }
                 }
-                //return;
-                //}else {
 
                 //Submits a word every 1 in 5 chance
                 Random rand = new Random();
-                int random = rand.nextInt(5);
+                int random = 1;
                 if (random == 1) {
                     submitScore = new BoggleComputerSubmitScoreAction(this, found);
                     game.sendAction(submitScore);

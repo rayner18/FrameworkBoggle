@@ -1,10 +1,6 @@
 [
     {
-        "merged": "C:\\FrameworkBoggle5\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\ic_launcher.png",
-        "source": "C:\\FrameworkBoggle5\\app\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
-    },
-    {
-        "merged": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\ic_launcher.png",
-        "source": "C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
+        "merged": "C:\\Users\\waitt18\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\waitt18\\FrameworkBoggle\\app\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
     }
 ]

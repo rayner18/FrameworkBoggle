@@ -47,6 +47,8 @@ public class BoggleState extends GameState {
     private ArrayList<String> copy = new ArrayList<String>();
     //list of all the words used by computer for points
     private ArrayList<String> compUsedWords = new ArrayList<String>();
+    private String compCurrentWord = "";
+    private String compPrevWord = "";
     private int gameOver; //determines if game is over
     public String word;
     public int arrayIndex;//int for the index used the Local Game
@@ -74,6 +76,8 @@ public class BoggleState extends GameState {
         curLetterRow = 4;
         curLetterCol = 4;
         secondsLeft = 180;
+        compCurrentWord = "";
+        compPrevWord = "";
 
 
         Random r1 = new Random();
@@ -135,14 +139,6 @@ public class BoggleState extends GameState {
 
             }
         }
-
-
-        //tests guaranteed vowel
-//        for (int i = 0; i < 4; i++) {
-//            for (int j = 0; j < 4; j++) {
-//                gameBoard[i][j] = "X";
-//            }
-//        }
 
         double randomVowelDouble = Math.random()*5;
         int randomVowelInt = (int)randomVowelDouble;
@@ -216,6 +212,8 @@ public class BoggleState extends GameState {
         gameBoard = Arrays.copyOf(state.gameBoard, state.gameBoard.length);
         visited = Arrays.copyOf(state.visited,state.gameBoard.length);
         selectedLetters = Arrays.copyOf(state.selectedLetters, state.selectedLetters.length);
+        compCurrentWord = state.compCurrentWord;
+        compPrevWord = state.compPrevWord;
         for(int i = 0; i < found.size(); i++){
             state.compUsedWords.add(this.found.get(i));
             state.found.add(this.found.get(i));
@@ -226,6 +224,10 @@ public class BoggleState extends GameState {
     public boolean isTimer() {return timer;}
     public ArrayList<String> getCompUsedWords() {return compUsedWords;}
     public void setCompUsedWords(String word){compUsedWords.add(word);}
+    public String getCompCurWord() {return compCurrentWord;}
+    public void setCompCurWord(String word) {this.compCurrentWord = word;}
+    public String getCompPrevWord() {return compPrevWord;}
+    public void setCompPrevWord(String word) {this.compPrevWord = word;}
     public int getTested() {return tested;}
     public void setTested(int tested) {this.tested = tested;}
     public void setTimer(boolean timer) {this.timer = timer;}
