@@ -44,7 +44,7 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
             board = state.getGameBoard();
             found = state.getFound(); //list of all words found by computer
 
-         //   if(state.getDictionary() == null) {
+            if (state.getDictionary() == null) {
                 try {
                     //initiates the dictionary. A random word needs to be passed in to make it
                     boolean l = state.inDictionary("start");
@@ -64,21 +64,24 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
                         visited[row][col] = true;
                         //calls the recursive method
                         state.findWords(state.getDictionary(), board, row, col, board[row][col], visited, found);
-                   }
+                    }
                 }
-             //return;
-            //}else {
+                //return;
+                //}else {
 
                 //Submits a word every 1 in 5 chance
                 Random rand = new Random();
                 int random = rand.nextInt(5);
-            if (random == 1) {
+                if (random == 1) {
                     submitScore = new BoggleComputerSubmitScoreAction(this, found);
                     game.sendAction(submitScore);
-                } else {return;}
+                } else {
+                    return;
+                }
             }
-        //}
-        return;
+            //}
+            return;
+        }
     }
 }
 

@@ -187,6 +187,9 @@ public class BoggleState extends GameState {
             selectedLetters[k][1] = 4;
         }
         wordBank = new ArrayList<String>();
+        for(int i = 0; i < compUsedWords.size(); i++){
+            compUsedWords.clear();
+        }
 
     }
 
@@ -214,6 +217,7 @@ public class BoggleState extends GameState {
         visited = Arrays.copyOf(state.visited,state.gameBoard.length);
         selectedLetters = Arrays.copyOf(state.selectedLetters, state.selectedLetters.length);
         for(int i = 0; i < found.size(); i++){
+            state.compUsedWords.add(this.found.get(i));
             state.found.add(this.found.get(i));
         }
     }

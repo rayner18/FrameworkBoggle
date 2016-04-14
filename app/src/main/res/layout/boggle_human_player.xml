@@ -329,8 +329,9 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_weight=".5"
-            android:text="Submit Score"
-            android:layout_marginRight="20dp" />
+            android:text="Submit Word"
+            android:layout_marginRight="20dp"
+            android:background="#e6b776" />
 
         <ScrollView
             android:id="@+id/wordBankScrollView"
@@ -345,10 +346,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/usedWordsTextView"
-                android:textSize="40dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#FF000000"
                 android:gravity="center_horizontal" />
+        </ScrollView>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/compScrollView"
+            android:layout_weight="5"
+            android:background="#f3cbcb"
+            android:fillViewport="false">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/compWordTextView"
+                android:textSize="20sp" />
         </ScrollView>
 
         <Button
@@ -358,7 +374,8 @@
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_weight=".5"
-            android:text="Rotate Board" />
+            android:text="Rotate Board"
+            android:background="#e6b776" />
 
     </LinearLayout>
 

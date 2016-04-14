@@ -120,14 +120,14 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="2"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
 
             <ScrollView
                 android:id="@+id/wordBankScrollView"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:background="#f3cbcb"
                 android:fillViewport="false"
                 android:foregroundGravity="center_horizontal">
@@ -137,9 +137,10 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/usedWordsTextView"
                     android:textStyle="bold"
-                    android:textSize="40dp"
+                    android:textSize="40sp"
                     android:textColor="#FF000000"
-                    android:gravity="center_horizontal" />
+                    android:gravity="center_horizontal"
+                    android:textIsSelectable="false" />
             </ScrollView>
         </LinearLayout>
 
@@ -314,10 +315,29 @@
                 android:textSize="55sp" />
         </LinearLayout>
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/compWordScrollView"
+                android:background="#f3cbcb"
+                android:fillViewport="false">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="40sp"
+                    android:textIsSelectable="false"
+                    android:id="@+id/compWordTextView" />
+            </ScrollView>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -338,8 +358,9 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_weight=".5"
-            android:text="Submit Score"
-            android:layout_marginRight="5dp" />
+            android:text="Submit Word"
+            android:layout_marginRight="5dp"
+            android:background="#e6b776" />
 
         <TextView
             android:id="@+id/letterDisplayTextView"
@@ -359,7 +380,8 @@
             android:layout_weight=".5"
             android:text="Rotate Board"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:background="#e6b776" />
 
 
     </LinearLayout>
