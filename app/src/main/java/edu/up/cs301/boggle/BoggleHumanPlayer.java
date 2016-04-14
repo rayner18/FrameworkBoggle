@@ -1,5 +1,7 @@
 package edu.up.cs301.boggle;
 
+import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -7,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import edu.up.cs301.game.GameHumanPlayer;
 import edu.up.cs301.game.GameMainActivity;
@@ -39,7 +42,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
             tile5ButtonPushed, tile6ButtonPushed, tile7ButtonPushed, tile8ButtonPushed,
             tile9ButtonPushed, tile10ButtonPushed, tile11ButtonPushed, tile12ButtonPushed,
             tile13ButtonPushed, tile14ButtonPushed, tile15ButtonPushed, tile16ButtonPushed;
-
+    BoggleTimerOutAction gameOver;
     protected Button tile1Button, tile2Button, tile3Button, tile4Button, tile5Button, tile6Button,
             tile7Button, tile8Button, tile9Button, tile10Button, tile11Button, tile12Button, tile13Button,
             tile14Button, tile15Button, tile16Button, rotateButton, submitScoreButton;
@@ -103,6 +106,14 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 
             String time = (minutes + ":" + seconds);
             timer.setText(time);
+//            if (!state.isTimer()) {
+//                state.setGameOver(1);
+//            }
+            if(state.getSecondsLeft() == 0){
+                gameOver = new BoggleTimerOutAction(this);
+                game.sendAction(gameOver);
+
+            }
         }
     }
 

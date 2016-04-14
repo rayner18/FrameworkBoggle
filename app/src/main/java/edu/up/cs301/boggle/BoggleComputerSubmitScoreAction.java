@@ -9,17 +9,17 @@ import edu.up.cs301.game.actionMsg.GameAction;
  * Created by Jacob on 4/12/2016.
  */
 public class BoggleComputerSubmitScoreAction extends GameAction{
-    public ArrayList<String> found;
+    public String word;
     /**
      * constructor for GameAction
      *
      * @param player the player who created the action
      */
-    public BoggleComputerSubmitScoreAction(GamePlayer player, ArrayList<String> found) {
+    public BoggleComputerSubmitScoreAction(GamePlayer player, String word) {
         super(player);
-        this.found = found;
+        this.word = word;
 
     }
-    public ArrayList<String> curArray(){return found;}
+    public String curWord(){return word;}
 
 }

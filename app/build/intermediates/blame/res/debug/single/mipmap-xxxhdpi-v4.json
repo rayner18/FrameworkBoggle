@@ -1,6 +1,14 @@
 [
     {
-        "merged": "C:\\Users\\waitt18\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi-v4\\ic_launcher.png",
-        "source": "C:\\Users\\waitt18\\FrameworkBoggle\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+        "merged": "/Users/charlesrayner/Documents/School/CS301/HW4/FrameworkBoggle/C:\\FrameworkBoggle5\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi-v4\\ic_launcher.png",
+        "source": "/Users/charlesrayner/Documents/School/CS301/HW4/FrameworkBoggle/C:\\FrameworkBoggle5\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "/Users/charlesrayner/Documents/School/CS301/HW4/FrameworkBoggle/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi-v4/ic_launcher.png",
+        "source": "/Users/charlesrayner/Documents/School/CS301/HW4/FrameworkBoggle/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/charlesrayner/Documents/School/CS301/HW4/FrameworkBoggle/C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi-v4\\ic_launcher.png",
+        "source": "/Users/charlesrayner/Documents/School/CS301/HW4/FrameworkBoggle/C:\\Users\\Michael\\AndroidStudioProjects\\FrameworkBoggle\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
     }
 ]

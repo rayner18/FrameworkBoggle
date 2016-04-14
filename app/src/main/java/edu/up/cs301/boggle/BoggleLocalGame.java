@@ -1,5 +1,8 @@
 package edu.up.cs301.boggle;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -40,23 +43,71 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 
 	@Override
 	protected String checkIfGameOver() {
-        System.out.println("CHECKING IF GAME OVER" + state.getGameOver());
+
+
+		int p1Score = state.getPlayer1Score();
+		int p2Score = state.getPlayer2Score();
+
+		ArrayList<String> p1Words = state.getWordBank();
+		ArrayList<String> p2Words = state.getCompUsedWords();
+
+
+		ArrayList<String> sameWords = new ArrayList<String>();
+
+		for (int i = 0; i < p1Words.size(); i++) {
+			if (p2Words.contains(p1Words.get(i))) {
+				sameWords.add(p1Words.get(i));
+			}
+		}
+
+
+		String wordToModify;
+
+		for (int i = 0; i < sameWords.size(); i++) {
+			wordToModify = sameWords.get(i);
+
+			if (wordToModify.length() == 3 || wordToModify.length() == 4) {
+				p1Score = p1Score - 1;
+				p2Score = p2Score - 1;
+			}
+			else if (wordToModify.length() == 5) {
+				p1Score = p1Score - 2;
+				p2Score = p2Score - 2;
+			}
+			else if (wordToModify.length() == 6) {
+				p1Score = p1Score - 3;
+				p2Score = p2Score - 3;
+			}
+			else if (wordToModify.length() == 7) {
+				p1Score = p1Score - 4;
+				p2Score = p2Score - 4;
+			}
+			else if (wordToModify.length() >= 8) {
+				p1Score = p1Score - 5;
+				p2Score = p2Score - 5;
+			}
+
+
+		}
+
+
+
+		System.out.println("CHECKING IF GAME OVER" + state.getGameOver());
 		if(state.getGameOver() == 1){
 			int winner = state.getWinner();
 			String winTxt = "";
 
 			if (winner == 1) {
-				winTxt = "Game over! "+playerNames[0]+" wins with a score of "+state.getPlayer1Score()+"!";
+				winTxt = "Game over! "+playerNames[0]+" wins with a score of "+p1Score+"!";
 			}
 
 			else if (winner == 2) {
-				winTxt = "Game over! "+playerNames[1]+" wins with a score of "+state.getPlayer2Score()+"!";
+				winTxt = "Game over! "+playerNames[1]+" wins with a score of "+p2Score+"!";
 			}
 
 			else if (winner == 3) {
-				winTxt = "It's a draw! "+playerNames[0]+" and "+playerNames[1]+" tie with a score of "+state.getPlayer1Score()+" each!";
+				winTxt = "It's a draw! "+playerNames[0]+" and "+playerNames[1]+" tie with a score of "+p1Score+" each!";
 			}
-			sendAllUpdatedState();
 			return winTxt;
 		}
 		else{
@@ -77,19 +128,9 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
         //action used for when the computer needs to score
         if(action instanceof BoggleComputerSubmitScoreAction){
             BoggleComputerSubmitScoreAction BCSA = (BoggleComputerSubmitScoreAction)action;
-            ArrayList<String> found = BCSA.curArray(); //gets list of all possible words comp can use
-            int index = state.getArrayIndex(); // gets the index of where to pick a word from comp wordbank
-            //If all the words are already used from the computers word bank
-            if(index >= found.size()) {
-                return false;
-            }
-            String word = found.get(index); // the word the computer will sumbit
-            index++;
-			state.setCompCurWord(word); //sets the word that was just submitted
-            sendAllUpdatedState();
-            // increases the index so that a new word will be selected from the comps word bank
-            state.setArrayIndex(index);
-            System.out.println("----"+word+ "------");
+            String word = BCSA.curWord(); //gets list of all possible words comp can use
+            //state.setCompUsedWords(word); //puts the words used by the computer in array
+            System.out.println("----"+ word+ "------");
             int score = state.updateScore(word); //calculates the score for the word
             state.setPlayer2Score(score + state.getPlayer2Score()); //sets the comps score
             return true;
@@ -150,7 +191,7 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 	protected void timerTicked() {
         int seconds = state.getSecondsLeft();
 
-        if (seconds == 0){
+        if (seconds == 1){
             state.setGameOver(1);
         }
 		if (seconds > 0) {

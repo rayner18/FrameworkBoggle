@@ -76,8 +76,6 @@ public class BoggleState extends GameState {
         curLetterRow = 4;
         curLetterCol = 4;
         secondsLeft = 180;
-        compCurrentWord = "";
-        compPrevWord = "";
 
 
         Random r1 = new Random();
@@ -253,14 +251,14 @@ public class BoggleState extends GameState {
     public ArrayList<String> getWordBank() {return wordBank;}
     public void setWordBank(ArrayList<String> wordBank) {this.wordBank = wordBank;}
     public HashSet<String> getDictionary(){return dictionary;}
-    public ArrayList<String> getFound(){return found;}
-    public void setFound(String s){this.found.add(s);}
+   // public ArrayList<String> getFound(){return found;}
+    //public void setFound(String s){this.found.add(s);}
     public int getGameOver(){return this.gameOver;}
     public void setGameOver(int gameOver) {this.gameOver = gameOver;}
     public int[][] getSelectedLetters() {
         return Arrays.copyOf(selectedLetters, selectedLetters.length);
     }
-    public boolean[][] getVisited() {return visited;}
+   // public boolean[][] getVisited() {return visited;}
     public void setSelectedLetters(int[][] selectedLetters){
         this.selectedLetters = Arrays.copyOf(selectedLetters, selectedLetters.length);
     }
@@ -560,41 +558,41 @@ public class BoggleState extends GameState {
      * @param visited
      * @param found
      */
-public void findWords(HashSet<String> dict, String[][] board, int row, int col, String currWord, boolean[][] visited, ArrayList<String> found) {
-
-
-    for (int x = row-1; x <= row+1 ; x++) {
-        for (int y = col-1; y <= col+1; y++) {
-
-//            if (row >= 0 && col >= 0) {
-                try {
-                    if (visited[x][y]) continue;  //makes sure tile is not visited twice
-                    visited[x][y] = true;
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    continue;
-                }
-                word = currWord + board[x][y];
-                if (found.contains(word)) continue; //if word already exsists in list dont add
-                //if word is over 3 letters and in dictionary add to found list
-                if (word.length() > 2 && dict.contains(word.toLowerCase())) {
-                    setFound(word);
-                }
-            boolean[][] copy = new boolean[4][4]; // copy of visited tiles
-               for(int i = 0; i < 4; i++){
-                    for(int j = 0; j < 4; j++){
-                        copy[i][j] = visited[i][j];
-                    }
-                }
-            ArrayList<String> copy2 = new ArrayList<String>(); //copy of found list
-            for(int i = 0; i< found.size(); i++){
-                copy2.add(found.get(i));
-            }
-                findWords(dict, board, x, y, word, copy, copy2);
-        }
-    }
-
-    return;
-}
+//public void findWords(HashSet<String> dict, String[][] board, int row, int col, String currWord, boolean[][] visited, ArrayList<String> found) {
+//
+//
+//    for (int x = row-1; x <= row+1 ; x++) {
+//        for (int y = col-1; y <= col+1; y++) {
+//
+////            if (row >= 0 && col >= 0) {
+//                try {
+//                    if (visited[x][y]) continue;  //makes sure tile is not visited twice
+//                    visited[x][y] = true;
+//                } catch (ArrayIndexOutOfBoundsException e) {
+//                    continue;
+//                }
+//                word = currWord + board[x][y];
+//                if (found.contains(word)) continue; //if word already exsists in list dont add
+//                //if word is over 3 letters and in dictionary add to found list
+//                if (word.length() > 2 && dict.contains(word.toLowerCase())) {
+//                    setFound(word);
+//                }
+//            boolean[][] copy = new boolean[4][4]; // copy of visited tiles
+//               for(int i = 0; i < 4; i++){
+//                    for(int j = 0; j < 4; j++){
+//                        copy[i][j] = visited[i][j];
+//                    }
+//                }
+//            ArrayList<String> copy2 = new ArrayList<String>(); //copy of found list
+//            for(int i = 0; i< found.size(); i++){
+//                copy2.add(found.get(i));
+//            }
+//                findWords(dict, board, x, y, word, copy, copy2);
+//        }
+//    }
+//
+//    return;
+//}
 
 
     /**
