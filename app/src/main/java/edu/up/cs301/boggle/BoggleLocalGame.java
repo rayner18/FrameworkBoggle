@@ -76,13 +76,12 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 	 */
 	@Override
 	protected boolean makeMove(GameAction action) throws IOException {
-
+        //action used for when the computer needs to score
         if(action instanceof BoggleComputerSubmitScoreAction){
             BoggleComputerSubmitScoreAction BCSA = (BoggleComputerSubmitScoreAction)action;
-            ArrayList<String> found = BCSA.curArray();
+            ArrayList<String> found = BCSA.curArray(); //gets list of all possible words comp can use
             int index = state.getArrayIndex(); // gets the index of where to pick a word from comp wordbank
             //If all the words are already used from the computers word bank
-
             if(index >= found.size()) {
                 return false;
             }
@@ -97,24 +96,18 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
             return true;
 		}
 		else if(action instanceof BoggleSelectTileAction){
-
 			BoggleSelectTileAction BSTA = (BoggleSelectTileAction)action;
-
 			int curRow = BSTA.curLetterRow;
 			int curCol = BSTA.curLetterCol;
-
-			String currentWord = state.getCurrentWord();
+			String currentWord = state.getCurrentWord(); //pre exsisting word
+            //array of all words choosen already and their positions
 			int[][] selectedLetters = state.getSelectedLetters();
 			String[][] gameBoard = state.getGameBoard();
-
-
+            //adds letter from tile to exsisitng word
 			currentWord = state.addToWord(currentWord, gameBoard[curRow][curCol]);
-
-
 			state.setCurrentWord(currentWord);
 			state.setSelectedLetters(selectedLetters);
 			return true;
-
 		}
 		else if(action instanceof BoggleDeSelectTileAction) {
 			String currentWord = state.getCurrentWord();
@@ -122,24 +115,18 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 			currentWord = state.removeFromWord(currentWord);
 			state.setCurrentWord(currentWord);
 			state.setSelectedLetters(selectedLetters);
-
-
-
-
-			return true;
+        	return true;
 
 		}
 		else if(action instanceof BoggleSubmitScoreAction){
 			BoggleSubmitScoreAction BSSA = (BoggleSubmitScoreAction)action;
 			String word = BSSA.currentWord;
+            //if word is more then 3 letters and in dictionary
 			if(state.wordLength(word)&&state.inDictionary(word)){
-				if (state.getWordBank().contains(word)) {
-
-				}
+				if (state.getWordBank().contains(word)) {return false;}
 				else {
 					int score = state.updateScore(word);
-					System.out.println("THE SCORE IS:" + score);
-					state.setPlayer1Score(state.getPlayer1Score() + score);
+                    state.setPlayer1Score(state.getPlayer1Score() + score);
 					state.addToWordBank(word);
 					state.setCurrentWord("");
 					return true;
@@ -148,7 +135,6 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 			state.setCurrentWord("");
 			return true;
 		}
-
 		else if (action instanceof BoggleRotateAction) {
 			state.rotateBoard(state.getGameBoard());
 			return true;
@@ -156,10 +142,8 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
         else if(action instanceof BoggleTimerOutAction){
             checkIfGameOver();
         }
-
 		return false;
 	}
-
 	/**
 	 * Invoked whenever the game's timer has ticked. It is expected
 	 * that this will be overridden in many games.
@@ -169,9 +153,7 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 
         if (seconds == 0){
             state.setGameOver(1);
-
         }
-
 		if (seconds > 0) {
 			seconds--;
 		}

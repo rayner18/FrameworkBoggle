@@ -36,7 +36,6 @@ public class BoggleState extends GameState {
     private boolean timer; //true if the timer is running, false if timer has stopped
     private String[][] gameBoard = new String[4][4];
     private boolean[][] visited = new boolean[4][4];
-
     private int[][] selectedLetters = new int[20][2];
     private String curLetter;
     private int curLetterRow;
@@ -50,7 +49,7 @@ public class BoggleState extends GameState {
     private ArrayList<String> compUsedWords = new ArrayList<String>();
     private int gameOver; //determines if game is over
     public String word;
-    public int arrayIndex;
+    public int arrayIndex;//int for the index used the Local Game
     public int tested;
 
     /**
@@ -211,7 +210,6 @@ public class BoggleState extends GameState {
         wordBank = state.wordBank;
         timer = state.timer;
         tested = state.tested;
-
         gameBoard = Arrays.copyOf(state.gameBoard, state.gameBoard.length);
         visited = Arrays.copyOf(state.visited,state.gameBoard.length);
         selectedLetters = Arrays.copyOf(state.selectedLetters, state.selectedLetters.length);
@@ -219,7 +217,6 @@ public class BoggleState extends GameState {
             state.found.add(this.found.get(i));
         }
     }
-
 
     //--------------------------- Getter/Setter End -----------------------------
     public boolean isTimer() {return timer;}
@@ -232,9 +229,7 @@ public class BoggleState extends GameState {
     public void setGameBoard(String[][] gameBoard){
         this.gameBoard = Arrays.copyOf(gameBoard, gameBoard.length);
     }
-
     public int getArrayIndex() {return arrayIndex;}
-
     public int getWinner() {
         if (getPlayer1Score() > getPlayer2Score()) {return 1;}
         else if (getPlayer2Score()>getPlayer1Score()) {return 2;}
@@ -242,43 +237,18 @@ public class BoggleState extends GameState {
     }
     public void setArrayIndex(int arrayIndex) {this.arrayIndex = arrayIndex;}
     public int getPlayerTurn() {return playerTurn;}
-    public void setPlayerTurn(int playerTurn) {
-        this.playerTurn = playerTurn;
-    }
-    public int getPlayer1Score() {
-        return player1Score;
-    }
-    public void setPlayer1Score(int player1Score) {
-        this.player1Score = player1Score;
-    }
-    public int getPlayer2Score() {
-        return player2Score;
-    }
-    public void setPlayer2Score(int player2Score) {
-        this.player2Score = player2Score;
-    }
-    public String getCurrentWord() {
-        return currentWord;
-    }
-    public void setCurrentWord(String currentWord) {
-        this.currentWord = currentWord;
-    }
-    public ArrayList<String> getWordBank() {
-        return wordBank;
-    }
-    public void setWordBank(ArrayList<String> wordBank) {
-        this.wordBank = wordBank;
-    }
+    public void setPlayerTurn(int playerTurn) {this.playerTurn = playerTurn;}
+    public int getPlayer1Score() {return player1Score;}
+    public void setPlayer1Score(int player1Score) {this.player1Score = player1Score;}
+    public int getPlayer2Score() {return player2Score;}
+    public void setPlayer2Score(int player2Score) {this.player2Score = player2Score;}
+    public String getCurrentWord() {return currentWord;}
+    public void setCurrentWord(String currentWord) {this.currentWord = currentWord;}
+    public ArrayList<String> getWordBank() {return wordBank;}
+    public void setWordBank(ArrayList<String> wordBank) {this.wordBank = wordBank;}
     public HashSet<String> getDictionary(){return dictionary;}
-
     public ArrayList<String> getFound(){return found;}
-    public void setFound(String s){
-
-
-        this.found.add(s);
-    }
-
-
+    public void setFound(String s){this.found.add(s);}
     public int getGameOver(){return this.gameOver;}
     public void setGameOver(int gameOver) {this.gameOver = gameOver;}
     public int[][] getSelectedLetters() {
@@ -290,7 +260,41 @@ public class BoggleState extends GameState {
     }
     public int getSecondsLeft() {return secondsLeft;}
     public void setSecondsLeft(int seconds) {this.secondsLeft = seconds;}
-//--------------------------- Getter/Setter End -----------------------------
+    public String getCurLetterFromBoard(int curLetterRow, int curLetterCol, String[][] gameBoard) {
+        return gameBoard[curLetterRow][curLetterCol];
+    }
+    public String getCurLetter() {
+        return curLetter;
+    }
+    public void setCurLetter(String curLetter) {
+        this.curLetter = curLetter;
+    }
+    public int getCurLetterRow() {
+        return curLetterRow;
+    }
+    public int getCurLetterCol() {
+        return curLetterCol;
+    }
+    public void setCurLetterRow(int curLetterRow) {
+        this.curLetterRow = curLetterRow;
+    }
+    public void setCurLetterCol(int curLetterCol) {
+        this.curLetterCol = curLetterCol;
+    }
+    public int getLastLetterCol(int [][] selectedLetters) {
+        return selectedLetters[getLastLetterIndex(selectedLetters)][1];
+    }
+    public int getLastLetterRow(int [][] selectedLetters) {
+        return selectedLetters[getLastLetterIndex(selectedLetters)][0];
+    }
+    public int getLastLetterIndex(int[][] selectedLetters) {
+        int counter = 0;
+        while (selectedLetters[counter + 1][0] != 4) {
+            counter++;
+        }
+        return counter;
+    }
+//--------------------------- End Getter/Setter End -----------------------------
     /**
      * Determines if the word is more then 3 letters, which means its playable
      *
@@ -375,55 +379,7 @@ public class BoggleState extends GameState {
          */
     }
 
-    public String getCurLetterFromBoard(int curLetterRow, int curLetterCol, String[][] gameBoard) {
-        return gameBoard[curLetterRow][curLetterCol];
-    }
 
-    public String getCurLetter() {
-        return curLetter;
-    }
-
-    public void setCurLetter(String curLetter) {
-        this.curLetter = curLetter;
-    }
-
-    public int getCurLetterRow() {
-        return curLetterRow;
-    }
-
-    public int getCurLetterCol() {
-        return curLetterCol;
-    }
-
-    public void setCurLetterRow(int curLetterRow) {
-        this.curLetterRow = curLetterRow;
-    }
-
-    public void setCurLetterCol(int curLetterCol) {
-        this.curLetterCol = curLetterCol;
-    }
-
-    public int getLastLetterCol(int [][] selectedLetters) {
-
-        return selectedLetters[getLastLetterIndex(selectedLetters)][1];
-    }
-
-    public int getLastLetterRow(int [][] selectedLetters) {
-
-        return selectedLetters[getLastLetterIndex(selectedLetters)][0];
-    }
-
-    public int getLastLetterIndex(int[][] selectedLetters) {
-
-        int counter = 0;
-
-
-        while (selectedLetters[counter + 1][0] != 4) {
-            counter++;
-        }
-
-        return counter;
-    }
 
     /**
      * checks if tile can be removed based on the grounds that it is the last picked tile
@@ -496,10 +452,6 @@ public class BoggleState extends GameState {
 
         return currentWord;
     }
-
-
-
-
 
     /**
      * checks if tile can be added based on the grounds that it has not already been added and
@@ -591,41 +543,43 @@ public class BoggleState extends GameState {
         //Copies the rotated board to the existing board
         gameBoard = tmp;
     }
-//------------------------------------------------------------------------
+
+    /**
+     * This method recursivally finds all the words on the board and puts them in an list "Found"
+     * @param dict
+     * @param board
+     * @param row
+     * @param col
+     * @param currWord
+     * @param visited
+     * @param found
+     */
 public void findWords(HashSet<String> dict, String[][] board, int row, int col, String currWord, boolean[][] visited, ArrayList<String> found) {
 
-
-    tested = 1;
 
     for (int x = row-1; x <= row+1 ; x++) {
         for (int y = col-1; y <= col+1; y++) {
 
 //            if (row >= 0 && col >= 0) {
                 try {
-                    if (visited[x][y]) continue;  //base case
+                    if (visited[x][y]) continue;  //makes sure tile is not visited twice
                     visited[x][y] = true;
-
                 } catch (ArrayIndexOutOfBoundsException e) {
                     continue;
                 }
-
                 word = currWord + board[x][y];
-
-                if (found.contains(word)) continue;
-
+                if (found.contains(word)) continue; //if word already exsists in list dont add
+                //if word is over 3 letters and in dictionary add to found list
                 if (word.length() > 2 && dict.contains(word.toLowerCase())) {
-
                     setFound(word);
                 }
-            boolean[][] copy = new boolean[4][4];
+            boolean[][] copy = new boolean[4][4]; // copy of visited tiles
                for(int i = 0; i < 4; i++){
                     for(int j = 0; j < 4; j++){
-
                         copy[i][j] = visited[i][j];
                     }
                 }
-
-            ArrayList<String> copy2 = new ArrayList<String>();
+            ArrayList<String> copy2 = new ArrayList<String>(); //copy of found list
             for(int i = 0; i< found.size(); i++){
                 copy2.add(found.get(i));
             }
@@ -636,7 +590,7 @@ public void findWords(HashSet<String> dict, String[][] board, int row, int col, 
     return;
 }
 
-//------------------------------------------------------------------------
+
     /**
      * checks if tile to select is adjacent to last tile picked.
      *

@@ -18,7 +18,7 @@ import java.util.Random;
  */
 public class BoggleComputerPlayer1 extends GameComputerPlayer implements BogglePlayer, Tickable {
     BoggleState state;
-    BoggleComputerSubmitScoreAction submitScore;
+    BoggleComputerSubmitScoreAction submitScore; //action for computer scoring
     boolean[][] visited = new boolean[4][4];  //array to see if the tile has been locked at yet
     String[][] board = new String[4][4];//array of all the letters on the board
     ArrayList<String> found = new ArrayList<String>(); // list of all the words found by the computer
@@ -42,15 +42,12 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
             state = (BoggleState) info;
             visited = state.getVisited(); //array to see if the tile has been locked at yet
             board = state.getGameBoard();
-            found = state.getFound();
-
+            found = state.getFound(); //list of all words found by computer
 
          //   if(state.getDictionary() == null) {
-
-                System.out.println(" You are inside");
-
                 try {
-                    boolean l = state.inDictionary("hi");
+                    //initiates the dictionary. A random word needs to be passed in to make it
+                    boolean l = state.inDictionary("start");
                 } catch (IOException e) {
                 }
                 for (int row = 0; row < 4; row++)// goes through all the rows
@@ -67,7 +64,6 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
                         visited[row][col] = true;
                         //calls the recursive method
                         state.findWords(state.getDictionary(), board, row, col, board[row][col], visited, found);
-
                    }
                 }
              //return;
@@ -76,13 +72,10 @@ public class BoggleComputerPlayer1 extends GameComputerPlayer implements BoggleP
                 //Submits a word every 1 in 5 chance
                 Random rand = new Random();
                 int random = rand.nextInt(5);
-                System.out.println("Random number" + random);
-                if (random == 1) {
+            if (random == 1) {
                     submitScore = new BoggleComputerSubmitScoreAction(this, found);
                     game.sendAction(submitScore);
-                } else {
-                    return;
-                }
+                } else {return;}
             }
         //}
         return;
