@@ -42,7 +42,7 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
             tile5ButtonPushed, tile6ButtonPushed, tile7ButtonPushed, tile8ButtonPushed,
             tile9ButtonPushed, tile10ButtonPushed, tile11ButtonPushed, tile12ButtonPushed,
             tile13ButtonPushed, tile14ButtonPushed, tile15ButtonPushed, tile16ButtonPushed;
-
+    BoggleTimerOutAction gameOver;
     protected Button tile1Button, tile2Button, tile3Button, tile4Button, tile5Button, tile6Button,
             tile7Button, tile8Button, tile9Button, tile10Button, tile11Button, tile12Button, tile13Button,
             tile14Button, tile15Button, tile16Button, rotateButton, submitScoreButton;
@@ -105,6 +105,11 @@ public class BoggleHumanPlayer extends GameHumanPlayer implements BogglePlayer, 
 //            if (!state.isTimer()) {
 //                state.setGameOver(1);
 //            }
+            if(state.getSecondsLeft() == 0){
+                gameOver = new BoggleTimerOutAction(this);
+                game.sendAction(gameOver);
+
+            }
         }
     }
 

@@ -79,19 +79,9 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
         //action used for when the computer needs to score
         if(action instanceof BoggleComputerSubmitScoreAction){
             BoggleComputerSubmitScoreAction BCSA = (BoggleComputerSubmitScoreAction)action;
-            ArrayList<String> found = BCSA.curArray(); //gets list of all possible words comp can use
-            int index = state.getArrayIndex(); // gets the index of where to pick a word from comp wordbank
-            //If all the words are already used from the computers word bank
-            if(index >= found.size()) {
-                return false;
-            }
-            String word = found.get(index); // the word the computer will sumbit
-            index++;
-            state.setCompUsedWords(word); //puts the words used by the computer in array
-            sendAllUpdatedState();
-            // increases the index so that a new word will be selected from the comps word bank
-            state.setArrayIndex(index);
-            System.out.println("----"+word+ "------");
+            String word = BCSA.curWord(); //gets list of all possible words comp can use
+            //state.setCompUsedWords(word); //puts the words used by the computer in array
+            System.out.println("----"+ word+ "------");
             int score = state.updateScore(word); //calculates the score for the word
             state.setPlayer2Score(score + state.getPlayer2Score()); //sets the comps score
             return true;
@@ -152,7 +142,7 @@ public class BoggleLocalGame extends LocalGame implements BoggleGame {
 	protected void timerTicked() {
         int seconds = state.getSecondsLeft();
 
-        if (seconds == 0){
+        if (seconds == 1){
             state.setGameOver(1);
         }
 		if (seconds > 0) {
